@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#f4f1ea">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f4f1ea"/>
+    <text x="600" y="400" font-family="Georgia,serif" font-size="120" fill="#1a1815" text-anchor="middle" dominant-baseline="middle">A</text>
+    <text x="600" y="520" font-family="Arial,sans-serif" font-size="26" fill="#8a7355" text-anchor="middle" letter-spacing="8">ПАВИЛЬОН</text>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:#f4f1ea;font-family:'Archivo',sans-serif;color:#1a1815;-webkit-font-smoothing:antialiased}
+  ::selection{background:#1a1815;color:#f4f1ea}
+  a{text-decoration:none;color:inherit}
+  .pv-up{letter-spacing:.18em;text-transform:uppercase}
+  @keyframes pvfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes pvscan{0%{top:6%}100%{top:90%}}
+  @keyframes pvspin{to{transform:rotate(360deg)}}
+  .pv-screen{animation:pvfade .5s ease both}
+  .pv-prod:hover .pv-prod-img{transform:scale(1.03)}
+  .pv-prod:hover .pv-quick{opacity:1}
+</style>
+</helmet>
+<div style="min-height:100vh">
+
+  <!-- utility bar -->
+  <div style="background:#1a1815;color:#e8e3d8;font-size:11px;letter-spacing:.04em;display:flex;justify-content:center;align-items:center;gap:30px;padding:8px 0">
+    <span class="pv-up" style="font-size:10px;color:#c7b299">Оригинал подтверждён</span>
+    <span>Бесплатная доставка в премиум-ПВЗ по всей России</span>
+    <span style="opacity:.5">Возврат 14 дней · Премиум-упаковка</span>
+  </div>
+
+  <!-- header -->
+  <header style="position:sticky;top:0;z-index:40;background:rgba(244,241,234,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(26,24,21,.1)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:74px">
+      <div style="display:flex;align-items:center;gap:20px">
+        <a href="Hub.dc.html" class="pv-up" style="font-size:10px;color:#8a7355;display:flex;align-items:center;gap:6px">← Хаб</a>
+        <span onClick="{{ goHome }}" style="cursor:pointer;display:flex;align-items:center;gap:7px">
+          <span class="pv-up" style="font-size:10px;color:#8a7355">Поиск</span>
+        </span>
+      </div>
+      <div onClick="{{ goHome }}" style="cursor:pointer;text-align:center">
+        <div style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:23px;letter-spacing:.02em;line-height:1">WB Бренды</div>
+        <div class="pv-up" style="font-size:8.5px;letter-spacing:.42em;color:#8a7355;margin-top:2px">ПАВИЛЬОН</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:22px;font-size:12px">
+        <span class="pv-up" style="font-size:10px;color:#8a7355;cursor:pointer">RU / ₽</span>
+        <span style="cursor:pointer">Войти</span>
+        <span onClick="{{ openScanner }}" class="pv-up" style="font-size:10px;cursor:pointer;border:1px solid rgba(26,24,21,.25);padding:6px 11px;border-radius:100px">Проверить оригинал</span>
+        <span style="cursor:pointer;position:relative">Сумка ({{ bag }})</span>
+      </div>
+    </div>
+    <nav style="max-width:1280px;margin:0 auto;padding:0 40px;display:flex;justify-content:center;gap:34px;height:42px;align-items:center;font-size:12.5px;border-top:1px solid rgba(26,24,21,.06)">
+      <span onClick="{{ openListing }}" style="cursor:pointer" class="pv-up" >Designers</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer">Новинки</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer">Одежда</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer">Сумки</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer">Обувь</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer">Украшения</span>
+      <span onClick="{{ openListing }}" style="cursor:pointer;color:#8a7355">Журнал</span>
+    </nav>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main class="pv-screen">
+
+    <!-- trust strip (USP) -->
+    <section style="border-bottom:1px solid rgba(26,24,21,.1)">
+      <div style="max-width:1280px;margin:0 auto;padding:20px 40px;display:grid;grid-template-columns:repeat(4,1fr)">
+        <div style="text-align:center;border-right:1px solid rgba(26,24,21,.08)"><div class="pv-up" style="font-size:11px;margin-bottom:5px">Оригинал подтверждён</div><div style="font-size:11px;color:#8a7355">Цифровой паспорт у каждой вещи</div></div>
+        <div style="text-align:center;border-right:1px solid rgba(26,24,21,.08)"><div class="pv-up" style="font-size:11px;margin-bottom:5px">Цена как в бутике</div><div style="font-size:11px;color:#8a7355">Прозрачно, не дороже официала</div></div>
+        <div style="text-align:center;border-right:1px solid rgba(26,24,21,.08)"><div class="pv-up" style="font-size:11px;margin-bottom:5px">Премиум-ПВЗ</div><div style="font-size:11px;color:#8a7355">Сервис и упаковка уровнем выше</div></div>
+        <div style="text-align:center"><div class="pv-up" style="font-size:11px;margin-bottom:5px">WB Club</div><div style="font-size:11px;color:#8a7355">Ранний доступ к дропам</div></div>
+      </div>
+    </section>
+
+    <!-- hero -->
+    <section style="max-width:1280px;margin:0 auto;padding:40px;display:grid;grid-template-columns:1.6fr 1fr;gap:2px">
+      <div style="position:relative;height:560px;border-radius:4px;overflow:hidden">
+        <div style="display:flex;height:100%;transition:transform .7s cubic-bezier(.65,0,.35,1);transform:translateX({{ heroShift }})">
+          <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="3">
+            <div style="flex:0 0 100%;height:100%;position:relative;background:{{ h.bg }}">
+              <div style="position:absolute;inset:0;background:radial-gradient(130% 100% at 78% 18%,rgba(245,236,222,.4),transparent 55%)"></div>
+              <div style="position:absolute;left:46px;bottom:46px;color:#f4f1ea;max-width:460px">
+                <div class="pv-up" style="font-size:10.5px;letter-spacing:.28em;color:#dcc9ad;margin-bottom:16px">{{ h.overline }}</div>
+                <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:52px;line-height:1.04;margin:0 0 22px">{{ h.title }}</h1>
+                <span onClick="{{ openListing }}" class="pv-up" style="display:inline-block;font-size:11px;background:#f4f1ea;color:#1a1815;padding:13px 26px;border-radius:100px;cursor:pointer">{{ h.cta }}</span>
+              </div>
+              <span class="pv-up" style="position:absolute;right:18px;top:18px;font-size:9px;color:rgba(245,236,222,.5);font-family:'Archivo'">{{ h.shot }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <span onClick="{{ heroPrev }}" style="position:absolute;left:18px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid rgba(244,241,234,.5);color:#f4f1ea;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;background:rgba(26,24,21,.15);backdrop-filter:blur(3px)">‹</span>
+        <span onClick="{{ heroNext }}" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid rgba(244,241,234,.5);color:#f4f1ea;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;background:rgba(26,24,21,.15);backdrop-filter:blur(3px)">›</span>
+        <div style="position:absolute;bottom:20px;left:46px;display:flex;gap:9px">
+          <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="3">
+            <span onClick="{{ d.go }}" style="width:{{ d.w }};height:5px;border-radius:100px;background:{{ d.bg }};cursor:pointer;transition:all .3s"></span>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+        <div onClick="{{ openListing }}" style="cursor:pointer;position:relative;border-radius:4px;overflow:hidden;background:linear-gradient(150deg,#d8cfc0,#b8a88f)">
+          <div style="position:absolute;left:26px;bottom:24px">
+            <div class="pv-up" style="font-size:9.5px;color:#5a4f3e;margin-bottom:6px">Сумки</div>
+            <div style="font-family:'Bodoni Moda',serif;font-size:26px">The Bag Edit</div>
+          </div>
+        </div>
+        <div onClick="{{ openListing }}" style="cursor:pointer;position:relative;border-radius:4px;overflow:hidden;background:linear-gradient(150deg,#cfd0c8,#9ea092)">
+          <div style="position:absolute;left:26px;bottom:24px">
+            <div class="pv-up" style="font-size:9.5px;color:#4d4f44;margin-bottom:6px">Кашемир</div>
+            <div style="font-family:'Bodoni Moda',serif;font-size:26px">Knitwear</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- designer row -->
+    <section style="max-width:1280px;margin:0 auto;padding:56px 40px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px">
+        <h2 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:30px;margin:0">Designer Edit</h2>
+        <span onClick="{{ openListing }}" class="pv-up" style="font-size:10.5px;color:#8a7355;cursor:pointer">Все дизайнеры A–Z →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+        <sc-for list="{{ brands }}" as="b" hint-placeholder-count="6">
+          <div onClick="{{ openListing }}" style="cursor:pointer;aspect-ratio:1;border:1px solid rgba(26,24,21,.12);border-radius:4px;display:flex;align-items:center;justify-content:center;background:#efeae0;transition:background .3s" style-hover="background:#e7e0d2">
+            <span style="font-family:'Bodoni Moda',serif;font-size:17px;text-align:center;padding:0 8px">{{ b.name }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- curated grid -->
+    <section style="max-width:1280px;margin:0 auto;padding:46px 40px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px">
+        <div>
+          <div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:8px">Кураторский отбор недели</div>
+          <h2 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:30px;margin:0">Just In, Just Right</h2>
+        </div>
+        <span onClick="{{ openListing }}" class="pv-up" style="font-size:10.5px;color:#8a7355;cursor:pointer">Весь каталог →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px 16px">
+        <sc-for list="{{ products }}" as="item" hint-placeholder-count="8">
+          <div class="pv-prod" onClick="{{ item.open }}" style="cursor:pointer">
+            <div style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:#e7e0d2">
+              <div class="pv-prod-img" style="position:absolute;inset:0;transition:transform .6s ease;background:{{ item.bg }}"></div>
+              <div style="position:absolute;left:10px;top:10px;display:flex;gap:6px">
+                <span class="pv-up" style="font-size:8px;background:rgba(244,241,234,.92);padding:4px 7px;border-radius:100px;color:#1a1815">✓ Оригинал</span>
+              </div>
+              <span class="pv-quick pv-up" style="opacity:0;transition:opacity .3s;position:absolute;left:50%;transform:translateX(-50%);bottom:12px;font-size:9.5px;background:#1a1815;color:#f4f1ea;padding:9px 16px;border-radius:100px;white-space:nowrap">Быстрый просмотр</span>
+              <span class="pv-up" style="position:absolute;right:9px;top:9px;font-size:7.5px;color:rgba(26,24,21,.35);font-family:'Archivo'">{{ item.shot }}</span>
+            </div>
+            <div style="padding:13px 2px 0">
+              <div class="pv-up" style="font-size:11px;letter-spacing:.1em;margin-bottom:4px">{{ item.brand }}</div>
+              <div style="font-size:13px;color:#5a5246;margin-bottom:7px">{{ item.name }}</div>
+              <div style="font-family:'Bodoni Moda',serif;font-size:15px">{{ item.priceFmt }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- shop-in-shop / brand boutiques -->
+    <section style="max-width:1280px;margin:24px auto 0;padding:0 40px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px">
+        <div>
+          <div class="pv-up" style="font-size:10px;letter-spacing:.24em;color:#8a7355;margin-bottom:10px">Shop-in-Shop</div>
+          <h2 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:30px;margin:0">Бутики брендов</h2>
+        </div>
+        <span onClick="{{ openListing }}" class="pv-up" style="font-size:10.5px;color:#8a7355;cursor:pointer">Все бутики →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:2px">
+        <div onClick="{{ openListing }}" style="cursor:pointer;position:relative;height:340px;border-radius:4px;overflow:hidden;background:linear-gradient(135deg,#2a2620 0%,#4a4036 55%,#8a7355 130%)">
+          <div style="position:absolute;inset:0;background:radial-gradient(120% 100% at 82% 12%,rgba(245,236,222,.28),transparent 55%)"></div>
+          <div style="position:absolute;left:40px;bottom:36px;color:#f4f1ea;max-width:360px">
+            <div class="pv-up" style="font-size:9.5px;letter-spacing:.2em;color:#dcc9ad;margin-bottom:12px">Бутик недели · официальный шоурум</div>
+            <div style="font-family:'Bodoni Moda',serif;font-size:40px;line-height:1;margin-bottom:12px">The Row</div>
+            <p style="font-size:13px;line-height:1.55;color:rgba(244,241,234,.75);margin:0 0 18px">Полная коллекция дома в отдельном пространстве: тихая роскошь, безупречный крой, сервис уровня бутика.</p>
+            <span class="pv-up" style="font-size:10.5px;background:#f4f1ea;color:#1a1815;padding:11px 22px;border-radius:100px;display:inline-block">Войти в бутик →</span>
+          </div>
+          <span class="pv-up" style="position:absolute;right:16px;top:16px;font-size:8.5px;color:rgba(245,236,222,.5);font-family:'Archivo'">[ brand shoot — full-bleed ]</span>
+        </div>
+        <div style="display:grid;grid-template-rows:repeat(3,1fr);gap:2px">
+          <sc-for list="{{ boutiques }}" as="b" hint-placeholder-count="3">
+            <div onClick="{{ openListing }}" style="cursor:pointer;position:relative;border-radius:4px;overflow:hidden;background:{{ b.bg }};display:flex;align-items:center;justify-content:space-between;padding:0 24px">
+              <div>
+                <div style="font-family:'Bodoni Moda',serif;font-size:22px;color:#1a1815">{{ b.name }}</div>
+                <div class="pv-up" style="font-size:9px;letter-spacing:.16em;color:#5a4f3e;margin-top:5px">{{ b.tag }}</div>
+              </div>
+              <span class="pv-up" style="font-size:9px;letter-spacing:.14em;color:#1a1815;border:1px solid rgba(26,24,21,.4);padding:7px 12px;border-radius:100px;white-space:nowrap">Официальный ✓</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- editorial feature -->
+    <section style="max-width:1280px;margin:56px auto 0;padding:0 40px">
+      <div onClick="{{ openListing }}" style="cursor:pointer;position:relative;height:460px;border-radius:4px;overflow:hidden;background:linear-gradient(120deg,#22201b 0%,#3c352b 55%,#6a5c47 130%)">
+        <div style="position:absolute;inset:0;background:radial-gradient(120% 120% at 18% 88%,rgba(199,178,153,.35),transparent 50%)"></div>
+        <div style="position:absolute;left:54px;top:50%;transform:translateY(-50%);color:#f4f1ea;max-width:480px">
+          <div class="pv-up" style="font-size:10px;letter-spacing:.28em;color:#dcc9ad;margin-bottom:16px">Журнал · The Pavilion Edit</div>
+          <h2 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:38px;line-height:1.1;margin:0 0 18px">Как читать состав: гид по кашемиру и кашемироподобному</h2>
+          <p style="font-size:14px;line-height:1.6;color:rgba(244,241,234,.75);margin:0 0 22px">Редакционный разбор: на что смотреть в карточке, чтобы отличить вещь на годы от вещи на сезон.</p>
+          <span class="pv-up" style="font-size:11px;border:1px solid rgba(244,241,234,.5);padding:12px 24px;border-radius:100px;display:inline-block">Читать в журнале →</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WB Club band -->
+    <section style="max-width:1280px;margin:40px auto;padding:0 40px">
+      <div style="background:#1a1815;color:#f4f1ea;border-radius:4px;padding:48px 54px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px">
+        <div>
+          <div class="pv-up" style="font-size:10px;color:#c7b299;margin-bottom:14px">WB Club · Premium tier</div>
+          <h2 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:32px;margin:0 0 12px">Доступ к дропам раньше всех</h2>
+          <p style="font-size:14px;line-height:1.6;color:rgba(244,241,234,.7);margin:0;max-width:520px">Ранний доступ к ограниченным поступлениям, премиум-ПВЗ с примеркой, эксклюзивы брендов и события. Модель ретеншна премиум-аудитории.</p>
+        </div>
+        <span class="pv-up" style="font-size:11px;background:#c7b299;color:#1a1815;padding:14px 30px;border-radius:100px;cursor:pointer;white-space:nowrap">Вступить в Club</span>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid rgba(26,24,21,.12);margin-top:20px">
+      <div style="max-width:1280px;margin:0 auto;padding:48px 40px;display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:22px;margin-bottom:6px">WB Бренды · Павильон</div>
+          <p style="font-size:12.5px;line-height:1.6;color:#8a7355;max-width:280px;margin:0">Курируемое премиум-пространство оригиналов внутри Wildberries.</p>
+        </div>
+        <div><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:14px">Покупателям</div><div style="font-size:12.5px;line-height:2;color:#5a5246">Доставка · Возврат · Проверка оригинала · WB Club</div></div>
+        <div><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:14px">Брендам</div><div style="font-size:12.5px;line-height:2;color:#5a5246">Shop-in-shop · Защита витрины · Условия</div></div>
+        <div><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:14px">Журнал</div><div style="font-size:12.5px;line-height:2;color:#5a5246">The Edit · Гиды · Интервью</div></div>
+      </div>
+    </footer>
+  </main>
+  </sc-if>
+
+  <!-- ============ LISTING ============ -->
+  <sc-if value="{{ isListing }}" hint-placeholder-val="{{ true }}">
+  <main class="pv-screen" style="max-width:1280px;margin:0 auto;padding:36px 40px 80px">
+    <div style="font-size:11px;color:#8a7355;margin-bottom:24px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> &nbsp;/&nbsp; <span class="pv-up">Сумки</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:30px">
+      <div>
+        <h1 style="font-family:'Bodoni Moda',serif;font-weight:400;font-size:42px;margin:0 0 6px">Сумки</h1>
+        <div style="font-size:12px;color:#8a7355">128 вещей · от проверенных дизайнеров</div>
+      </div>
+      <div style="display:flex;gap:10px;font-size:11px">
+        <span class="pv-up" style="padding:9px 15px;border:1px solid rgba(26,24,21,.2);border-radius:100px;cursor:pointer">Сортировка ↓</span>
+        <span class="pv-up" style="padding:9px 15px;border:1px solid rgba(26,24,21,.2);border-radius:100px;cursor:pointer">Плотность ▦</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:40px">
+      <aside style="font-size:12.5px">
+        <div style="margin-bottom:26px"><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:12px">Designer</div><div style="line-height:2.1;color:#5a5246">Lemaire · The Row · Toteme · Khaite · Jil Sander · Loro Piana</div></div>
+        <div style="margin-bottom:26px"><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:12px">Цена</div><div style="line-height:2.1;color:#5a5246">до 75 000 ₽<br>75 000 – 150 000 ₽<br>от 150 000 ₽</div></div>
+        <div><div class="pv-up" style="font-size:10px;color:#8a7355;margin-bottom:12px">Гарантия</div><div style="line-height:2.1;color:#5a5246">✓ Цифровой паспорт<br>✓ Премиум-упаковка</div></div>
+      </aside>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px 18px">
+        <sc-for list="{{ products }}" as="item" hint-placeholder-count="6">
+          <div class="pv-prod" onClick="{{ item.open }}" style="cursor:pointer">
+            <div style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:#e7e0d2">
+              <div class="pv-prod-img" style="position:absolute;inset:0;transition:transform .6s ease;background:{{ item.bg }}"></div>
+              <span class="pv-up" style="position:absolute;left:10px;top:10px;font-size:8px;background:rgba(244,241,234,.92);padding:4px 7px;border-radius:100px">✓ Оригинал</span>
+            </div>
+            <div style="padding:13px 2px 0">
+              <div class="pv-up" style="font-size:11px;margin-bottom:4px">{{ item.brand }}</div>
+              <div style="font-size:13px;color:#5a5246;margin-bottom:7px">{{ item.name }}</div>
+              <div style="font-family:'Bodoni Moda',serif;font-size:15px">{{ item.priceFmt }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ PDP ============ -->
+  <sc-if value="{{ isPdp }}" hint-placeholder-val="{{ true }}">
+  <main class="pv-screen" style="max-width:1280px;margin:0 auto;padding:28px 40px 80px">
+    <div style="font-size:11px;color:#8a7355;margin-bottom:24px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> &nbsp;/&nbsp; <span onClick="{{ openListing }}" style="cursor:pointer">Сумки</span> &nbsp;/&nbsp; <span class="pv-up">{{ p.brand }}</span></div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:54px;align-items:start">
+
+      <!-- gallery -->
+      <div style="display:grid;grid-template-columns:72px 1fr;gap:14px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ p.thumbs }}" as="t" hint-placeholder-count="4">
+            <div style="aspect-ratio:3/4;border-radius:3px;background:{{ t.bg }};border:1px solid rgba(26,24,21,.1);cursor:pointer"></div>
+          </sc-for>
+        </div>
+        <div style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:{{ p.heroBg }}">
+          <span class="pv-up" style="position:absolute;right:14px;top:14px;font-size:8px;color:rgba(26,24,21,.4);font-family:'Archivo'">{{ p.shot }}</span>
+        </div>
+      </div>
+
+      <!-- buy panel -->
+      <div style="position:sticky;top:130px">
+        <div class="pv-up" style="font-size:9px;color:#8a7355;margin-bottom:10px">Designer</div>
+        <h1 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:30px;margin:0 0 4px">{{ p.brand }}</h1>
+        <div style="font-size:15px;color:#5a5246;margin-bottom:18px">{{ p.name }}</div>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:6px">
+          <div style="font-family:'Bodoni Moda',serif;font-size:26px">{{ p.priceFmt }}</div>
+        </div>
+
+        <!-- price transparency -->
+        <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:#5a7355;background:#eef0e6;border:1px solid #d8ddc6;border-radius:4px;padding:9px 12px;margin-bottom:24px">
+          <span style="font-size:13px">↘</span><span>Цена как в официальном бутике — не дороже. <span style="border-bottom:1px solid #b6bf9c;cursor:pointer">История цены</span></span>
+        </div>
+
+        <div style="font-size:11px;color:#8a7355;margin-bottom:10px">Цвет — {{ p.color }}</div>
+        <div class="pv-up" style="font-size:10.5px;margin-bottom:10px;color:#1a1815">Размер</div>
+        <div style="display:flex;gap:8px;margin-bottom:24px">
+          <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="4">
+            <span onClick="{{ s.pick }}" style="cursor:pointer;min-width:46px;text-align:center;padding:11px 0;border-radius:3px;font-size:12.5px;border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }}">{{ s.label }}</span>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-bottom:14px">
+          <span onClick="{{ addToBag }}" class="pv-up" style="flex:1;text-align:center;font-size:11px;background:#1a1815;color:#f4f1ea;padding:16px;border-radius:100px;cursor:pointer">Добавить в сумку</span>
+          <span style="width:54px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(26,24,21,.2);border-radius:100px;cursor:pointer;font-size:16px">♡</span>
+        </div>
+
+        <!-- authenticity kill feature -->
+        <div style="border:1px solid #d8c9af;background:#f0ebde;border-radius:6px;padding:18px;margin:20px 0 22px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <span style="width:26px;height:26px;border-radius:50%;background:#1a1815;color:#c7b299;display:flex;align-items:center;justify-content:center;font-size:13px">✓</span>
+            <div>
+              <div class="pv-up" style="font-size:10.5px;letter-spacing:.1em">Оригинал подтверждён</div>
+              <div style="font-size:10.5px;color:#8a7355">Цифровой паспорт продукта · DPP</div>
+            </div>
+          </div>
+          <div style="font-size:11px;line-height:1.9;color:#5a5246;border-top:1px solid rgba(138,115,85,.25);padding-top:11px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">ID паспорта</span><span>{{ p.passId }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Верифицировано брендом</span><span>{{ p.passDate }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Метка</span><span>QR + NFC на бирке</span></div>
+          </div>
+          <span onClick="{{ openScanner }}" class="pv-up" style="display:block;text-align:center;margin-top:13px;font-size:10px;border:1px solid #1a1815;border-radius:100px;padding:11px;cursor:pointer">Сканировать и проверить подлинность</span>
+        </div>
+
+        <!-- accordions -->
+        <div style="border-top:1px solid rgba(26,24,21,.12)">
+          <div onClick="{{ toggleA }}" style="cursor:pointer;display:flex;justify-content:space-between;padding:16px 0;font-size:12.5px"><span class="pv-up" style="font-size:11px">Состав и уход</span><span>{{ aSign }}</span></div>
+          <sc-if value="{{ aOpen }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;line-height:1.7;color:#5a5246;padding:0 0 16px">{{ p.composition }}</div></sc-if>
+          <div onClick="{{ toggleB }}" style="cursor:pointer;display:flex;justify-content:space-between;padding:16px 0;font-size:12.5px;border-top:1px solid rgba(26,24,21,.12)"><span class="pv-up" style="font-size:11px">Доставка и возврат</span><span>{{ bSign }}</span></div>
+          <sc-if value="{{ bOpen }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;line-height:1.7;color:#5a5246;padding:0 0 16px">Премиум-ПВЗ с примеркой по всей России. Бесплатный возврат 14 дней. Премиум-упаковка.</div></sc-if>
+          <div onClick="{{ toggleC }}" style="cursor:pointer;display:flex;justify-content:space-between;padding:16px 0;font-size:12.5px;border-top:1px solid rgba(26,24,21,.12);border-bottom:1px solid rgba(26,24,21,.12)"><span class="pv-up" style="font-size:11px">О дизайнере</span><span>{{ cSign }}</span></div>
+          <sc-if value="{{ cOpen }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;line-height:1.7;color:#5a5246;padding:16px 0">{{ p.about }}</div></sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- complete the look -->
+    <section style="margin-top:72px">
+      <h2 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:26px;margin:0 0 24px">Образ целиком</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px 16px">
+        <sc-for list="{{ related }}" as="item" hint-placeholder-count="4">
+          <div class="pv-prod" onClick="{{ item.open }}" style="cursor:pointer">
+            <div style="position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;background:#e7e0d2">
+              <div class="pv-prod-img" style="position:absolute;inset:0;transition:transform .6s ease;background:{{ item.bg }}"></div>
+              <span class="pv-up" style="position:absolute;left:10px;top:10px;font-size:8px;background:rgba(244,241,234,.92);padding:4px 7px;border-radius:100px">✓ Оригинал</span>
+            </div>
+            <div style="padding:13px 2px 0">
+              <div class="pv-up" style="font-size:11px;margin-bottom:4px">{{ item.brand }}</div>
+              <div style="font-size:13px;color:#5a5246;margin-bottom:7px">{{ item.name }}</div>
+              <div style="font-family:'Bodoni Moda',serif;font-size:15px">{{ item.priceFmt }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ QR SCANNER MODAL ============ -->
+  <sc-if value="{{ scannerOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:90;background:rgba(20,18,16,.62);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ closeScanner }}">
+    <div style="background:#f4f1ea;border-radius:10px;width:400px;max-width:100%;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)" onClick="{{ stop }}">
+      <div style="background:#1a1815;color:#f4f1ea;padding:18px 22px;display:flex;justify-content:space-between;align-items:center">
+        <span class="pv-up" style="font-size:10.5px;letter-spacing:.16em">Проверка подлинности</span>
+        <span onClick="{{ closeScanner }}" style="cursor:pointer;opacity:.6;font-size:18px">✕</span>
+      </div>
+      <div style="padding:30px 26px 28px;text-align:center">
+        <sc-if value="{{ scanning }}" hint-placeholder-val="{{ true }}">
+          <div style="position:relative;width:190px;height:190px;margin:0 auto 22px;border-radius:8px;background:linear-gradient(135deg,#2b2620,#4a4036);overflow:hidden;border:1px solid rgba(199,178,153,.4)">
+            <div style="position:absolute;inset:18px;border:1px solid rgba(199,178,153,.4);border-radius:4px;background-image:repeating-linear-gradient(45deg,rgba(199,178,153,.12) 0 6px,transparent 6px 12px)"></div>
+            <div style="position:absolute;left:8%;right:8%;height:2px;background:#c7b299;box-shadow:0 0 14px 2px #c7b299;animation:pvscan 1.1s ease-in-out infinite alternate"></div>
+            <span class="pv-up" style="position:absolute;left:0;right:0;bottom:14px;font-size:8.5px;color:rgba(199,178,153,.8)">NFC + QR · считывание метки</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:9px;font-size:13px;color:#5a5246">
+            <span style="width:14px;height:14px;border:2px solid #c7b299;border-top-color:transparent;border-radius:50%;display:inline-block;animation:pvspin .8s linear infinite"></span>
+            Сверяем цифровой паспорт с реестром бренда…
+          </div>
+        </sc-if>
+        <sc-if value="{{ verified }}" hint-placeholder-val="{{ false }}">
+          <div style="width:74px;height:74px;border-radius:50%;background:#1a1815;color:#c7b299;display:flex;align-items:center;justify-content:center;font-size:34px;margin:6px auto 18px">✓</div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-weight:500;font-size:24px;margin:0 0 6px">Подлинность подтверждена</h3>
+          <p style="font-size:12.5px;color:#8a7355;margin:0 0 20px">Цифровой паспорт совпал с реестром бренда</p>
+          <div style="text-align:left;background:#efeae0;border-radius:6px;padding:16px;font-size:12px;line-height:2;color:#5a5246">
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Бренд</span><span>{{ p.brand }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Модель</span><span>{{ p.name }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">ID паспорта</span><span>{{ p.passId }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Верифицировано</span><span>{{ p.passDate }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#8a7355">Статус</span><span style="color:#5a7355">● Оригинал</span></div>
+          </div>
+          <span onClick="{{ closeScanner }}" class="pv-up" style="display:block;margin-top:18px;font-size:10.5px;background:#1a1815;color:#f4f1ea;padding:14px;border-radius:100px;cursor:pointer">Готово</span>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- toast -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:95;background:#1a1815;color:#f4f1ea;padding:14px 26px;border-radius:100px;font-size:12.5px;box-shadow:0 12px 40px rgba(0,0,0,.3)">{{ toast }}</div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen:'home', productId:'p1', size:'M', bag:0, scanner:null, a:false, b:false, c:false, toast:null, hero:0 };
+
+  componentDidMount(){ this._hv = setInterval(()=>{ if(this.state.screen==='home') this.setState(s=>({hero:(s.hero+1)%3})); }, 5500); }
+  componentWillUnmount(){ clearInterval(this._hv); }
+  heroGo=(i)=> this.setState({hero:i});
+  heroNext=()=> this.setState(s=>({hero:(s.hero+1)%3}));
+  heroPrev=()=> this.setState(s=>({hero:(s.hero+2)%3}));
+
+  catalog() {
+    return [
+      { id:'p1', brand:'Lemaire', name:'Croissant Bag Small', price:189000, cat:'Сумки', color:'Dark Chocolate',
+        bg:'linear-gradient(150deg,#5a4a38 0%,#8a7355 60%,#c7b299 130%)', shot:'[ bag — 3/4 studio ]',
+        composition:'100% телячья кожа наппа, подкладка из хлопкового твила. Беречь от влаги, хранить в чехле.',
+        about:'Lemaire — парижский дом, основанный Кристофом Лемером. Сдержанный силуэт, природная палитра, вещи «на годы».' },
+      { id:'p2', brand:'The Row', name:'Кашемировый джемпер', price:132000, cat:'Одежда', color:'Camel',
+        bg:'linear-gradient(150deg,#9a8f7c 0%,#b8a88f 60%,#d8cfc0 130%)', shot:'[ knit — flat-lay ]',
+        composition:'100% монгольский кашемир. Ручная стирка, сушка горизонтально.',
+        about:'The Row — дом Мэри-Кейт и Эшли Олсен. Эталон тихой роскоши и безупречного кроя.' },
+      { id:'p3', brand:'Toteme', name:'Пальто Signature oversize', price:98500, cat:'Одежда', color:'Greige',
+        bg:'linear-gradient(150deg,#8d8c80 0%,#a7a597 60%,#cfd0c8 130%)', shot:'[ coat — full length ]',
+        composition:'82% шерсть, 18% кашемир. Сухая чистка.',
+        about:'Toteme — стокгольмский бренд Элин Клинг. Скандинавский минимализм и архитектурные силуэты.' },
+      { id:'p4', brand:'Jil Sander', name:'Кожаные лоферы', price:76000, cat:'Обувь', color:'Black',
+        bg:'linear-gradient(150deg,#2f2c28 0%,#4a463f 60%,#6f6a60 130%)', shot:'[ shoe — pair on plinth ]',
+        composition:'Верх и подкладка — телячья кожа, подошва кожаная. Италия.',
+        about:'Jil Sander — пуризм формы и материала, минимализм как философия.' },
+      { id:'p5', brand:'Khaite', name:'Джинсы прямые высокие', price:54000, cat:'Одежда', color:'Vintage Blue',
+        bg:'linear-gradient(150deg,#3e4a59 0%,#5d6b7c 60%,#9aa6b4 130%)', shot:'[ denim — flat-lay ]',
+        composition:'100% хлопок, японский деним. Машинная стирка 30°.',
+        about:'Khaite — нью-йоркский бренд Кэтрин Холстейн, современная женственность с характером.' },
+      { id:'p6', brand:'Loro Piana', name:'Шарф из кашемира', price:67000, cat:'Аксессуары', color:'Ivory',
+        bg:'linear-gradient(150deg,#b9b3a4 0%,#d2cdbf 60%,#ece7da 130%)', shot:'[ scarf — draped ]',
+        composition:'100% baby cashmere. Сухая чистка.',
+        about:'Loro Piana — итальянская легенда сырья: лучший кашемир и викунья в мире.' },
+      { id:'p7', brand:'Lemaire', name:'Шёлковая рубашка', price:61000, cat:'Одежда', color:'Sand',
+        bg:'linear-gradient(150deg,#b3a589 0%,#c9bda3 60%,#e4dcc8 130%)', shot:'[ shirt — on form ]',
+        composition:'100% шёлк. Деликатная стирка.',
+        about:'Lemaire — парижская сдержанность, мягкая палитра и безупречная посадка.' },
+      { id:'p8', brand:'Brunello Cucinelli', name:'Трикотаж тонкой вязки', price:145000, cat:'Одежда', color:'Stone',
+        bg:'linear-gradient(150deg,#9f978a 0%,#b8b0a2 60%,#d8d2c6 130%)', shot:'[ knit — detail ]',
+        composition:'100% кашемир. Ручная стирка.',
+        about:'Brunello Cucinelli — «гуманистический капитализм» и итальянская роскошь ручной работы.' },
+    ];
+  }
+
+  fmt(n){ return n.toLocaleString('ru-RU').replace(/,/g,' ') + ' ₽'; }
+
+  go(screen, id){ if(id) this.setState({screen, productId:id, a:false,b:false,c:false}); else this.setState({screen, a:false,b:false,c:false}); try{window.scrollTo(0,0)}catch(e){} }
+
+  openScanner = () => {
+    this.setState({ scanner:'scan' });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=> this.setState({ scanner:'done' }), 2300);
+  };
+  closeScanner = () => this.setState({ scanner:null });
+
+  addToBag = () => {
+    this.setState(s=>({ bag:s.bag+1, toast:'Добавлено в сумку · '+this.size()+' · оригинал подтверждён' }));
+    clearTimeout(this._tt);
+    this._tt = setTimeout(()=> this.setState({toast:null}), 2600);
+  };
+
+  size(){ return this.state.size; }
+
+  renderVals(){
+    const cat = this.catalog();
+    const mk = (p)=> ({ ...p, priceFmt:this.fmt(p.price), open:()=>this.go('pdp', p.id) });
+    const products = cat.map(mk);
+    const cur = cat.find(p=>p.id===this.state.productId) || cat[0];
+    const p = mk(cur);
+    const thumbVars = ['','brightness(1.12)','brightness(.82)','saturate(1.3) brightness(.95)'];
+    p.thumbs = thumbVars.map(f=> ({ bg: cur.bg + (f? ';filter:'+f : '') }));
+    p.passId = 'WB-DPP-2026-'+ (1000 + cat.indexOf(cur)*137);
+    p.passDate = '12.06.2026';
+    p.heroBg = cur.bg;
+    const related = cat.filter(x=>x.id!==cur.id).slice(0,4).map(mk);
+
+    const sizeList = ['XS','S','M','L'].map(label=>{
+      const on = label===this.state.size;
+      return { label, pick:()=>this.setState({size:label}),
+        bd: on? '#1a1815':'rgba(26,24,21,.2)', bg: on? '#1a1815':'transparent', fg: on? '#f4f1ea':'#1a1815' };
+    });
+
+    const brands = ['Lemaire','The Row','Toteme','Khaite','Jil Sander','Loro Piana'].map(name=>({name}));
+
+    const heroSlides = [
+      { overline:'The Pavilion · Осень 2026', title:'Тихая роскошь, проверенная до нитки', cta:'Смотреть отбор', shot:'[ campaign — full-bleed editorial ]', bg:'linear-gradient(135deg,#2b2620 0%,#4a4036 45%,#8a7355 120%)' },
+      { overline:'Новое имя · The Row', title:'Эталон кроя. Теперь в Павильоне', cta:'Открыть бутик', shot:'[ campaign — brand shoot ]', bg:'linear-gradient(135deg,#20242a 0%,#3d4650 45%,#8a94a0 120%)' },
+      { overline:'The Bag Edit · Осень', title:'Сумки, которые останутся с вами', cta:'Смотреть сумки', shot:'[ campaign — accessory still ]', bg:'linear-gradient(135deg,#2c2018 0%,#5a4432 45%,#b58f68 120%)' },
+    ];
+    const heroShift = (-this.state.hero*100)+'%';
+    const heroDots = [0,1,2].map(i=>({ go:()=>this.heroGo(i), w:i===this.state.hero?'26px':'6px', bg:i===this.state.hero?'#f4f1ea':'rgba(244,241,234,.45)' }));
+
+    const boutiques = [
+      { name:'Loro Piana', tag:'Кашемир · викунья', bg:'linear-gradient(135deg,#d2cdbf,#b9b3a4)' },
+      { name:'Lemaire', tag:'Париж · сдержанность', bg:'linear-gradient(135deg,#cdc4b2,#b3a589)' },
+      { name:'Jil Sander', tag:'Пуризм формы', bg:'linear-gradient(135deg,#c3c4bc,#a7a89c)' },
+    ];
+
+    return {
+      isHome:this.state.screen==='home', isListing:this.state.screen==='listing', isPdp:this.state.screen==='pdp',
+      goHome:()=>this.go('home'), openListing:()=>this.go('listing'),
+      products, brands, boutiques, p, related, sizes:sizeList,
+      heroSlides, heroShift, heroDots, heroNext:this.heroNext, heroPrev:this.heroPrev,
+      bag:this.state.bag,
+      openScanner:this.openScanner, closeScanner:this.closeScanner, stop:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
+      scannerOpen: !!this.state.scanner, scanning:this.state.scanner==='scan', verified:this.state.scanner==='done',
+      addToBag:this.addToBag, toast:this.state.toast,
+      toggleA:()=>this.setState(s=>({a:!s.a})), toggleB:()=>this.setState(s=>({b:!s.b})), toggleC:()=>this.setState(s=>({c:!s.c})),
+      aOpen:this.state.a, bOpen:this.state.b, cOpen:this.state.c,
+      aSign:this.state.a?'−':'+', bSign:this.state.b?'−':'+', cSign:this.state.c?'−':'+',
+    };
+  }
+}
+</script>
+</body>
+</html>

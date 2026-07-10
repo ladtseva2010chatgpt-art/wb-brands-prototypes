@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#e9e6dd">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#e9e6dd"/>
+    <text x="600" y="400" font-family="Georgia,serif" font-size="120" fill="#15140f" text-anchor="middle" dominant-baseline="middle">B</text>
+    <text x="600" y="520" font-family="Arial,sans-serif" font-size="26" fill="#7c5cff" text-anchor="middle" letter-spacing="6">КОНЦЕПТ STORE</text>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:#e9e6dd;font-family:'Space Grotesk',sans-serif;color:#15140f;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff)}
+  a{text-decoration:none;color:inherit}
+  .cn-up{text-transform:uppercase;letter-spacing:.04em}
+  .cn-anton{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.005em;text-transform:uppercase}
+  .cn-serif{font-family:'Newsreader',serif}
+  @keyframes cnfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes cnscan{0%{top:6%}100%{top:90%}}
+  @keyframes cnspin{to{transform:rotate(360deg)}}
+  .cn-screen{animation:cnfade .5s ease both}
+  .cn-card:hover .cn-img{transform:scale(1.04)}
+  .cn-card:hover .cn-plus{background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff)}
+</style>
+</helmet>
+<div style="min-height:100vh;--acc: {{ accent }};--ai: {{ accentInk }}">
+
+  <div style="background:#15140f;color:#e9e6dd;font-size:11px;display:flex;justify-content:space-between;padding:7px 24px">
+    <span class="cn-up" style="color:var(--acc,#7c5cff)">● DROP 015 — LOCAL FUTURES · уже в продаже</span>
+    <span class="cn-up" style="opacity:.55">Оригинал подтверждён · Доставка по РФ · WB Club: ранний доступ</span>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:40;background:#e9e6dd;border-bottom:1.5px solid #15140f">
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 24px">
+      <div style="display:flex;align-items:center;gap:18px">
+        <a href="Hub.dc.html" class="cn-up" style="font-size:10px;border:1px solid #15140f;padding:6px 10px">← Хаб</a>
+        <span onClick="{{ openCatalog }}" class="cn-up" style="font-size:12px;cursor:pointer;font-weight:700;border-bottom:2px solid var(--acc,#7c5cff);padding-bottom:2px">Каталог</span>
+        <span onClick="{{ openListing }}" class="cn-up" style="font-size:12px;cursor:pointer">New In</span>
+        <span onClick="{{ openCatalog }}" class="cn-up" style="font-size:12px;cursor:pointer">Designers</span>
+        <span onClick="{{ goDrop }}" class="cn-up" style="font-size:12px;cursor:pointer;color:#15140f">Drops</span>
+        <span onClick="{{ goJournal }}" class="cn-up" style="font-size:12px;cursor:pointer">Stories</span>
+      </div>
+      <div onClick="{{ goHome }}" style="cursor:pointer;text-align:center;line-height:1.05">
+        <div class="cn-anton" style="font-size:29px;letter-spacing:.03em">WB БРЕНДЫ</div>
+        <div class="cn-up" style="font-size:8px;letter-spacing:.34em;margin-top:6px">Концепт Store</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:18px;font-size:12px">
+        <span class="cn-up" style="cursor:pointer">Поиск</span>
+        <span onClick="{{ openScanner }}" class="cn-up" style="font-size:10px;cursor:pointer;background:#15140f;color:var(--acc,#7c5cff);padding:7px 11px">Проверить ✓</span>
+        <span class="cn-up" style="cursor:pointer">Корзина · {{ bag }}</span>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main class="cn-screen">
+
+    <!-- hero drop -->
+    <section style="position:relative;border-bottom:1.5px solid #15140f;background:#15140f;color:#e9e6dd;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1.15fr 1fr;min-height:600px">
+        <div style="padding:46px 44px;display:flex;flex-direction:column;justify-content:space-between">
+          <div class="cn-up" style="font-size:11px;display:flex;justify-content:space-between"><span style="color:var(--acc,#7c5cff)">Сейчас в фокусе</span><span style="opacity:.5">{{ heroBadge }}</span></div>
+          <div style="overflow:hidden">
+            <div style="display:flex;transition:transform .6s cubic-bezier(.65,0,.35,1);transform:translateX({{ heroShift }})">
+              <sc-for list="{{ heroSlides }}" as="h" hint-placeholder-count="3">
+                <div style="flex:0 0 100%">
+                  <div class="cn-serif" style="font-style:italic;font-size:22px;color:var(--acc,#7c5cff);margin-bottom:8px">{{ h.label }}</div>
+                  <h1 class="cn-anton" style="font-size:104px;line-height:.98;margin:0">{{ h.line1 }}<br>{{ h.line2 }}</h1>
+                  <p style="font-size:14.5px;line-height:1.6;max-width:440px;color:rgba(233,230,221,.72);margin:22px 0 26px">{{ h.text }}</p>
+                  <div style="display:flex;gap:12px;align-items:center">
+                    <span onClick="{{ h.action }}" class="cn-up" style="font-size:11px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:14px 26px;cursor:pointer">{{ h.cta }} →</span>
+                    <span onClick="{{ goJournal }}" class="cn-up" style="font-size:11px;border:1px solid rgba(233,230,221,.4);padding:14px 22px;cursor:pointer">Манифест дропа</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:26px">
+              <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="3">
+                <span onClick="{{ d.go }}" style="width:{{ d.w }};height:5px;background:{{ d.bg }};cursor:pointer;transition:all .3s"></span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative;background:linear-gradient(160deg,#221c2b 0%,#3c3348 50%,var(--acc,#7c5cff) 150%)">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 60px,rgba(0,0,0,.08) 60px 61px)"></div>
+          <div style="position:absolute;left:24px;top:24px;display:flex;gap:8px">
+            <span class="cn-up" style="font-size:9px;background:#15140f;color:var(--acc,#7c5cff);padding:6px 10px">Limited · 200 шт</span>
+          </div>
+          <span class="cn-up" style="position:absolute;right:18px;bottom:16px;font-size:8.5px;color:rgba(21,20,15,.55)">[ campaign — group editorial, on-location ]</span>
+        </div>
+      </div>
+      <!-- countdown bar -->
+      <div style="border-top:1.5px solid rgba(233,230,221,.18);display:grid;grid-template-columns:1fr auto;align-items:center;padding:14px 44px">
+        <span class="cn-up" style="font-size:11px;opacity:.6">Следующий дроп — DROP 016 · KM-адаптив</span>
+        <div style="display:flex;gap:18px;align-items:center">
+          <span class="cn-up" style="font-size:10px;opacity:.5">Старт через</span>
+          <div style="display:flex;gap:8px;font-family:'Anton';font-size:24px">
+            <span>{{ cd.d }}<span style="font-size:10px;opacity:.5">д</span></span>
+            <span>{{ cd.h }}<span style="font-size:10px;opacity:.5">ч</span></span>
+            <span>{{ cd.m }}<span style="font-size:10px;opacity:.5">м</span></span>
+            <span style="color:var(--acc,#7c5cff)">{{ cd.s }}<span style="font-size:10px;opacity:.5">с</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- local designers strip -->
+    <section style="border-bottom:1.5px solid #15140f;padding:28px 24px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
+        <h2 class="cn-anton" style="font-size:26px;margin:0">Локальные имена</h2>
+        <span onClick="{{ openListing }}" class="cn-up" style="font-size:10.5px;cursor:pointer;border-bottom:1.5px solid var(--acc,#7c5cff)">Все дизайнеры A–Z →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+        <sc-for list="{{ designers }}" as="d" hint-placeholder-count="5">
+          <div onClick="{{ openListing }}" style="cursor:pointer;border:1.5px solid #15140f;padding:16px;display:flex;flex-direction:column;justify-content:space-between;min-height:140px;background:#e9e6dd;transition:background .25s" style-hover="background:#15140f;color:#e9e6dd">
+            <span class="cn-up" style="font-size:9px;opacity:.6">{{ d.city }}</span>
+            <div>
+              <div class="cn-anton" style="font-size:20px;line-height:.95">{{ d.name }}</div>
+              <div style="font-size:11px;margin-top:5px" class="cn-serif">{{ d.note }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- editorial stories -->
+    <section style="border-bottom:1.5px solid #15140f">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr)">
+        <sc-for list="{{ stories }}" as="s" hint-placeholder-count="3">
+          <div onClick="{{ goJournal }}" style="cursor:pointer;border-right:1.5px solid #15140f;padding:0 0 24px">
+            <div style="height:300px;background:{{ s.bg }};position:relative">
+              <span class="cn-up" style="position:absolute;left:14px;top:14px;font-size:9px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:5px 9px">{{ s.tag }}</span>
+            </div>
+            <div style="padding:20px 22px 0">
+              <h3 class="cn-serif" style="font-size:24px;line-height:1.12;margin:0 0 10px;font-weight:500">{{ s.title }}</h3>
+              <p style="font-size:12.5px;line-height:1.55;color:rgba(21,20,15,.6);margin:0">{{ s.excerpt }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- categories -->
+    <section style="padding:34px 24px;border-bottom:1.5px solid #15140f">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
+        <div>
+          <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:6px">Магазин по категориям</div>
+          <h2 class="cn-anton" style="font-size:30px;margin:0">Категории</h2>
+        </div>
+        <span onClick="{{ openCatalog }}" class="cn-up" style="font-size:10.5px;cursor:pointer;border-bottom:1.5px solid var(--acc,#7c5cff)">Открыть каталог →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1.5px;background:#15140f;border:1.5px solid #15140f">
+        <sc-for list="{{ catTiles }}" as="c" hint-placeholder-count="6">
+          <div onClick="{{ c.open }}" class="cn-card" style="cursor:pointer;position:relative;aspect-ratio:3/4;overflow:hidden;background:#d8d5cb">
+            <div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ c.bg }}"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(21,20,15,.72),transparent 55%)"></div>
+            <div style="position:absolute;left:12px;right:12px;bottom:12px;color:#e9e6dd">
+              <div class="cn-up" style="font-size:12px;font-weight:700">{{ c.label }}</div>
+              <div class="cn-up" style="font-size:9px;opacity:.7;margin-top:3px">{{ c.count }} вещей →</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- new in grid -->
+    <section style="padding:34px 24px;border-bottom:1.5px solid #15140f">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px">
+        <h2 class="cn-anton" style="font-size:30px;margin:0">New In — отбор недели</h2>
+        <span onClick="{{ openCatalog }}" class="cn-up" style="font-size:10.5px;cursor:pointer;border-bottom:1.5px solid var(--acc,#7c5cff)">Весь каталог →</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:#15140f;border:1.5px solid #15140f">
+        <sc-for list="{{ products }}" as="item" hint-placeholder-count="8">
+          <div class="cn-card" onClick="{{ item.open }}" style="cursor:pointer;background:#e9e6dd;padding:0 0 14px">
+            <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#d8d5cb">
+              <div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ item.bg }}"></div>
+              <span class="cn-up" style="position:absolute;left:10px;top:10px;font-size:8px;background:#e9e6dd;padding:4px 7px">✓ Оригинал</span>
+              <span class="cn-plus cn-up" style="position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;background:#15140f;color:#e9e6dd;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .25s">+</span>
+            </div>
+            <div style="padding:12px 12px 0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <span class="cn-up" style="font-size:11px;font-weight:600">{{ item.brand }}</span>
+                <span class="cn-up" style="font-size:8px;color:#7a7a6a">{{ item.city }}</span>
+              </div>
+              <div style="font-size:12.5px;color:#5a5a4d;margin:4px 0 7px" class="cn-serif">{{ item.name }}</div>
+              <div class="cn-up" style="font-size:13px;font-weight:600">{{ item.priceFmt }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- community / wibes -->
+    <section style="background:#15140f;color:#e9e6dd;padding:46px 44px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center">
+      <div>
+        <div class="cn-up" style="font-size:10px;color:var(--acc,#7c5cff);margin-bottom:12px">Комьюнити × Wibes</div>
+        <h2 class="cn-anton" style="font-size:40px;line-height:.95;margin:0 0 12px">Культура, а не каталог</h2>
+        <p style="font-size:14px;line-height:1.6;color:rgba(233,230,221,.7);margin:0;max-width:560px">Дропы, интервью с дизайнерами, стримы примерок и UGC-съёмки в Wibes. Повод заходить — не скидка, а то, что здесь происходит.</p>
+      </div>
+      <span onClick="{{ goJournal }}" class="cn-up" style="font-size:11px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:15px 28px;cursor:pointer;white-space:nowrap">В Stories →</span>
+    </section>
+
+    <footer style="padding:34px 24px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div class="cn-anton" style="font-size:64px;line-height:.8">КОНЦЕПТ<span style="color:var(--acc,#7c5cff)">.</span></div>
+      <div class="cn-up" style="font-size:10px;text-align:right;line-height:2;color:#5a5a4d">WB Бренды · Concept Store<br>Каталог · Drops · Designers · Stories<br>Оригинал подтверждён · DPP</div>
+    </footer>
+  </main>
+  </sc-if>
+
+  <!-- ============ LISTING ============ -->
+  <sc-if value="{{ isListing }}" hint-placeholder-val="{{ false }}">
+  <main class="cn-screen">
+    <div style="border-bottom:1.5px solid #15140f;padding:30px 24px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:8px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> / New In</div>
+        <h1 class="cn-anton" style="font-size:54px;margin:0">New In</h1>
+      </div>
+      <div class="cn-up" style="font-size:11px;display:flex;gap:10px">
+        <span style="border:1.5px solid #15140f;padding:9px 14px;cursor:pointer">Designers ▾</span>
+        <span style="border:1.5px solid #15140f;padding:9px 14px;cursor:pointer">Категория ▾</span>
+        <span style="background:#15140f;color:var(--acc,#7c5cff);padding:9px 14px;cursor:pointer">Сортировка ▾</span>
+      </div>
+    </div>
+    <section style="padding:24px;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:#15140f;border:1.5px solid #15140f">
+        <sc-for list="{{ products }}" as="item" hint-placeholder-count="8">
+          <div class="cn-card" onClick="{{ item.open }}" style="cursor:pointer;background:#e9e6dd;padding:0 0 14px">
+            <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#d8d5cb">
+              <div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ item.bg }}"></div>
+              <span class="cn-up" style="position:absolute;left:10px;top:10px;font-size:8px;background:#e9e6dd;padding:4px 7px">✓ Оригинал</span>
+              <span class="cn-plus cn-up" style="position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;background:#15140f;color:#e9e6dd;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .25s">+</span>
+            </div>
+            <div style="padding:12px 12px 0">
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <span class="cn-up" style="font-size:11px;font-weight:600">{{ item.brand }}</span>
+                <span class="cn-up" style="font-size:8px;color:#7a7a6a">{{ item.city }}</span>
+              </div>
+              <div style="font-size:12.5px;color:#5a5a4d;margin:4px 0 7px" class="cn-serif">{{ item.name }}</div>
+              <div class="cn-up" style="font-size:13px;font-weight:600">{{ item.priceFmt }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ CATALOG ============ -->
+  <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+  <main class="cn-screen">
+    <div style="border-bottom:1.5px solid #15140f;padding:26px 24px 0">
+      <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:10px"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> / Каталог / {{ catActive }}</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:18px">
+        <div style="display:flex;align-items:baseline;gap:16px">
+          <h1 class="cn-anton" style="font-size:54px;margin:0">Каталог</h1>
+          <span class="cn-up" style="font-size:11px;color:#5a5a4d">{{ catCount }} вещей · оригинал ✓ DPP</span>
+        </div>
+        <span onClick="{{ cycleSort }}" class="cn-up" style="font-size:11px;background:#15140f;color:var(--acc,#7c5cff);padding:10px 15px;cursor:pointer">Сортировка · {{ sortLabel }} ⇅</span>
+      </div>
+      <!-- category chips -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;padding-bottom:18px">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="8">
+          <span onClick="{{ c.pick }}" class="cn-up" style="font-size:11px;cursor:pointer;padding:9px 14px;border:1.5px solid {{ c.bd }};background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }} · {{ c.count }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:210px 1fr">
+      <!-- sidebar -->
+      <aside style="border-right:1.5px solid #15140f;padding:26px 20px;min-height:600px">
+        <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:12px">Категория</div>
+        <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:26px">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="8">
+            <span onClick="{{ c.pick }}" style="cursor:pointer;display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;color:{{ c.fg }}" class="cn-serif"><span>{{ c.label }}</span><span class="cn-up" style="font-size:9px;color:#7a7a6a">{{ c.count }}</span></span>
+          </sc-for>
+        </div>
+        <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:12px">Дизайнеры</div>
+        <div class="cn-serif" style="font-size:12.5px;line-height:2;color:#5a5a4d;margin-bottom:26px">Ushatava · Lesyanebo · Our Legacy · Acne Studios · Kapital · Toptygin · Stüssy · Carhartt WIP</div>
+        <div class="cn-up" style="font-size:10px;color:#5a5a4d;margin-bottom:12px">Цена</div>
+        <div class="cn-serif" style="font-size:12.5px;line-height:2;color:#5a5a4d;margin-bottom:26px">до 15 000 ₽<br>15 000 – 30 000 ₽<br>от 30 000 ₽</div>
+        <div style="border:1.5px solid #15140f;padding:14px">
+          <div class="cn-up" style="font-size:10px;margin-bottom:6px">✓ Гарантия оригинала</div>
+          <div style="font-size:11.5px;line-height:1.5;color:#5a5a4d" class="cn-serif">Цифровой паспорт (DPP) и проверка QR / NFC у каждой вещи.</div>
+        </div>
+      </aside>
+      <!-- grid -->
+      <section style="padding:24px">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:#15140f;border:1.5px solid #15140f">
+          <sc-for list="{{ catProducts }}" as="item" hint-placeholder-count="9">
+            <div class="cn-card" onClick="{{ item.open }}" style="cursor:pointer;background:#e9e6dd;padding:0 0 14px">
+              <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#d8d5cb">
+                <div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ item.bg }}"></div>
+                <span class="cn-up" style="position:absolute;left:10px;top:10px;font-size:8px;background:#e9e6dd;padding:4px 7px">✓ Оригинал</span>
+                <span class="cn-up" style="position:absolute;right:10px;top:10px;font-size:8px;background:#15140f;color:var(--acc,#7c5cff);padding:4px 7px">{{ item.cat }}</span>
+                <span class="cn-plus cn-up" style="position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;background:#15140f;color:#e9e6dd;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .25s">+</span>
+              </div>
+              <div style="padding:12px 12px 0">
+                <div style="display:flex;justify-content:space-between;align-items:baseline">
+                  <span class="cn-up" style="font-size:11px;font-weight:600">{{ item.brand }}</span>
+                  <span class="cn-up" style="font-size:8px;color:#7a7a6a">{{ item.city }}</span>
+                </div>
+                <div style="font-size:12.5px;color:#5a5a4d;margin:4px 0 7px" class="cn-serif">{{ item.name }}</div>
+                <div class="cn-up" style="font-size:13px;font-weight:600">{{ item.priceFmt }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ DROP / LOOKBOOK ============ -->
+  <sc-if value="{{ isDrop }}" hint-placeholder-val="{{ false }}">
+  <main class="cn-screen">
+    <section style="background:#15140f;color:#e9e6dd;padding:40px 44px 50px;border-bottom:1.5px solid #15140f">
+      <div class="cn-up" style="font-size:11px;display:flex;justify-content:space-between;margin-bottom:50px"><span onClick="{{ goHome }}" style="cursor:pointer;opacity:.6">← Главная</span><span style="color:var(--acc,#7c5cff)">DROP 015 · Live</span></div>
+      <div class="cn-serif" style="font-style:italic;font-size:26px;color:var(--acc,#7c5cff);margin-bottom:6px">локальное будущее</div>
+      <h1 class="cn-anton" style="font-size:130px;line-height:.92;letter-spacing:.01em;margin:0 0 24px">LOCAL FUTURES</h1>
+      <p class="cn-serif" style="font-size:19px;line-height:1.5;max-width:680px;color:rgba(233,230,221,.82);margin:0">Манифест: мода как культурный код, а не ярлык. Семь имён из Москвы, Петербурга, Казани и Тбилиси — ограниченные тиражи по 200 единиц. Каждая вещь — с цифровым паспортом и проверкой в приложении.</p>
+      <div style="display:flex;gap:30px;margin-top:34px;border-top:1px solid rgba(233,230,221,.18);padding-top:22px">
+        <div><div class="cn-anton" style="font-size:34px;color:var(--acc,#7c5cff)">07</div><div class="cn-up" style="font-size:10px;opacity:.6">дизайнеров</div></div>
+        <div><div class="cn-anton" style="font-size:34px;color:var(--acc,#7c5cff)">200</div><div class="cn-up" style="font-size:10px;opacity:.6">тираж каждой вещи</div></div>
+        <div><div class="cn-anton" style="font-size:34px;color:var(--acc,#7c5cff)">DPP</div><div class="cn-up" style="font-size:10px;opacity:.6">паспорт у каждой</div></div>
+      </div>
+    </section>
+
+    <!-- lookbook: alternating editorial + shop-the-look -->
+    <sc-for list="{{ lookbook }}" as="l" hint-placeholder-count="5">
+      <section style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #15140f;min-height:520px">
+        <div style="position:relative;background:{{ l.bg }}">
+          <span class="cn-up" style="position:absolute;left:18px;top:18px;font-size:9px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:6px 10px">Look 0{{ l.idx }}</span>
+          <span class="cn-up" style="position:absolute;right:16px;bottom:14px;font-size:8.5px;color:rgba(255,255,255,.5)">{{ l.shot }}</span>
+        </div>
+        <div style="padding:48px 44px;display:flex;flex-direction:column;justify-content:center">
+          <div class="cn-up" style="font-size:11px;color:#7a7a6a;margin-bottom:10px">Shop the look</div>
+          <div class="cn-anton" style="font-size:48px;line-height:.9;margin-bottom:8px">{{ l.brand }}</div>
+          <div class="cn-serif" style="font-size:20px;margin-bottom:24px">{{ l.name }}</div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="cn-up" style="font-size:16px;font-weight:600">{{ l.priceFmt }}</span>
+            <span onClick="{{ l.open }}" class="cn-up" style="font-size:11px;background:#15140f;color:var(--acc,#7c5cff);padding:13px 24px;cursor:pointer">В карточку →</span>
+          </div>
+        </div>
+      </section>
+    </sc-for>
+  </main>
+  </sc-if>
+
+  <!-- ============ JOURNAL ============ -->
+  <sc-if value="{{ isJournal }}" hint-placeholder-val="{{ false }}">
+  <main class="cn-screen" style="max-width:920px;margin:0 auto;padding:0 24px 80px">
+    <div class="cn-up" style="font-size:10px;color:#5a5a4d;padding:26px 0 0"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> / Stories / Манифест</div>
+    <div style="text-align:center;padding:46px 0 32px;border-bottom:1.5px solid #15140f">
+      <div class="cn-up" style="font-size:11px;color:var(--ai,#f6f2ff);background:var(--acc,#7c5cff);display:inline-block;padding:6px 12px;margin-bottom:24px">Манифест дропа 015</div>
+      <h1 class="cn-serif" style="font-size:58px;line-height:1.04;font-weight:500;margin:0 auto 20px;max-width:720px">Почему локальное —<br>это новый люкс</h1>
+      <div class="cn-up" style="font-size:11px;color:#5a5a4d">Текст: редакция Концепт · 30.06.2026 · 6 мин</div>
+    </div>
+    <div style="height:440px;background:linear-gradient(150deg,#221c2b,#4a4058 70%,var(--acc,#7c5cff) 140%);margin:0 0 40px;position:relative">
+      <span class="cn-up" style="position:absolute;right:16px;bottom:14px;font-size:8.5px;color:rgba(233,230,221,.55)">[ editorial — campaign still ]</span>
+    </div>
+    <div style="font-family:'Newsreader',serif;font-size:19px;line-height:1.7;color:#23221a">
+      <p style="margin:0 0 24px"><span style="font-family:'Anton';font-size:62px;float:left;line-height:.8;margin:6px 14px 0 0">Л</span>юкс перестал быть про логотип. В 2026-м статус — это насмотренность и причастность к коду, который не купить в общем поиске. Дроп 015 собирает семь имён, формирующих этот код в России и за её пределами.</p>
+      <p style="margin:0 0 24px">Мы не гонимся за охватом. Каждая вещь выходит тиражом 200 единиц, с цифровым паспортом продукта (DPP) — QR и NFC-метка, которую покупатель сверяет с реестром бренда прямо в приложении. Подделка становится бессмысленной.</p>
+      <blockquote class="cn-anton" style="font-size:36px;line-height:1.05;margin:38px 0;padding:0 0 0 24px;border-left:4px solid var(--acc,#7c5cff);text-transform:uppercase">«Доверие — это не плашка. Это инфраструктура.»</blockquote>
+      <p style="margin:0 0 24px">Ushatava переосмысляет крой как высказывание. Lesyanebo работает с шёлком и недосказанностью. Toptygin возвращает деним-силуэты 90-х. Вместе они — не подборка товаров, а культурный жест.</p>
+    </div>
+    <div style="border-top:1.5px solid #15140f;margin-top:40px;padding-top:28px">
+      <div class="cn-up" style="font-size:11px;margin-bottom:18px">Из этого материала</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <sc-for list="{{ related }}" as="item" hint-placeholder-count="4">
+          <div class="cn-card" onClick="{{ item.open }}" style="cursor:pointer">
+            <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#d8d5cb"><div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ item.bg }}"></div></div>
+            <div style="padding:9px 0 0"><div class="cn-up" style="font-size:10px;font-weight:600">{{ item.brand }}</div><div class="cn-up" style="font-size:11px;margin-top:3px">{{ item.priceFmt }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ PDP ============ -->
+  <sc-if value="{{ isPdp }}" hint-placeholder-val="{{ false }}">
+  <main class="cn-screen">
+    <div class="cn-up" style="font-size:10px;color:#5a5a4d;padding:22px 24px 0"><span onClick="{{ goHome }}" style="cursor:pointer">Главная</span> / <span onClick="{{ openListing }}" style="cursor:pointer">New In</span> / {{ p.brand }}</div>
+    <div style="display:grid;grid-template-columns:1.45fr 1fr;gap:0;border-top:1.5px solid #15140f;margin-top:18px">
+      <!-- gallery -->
+      <div style="border-right:1.5px solid #15140f;padding:24px;display:grid;grid-template-columns:64px 1fr;gap:14px">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ p.thumbs }}" as="t" hint-placeholder-count="4">
+            <div style="aspect-ratio:4/5;background:{{ t.bg }};border:1.5px solid #15140f;cursor:pointer"></div>
+          </sc-for>
+        </div>
+        <div style="position:relative;aspect-ratio:4/5;background:{{ p.heroBg }}">
+          <span class="cn-up" style="position:absolute;left:12px;top:12px;font-size:9px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:5px 9px">Limited · 200 шт</span>
+          <span class="cn-up" style="position:absolute;right:12px;bottom:12px;font-size:8.5px;color:rgba(255,255,255,.5)">{{ p.shot }}</span>
+        </div>
+      </div>
+      <!-- buy -->
+      <div style="padding:30px 28px">
+        <div style="position:sticky;top:120px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <div class="cn-anton" style="font-size:34px">{{ p.brand }}</div>
+            <span class="cn-up" style="font-size:9px;color:#7a7a6a">{{ p.city }}</span>
+          </div>
+          <div class="cn-serif" style="font-size:20px;margin:2px 0 18px">{{ p.name }}</div>
+          <div class="cn-up" style="font-size:24px;font-weight:600;margin-bottom:20px">{{ p.priceFmt }}</div>
+          <div class="cn-up" style="font-size:10px;margin-bottom:9px">Размер</div>
+          <div style="display:flex;gap:7px;margin-bottom:22px">
+            <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="5">
+              <span onClick="{{ s.pick }}" style="cursor:pointer;min-width:44px;text-align:center;padding:11px 0;font-size:12px;border:1.5px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.fg }}" class="cn-up">{{ s.label }}</span>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:20px">
+            <span onClick="{{ addToBag }}" class="cn-up" style="flex:1;text-align:center;font-size:11px;background:#15140f;color:var(--acc,#7c5cff);padding:16px;cursor:pointer">Добавить в сумку</span>
+            <span style="width:52px;display:flex;align-items:center;justify-content:center;border:1.5px solid #15140f;cursor:pointer">♡</span>
+          </div>
+          <!-- authenticity -->
+          <div style="border:1.5px solid #15140f;padding:16px;margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <span style="width:26px;height:26px;background:#15140f;color:var(--acc,#7c5cff);display:flex;align-items:center;justify-content:center;font-size:13px">✓</span>
+              <div><div class="cn-up" style="font-size:10.5px">Оригинал подтверждён</div><div style="font-size:10px;color:#7a7a6a">Цифровой паспорт · DPP</div></div>
+            </div>
+            <div style="font-size:11px;line-height:1.9;border-top:1px solid rgba(21,20,15,.15);padding-top:10px">
+              <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">ID паспорта</span><span>{{ p.passId }}</span></div>
+              <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">Верифицировано</span><span>{{ p.passDate }}</span></div>
+              <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">Метка</span><span>QR + NFC на бирке</span></div>
+            </div>
+            <span onClick="{{ openScanner }}" class="cn-up" style="display:block;text-align:center;margin-top:12px;font-size:10px;background:var(--acc,#7c5cff);color:var(--ai,#f6f2ff);padding:11px;cursor:pointer">Сканировать и проверить</span>
+          </div>
+          <div style="font-size:12.5px;line-height:1.7;color:#3a392f"><b class="cn-up" style="font-size:10px">Состав.</b> {{ p.composition }}</div>
+          <div style="font-size:12.5px;line-height:1.7;color:#3a392f;margin-top:12px"><b class="cn-up" style="font-size:10px">О дизайнере.</b> {{ p.about }}</div>
+        </div>
+      </div>
+    </div>
+    <section style="padding:40px 24px;border-top:1.5px solid #15140f">
+      <h2 class="cn-anton" style="font-size:28px;margin:0 0 20px">С этим носят</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:#15140f;border:1.5px solid #15140f">
+        <sc-for list="{{ related }}" as="item" hint-placeholder-count="4">
+          <div class="cn-card" onClick="{{ item.open }}" style="cursor:pointer;background:#e9e6dd;padding:0 0 12px">
+            <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#d8d5cb"><div class="cn-img" style="position:absolute;inset:0;transition:transform .55s ease;background:{{ item.bg }}"></div></div>
+            <div style="padding:11px 11px 0"><div class="cn-up" style="font-size:10.5px;font-weight:600">{{ item.brand }}</div><div class="cn-up" style="font-size:12px;margin-top:4px">{{ item.priceFmt }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ SCANNER ============ -->
+  <sc-if value="{{ scannerOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:90;background:rgba(21,20,15,.7);display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ closeScanner }}">
+    <div style="background:#e9e6dd;width:400px;max-width:100%;border:2px solid #15140f" onClick="{{ stop }}">
+      <div style="background:#15140f;color:var(--acc,#7c5cff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><span class="cn-up" style="font-size:11px">Проверка подлинности</span><span onClick="{{ closeScanner }}" style="cursor:pointer;font-size:17px">✕</span></div>
+      <div style="padding:28px 24px;text-align:center">
+        <sc-if value="{{ scanning }}" hint-placeholder-val="{{ true }}">
+          <div style="position:relative;width:180px;height:180px;margin:0 auto 20px;background:linear-gradient(135deg,#221c2b,#3c3348);overflow:hidden;border:1.5px solid #15140f">
+            <div style="position:absolute;inset:16px;border:1px solid rgba(255,255,255,.4);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.14) 0 6px,transparent 6px 12px)"></div>
+            <div style="position:absolute;left:8%;right:8%;height:2px;background:var(--acc,#7c5cff);box-shadow:0 0 14px 2px var(--acc,#7c5cff);animation:cnscan 1.1s ease-in-out infinite alternate"></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:9px;font-size:13px"><span style="width:14px;height:14px;border:2px solid #15140f;border-top-color:transparent;border-radius:50%;animation:cnspin .8s linear infinite"></span>Сверяем DPP с реестром бренда…</div>
+        </sc-if>
+        <sc-if value="{{ verified }}" hint-placeholder-val="{{ false }}">
+          <div style="width:70px;height:70px;background:#15140f;color:var(--acc,#7c5cff);display:flex;align-items:center;justify-content:center;font-size:32px;margin:4px auto 16px">✓</div>
+          <h3 class="cn-anton" style="font-size:26px;margin:0 0 6px">Оригинал</h3>
+          <p style="font-size:12.5px;color:#5a5a4d;margin:0 0 18px">Паспорт совпал с реестром бренда</p>
+          <div style="text-align:left;border:1.5px solid #15140f;padding:14px;font-size:12px;line-height:1.95">
+            <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">Бренд</span><span>{{ p.brand }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">Модель</span><span>{{ p.name }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">ID</span><span>{{ p.passId }}</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:#7a7a6a">Статус</span><span style="color:#4a7a1a">● Подтверждён</span></div>
+          </div>
+          <span onClick="{{ closeScanner }}" class="cn-up" style="display:block;margin-top:16px;font-size:10.5px;background:#15140f;color:var(--acc,#7c5cff);padding:13px;cursor:pointer">Готово</span>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#b45cf0&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#7c5cff&quot;,&quot;#b45cf0&quot;,&quot;#9a7bd0&quot;],&quot;section&quot;:&quot;Тема&quot;},&quot;accentInk&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f6f2ff&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#f6f2ff&quot;,&quot;#1c1024&quot;],&quot;section&quot;:&quot;Тема&quot;}}">
+class Component extends DCLogic {
+  state = { screen:'home', productId:'c1', size:'M', bag:0, scanner:null, now:Date.now(), look:0, catActive:'Все', sort:'Новинки', hero:0 };
+
+  componentDidMount(){
+    const h=(location.hash||'').replace('#','');
+    if(h==='pdp'||h==='pass'){ this.go('pdp','c1');
+      if(h==='pass') setTimeout(()=>{ const el=[...document.querySelectorAll('div')].find(e=>e.textContent.includes('WB-DPP')&&e.textContent.length<400); if(el) window.scrollTo(0,el.getBoundingClientRect().top+window.scrollY-140); },700);
+    }
+    if(h==='verify'){ this.openScanner(); }
+    if(h==='catalog'){ this.go('catalog'); }
+    this._tick=0; this._iv = setInterval(()=>{ this._tick++; const st={ now:Date.now() }; if(this.state.screen==='home' && this._tick%5===0) st.hero=(this.state.hero+1)%3; this.setState(st); }, 1000); }
+  componentWillUnmount(){ clearInterval(this._iv); }
+  heroGo=(i)=> this.setState({hero:i});
+
+  catalog(){
+    return [
+      { id:'c1', brand:'Ushatava', city:'Москва', name:'Куртка-трансформер', price:32000, color:'Asphalt', cat:'Верхняя одежда',
+        bg:'linear-gradient(155deg,#3a3d2a,#5c6040)', shot:'[ jacket — studio, hard light ]',
+        composition:'Мембрана, переработанный нейлон. Съёмные рукава.', about:'Ushatava — московский бренд Нины Гольцовой и Алисы Ушаковой. Архитектурный крой, гендер-нейтральность.' },
+      { id:'c2', brand:'Lesyanebo', city:'СПб', name:'Платье из шёлка', price:28000, color:'Bone', cat:'Платья',
+        bg:'linear-gradient(155deg,#b8b2a0,#d8d2bf)', shot:'[ dress — movement on figure ]',
+        composition:'100% шёлк-армани. Деликатная стирка.', about:'Lesyanebo — петербургская студия, ручная работа и поэтика недосказанности.' },
+      { id:'c3', brand:'Our Legacy', city:'Stockholm', name:'Box Shirt washed', price:24500, color:'Faded Blue', cat:'Рубашки',
+        bg:'linear-gradient(155deg,#5a6b78,#8b9aa6)', shot:'[ shirt — flat-lay textured ]',
+        composition:'100% хлопок, стирка-эффект.', about:'Our Legacy — шведский культ-бренд, работа с фактурой и винтажной оптикой.' },
+      { id:'c4', brand:'Acne Studios', city:'Stockholm', name:'Face Beanie', price:14000, color:'Black', cat:'Аксессуары',
+        bg:'linear-gradient(155deg,#1c1c1c,#3a3a3a)', shot:'[ beanie — close crop ]',
+        composition:'100% шерсть, фирменный пэтч Face.', about:'Acne Studios — арт-фэшн из Стокгольма, айдентика как искусство.' },
+      { id:'c5', brand:'Kapital', city:'Kojima', name:'Bandana Knit Cardigan', price:68000, color:'Indigo', cat:'Трикотаж',
+        bg:'linear-gradient(155deg,#283a52,#4a6585)', shot:'[ knit — detail weave ]',
+        composition:'Хлопок/шерсть, ручная вязка, Япония.', about:'Kapital — японский культ: индиго, бандана-паттерн, ремесло.' },
+      { id:'c6', brand:'Stüssy', city:'Los Angeles', name:'8 Ball Heavy Tee', price:9800, color:'Pigment Black', cat:'Футболки',
+        bg:'linear-gradient(155deg,#222,#444)', shot:'[ tee — hanger flat ]',
+        composition:'100% хлопок, плотность 240 г/м².', about:'Stüssy — родоначальник стритвира, культурный код surf/skate.' },
+      { id:'c7', brand:'Toptygin', city:'Москва', name:'Деним oversize', price:19000, color:'Raw', cat:'Деним',
+        bg:'linear-gradient(155deg,#3e4a59,#6c7c8e)', shot:'[ denim — wide leg, full ]',
+        composition:'100% хлопок, сырой деним 14oz.', about:'Toptygin — российский деним-проект, силуэты 90-х.' },
+      { id:'c8', brand:'Carhartt WIP', city:'Weil am Rhein', name:'Detroit Jacket', price:21000, color:'Hamilton Brown', cat:'Верхняя одежда',
+        bg:'linear-gradient(155deg,#5a3f24,#83613b)', shot:'[ jacket — workwear, worn ]',
+        composition:'Хлопковый дак, подкладка-шерпа.', about:'Carhartt WIP — ворквир, ставший культурным кодом.' },
+      { id:'c9', brand:'Ushatava', city:'Москва', name:'Брюки-карго', price:24000, color:'Slate', cat:'Брюки',
+        bg:'linear-gradient(155deg,#4a4d3e,#6e7160)', shot:'[ trousers — full length ]',
+        composition:'Хлопок/эластан, накладные карманы.', about:'Ushatava — архитектурный крой и гендер-нейтральность.' },
+      { id:'c10', brand:'Our Legacy', city:'Stockholm', name:'Куртка Nowa', price:41000, color:'Olive', cat:'Верхняя одежда',
+        bg:'linear-gradient(155deg,#3d4632,#697150)', shot:'[ jacket — soft shell ]',
+        composition:'Технический нейлон, водоотталкивающая пропитка.', about:'Our Legacy — работа с фактурой и винтажной оптикой.' },
+      { id:'c11', brand:'Lesyanebo', city:'СПб', name:'Юбка миди', price:17500, color:'Sand', cat:'Юбки',
+        bg:'linear-gradient(155deg,#c3b7a2,#ded3bd)', shot:'[ skirt — movement ]',
+        composition:'Вискоза, подкладка из шёлка.', about:'Lesyanebo — ручная работа и поэтика недосказанности.' },
+      { id:'c12', brand:'Kapital', city:'Kojima', name:'Носки Bandana', price:3200, color:'Indigo', cat:'Аксессуары',
+        bg:'linear-gradient(155deg,#2a3a55,#4a6088)', shot:'[ socks — pair flat ]',
+        composition:'Хлопок, бандана-паттерн.', about:'Kapital — индиго и ремесло.' },
+      { id:'c13', brand:'Toptygin', city:'Москва', name:'Худи oversize', price:15000, color:'Ash', cat:'Худи',
+        bg:'linear-gradient(155deg,#43474a,#6a6f73)', shot:'[ hoodie — flat-lay ]',
+        composition:'Футер трёхнитка, плотность 380 г/м².', about:'Toptygin — силуэты 90-х.' },
+      { id:'c14', brand:'Acne Studios', city:'Stockholm', name:'Шарф в клетку', price:22000, color:'Grey', cat:'Аксессуары',
+        bg:'linear-gradient(155deg,#33343a,#5a5c64)', shot:'[ scarf — draped ]',
+        composition:'Шерсть/альпака, фирменная бахрома.', about:'Acne Studios — айдентика как искусство.' },
+      { id:'c15', brand:'Stüssy', city:'Los Angeles', name:'Рубашка вельвет', price:13500, color:'Rust', cat:'Рубашки',
+        bg:'linear-gradient(155deg,#6a4632,#916145)', shot:'[ shirt — corduroy detail ]',
+        composition:'Хлопковый вельвет, перламутровые пуговицы.', about:'Stüssy — культурный код surf/skate.' },
+      { id:'c16', brand:'Carhartt WIP', city:'Weil am Rhein', name:'Брюки Single Knee', price:16500, color:'Wall', cat:'Брюки',
+        bg:'linear-gradient(155deg,#6f6a52,#95906f)', shot:'[ trousers — workwear ]',
+        composition:'Хлопковый дак, усиленное колено.', about:'Carhartt WIP — ворквир как культурный код.' },
+    ];
+  }
+
+  fmt(n){ return n.toLocaleString('ru-RU').replace(/,/g,' ')+' ₽'; }
+  go(s,id){ if(id) this.setState({screen:s,productId:id}); else this.setState({screen:s}); try{window.scrollTo(0,0)}catch(e){} }
+  openScanner=()=>{ this.setState({scanner:'scan'}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({scanner:'done'}),2300); };
+  closeScanner=()=> this.setState({scanner:null});
+  addToBag=()=>{ this.setState(s=>({bag:s.bag+1})); };
+  openCatalog=(c)=>{ this.setState({screen:'catalog', catActive:c||'Все'}); try{window.scrollTo(0,0)}catch(e){} };
+  setCat=(c)=> this.setState({catActive:c});
+  cycleSort=()=>{ const o=['Новинки','Цена ↑','Цена ↓']; this.setState(s=>({sort:o[(o.indexOf(s.sort)+1)%o.length]})); };
+
+  countdown(){
+    const target = this._target || (this._target = Date.now()+ (3*24*3600+7*3600+42*60+18)*1000);
+    let diff = Math.max(0, target - this.state.now);
+    const d=Math.floor(diff/86400000); diff-=d*86400000;
+    const h=Math.floor(diff/3600000); diff-=h*3600000;
+    const m=Math.floor(diff/60000); diff-=m*60000;
+    const s=Math.floor(diff/1000);
+    const z=n=>String(n).padStart(2,'0');
+    return { d:z(d), h:z(h), m:z(m), s:z(s) };
+  }
+
+  renderVals(){
+    const cat=this.catalog();
+    const mk=p=>({...p, priceFmt:this.fmt(p.price), open:()=>this.go('pdp',p.id)});
+    const products=cat.slice(0,8).map(mk);
+    // ---- catalog: categories, filter, sort ----
+    const order=['Верхняя одежда','Трикотаж','Худи','Футболки','Рубашки','Деним','Брюки','Платья','Юбки','Аксессуары'];
+    const catNames=order.filter(c=>cat.some(p=>p.cat===c));
+    const categories=[{key:'Все',label:'Все',count:cat.length}].concat(catNames.map(c=>({key:c,label:c,count:cat.filter(p=>p.cat===c).length})));
+    const chips=categories.map(c=>{const on=c.key===this.state.catActive;return{label:c.label,count:c.count,pick:()=>this.setCat(c.key),bg:on?'#15140f':'transparent',fg:on?'var(--acc,#7c5cff)':'#15140f',bd:on?'#15140f':'rgba(21,20,15,.28)'};});
+    let cp=this.state.catActive==='Все'?cat.slice():cat.filter(p=>p.cat===this.state.catActive);
+    if(this.state.sort==='Цена ↑') cp=cp.slice().sort((a,b)=>a.price-b.price);
+    else if(this.state.sort==='Цена ↓') cp=cp.slice().sort((a,b)=>b.price-a.price);
+    const catProducts=cp.map(mk);
+    const catTiles=catNames.slice(0,6).map(c=>{const ex=cat.find(p=>p.cat===c);return{label:c,count:cat.filter(p=>p.cat===c).length,bg:ex?ex.bg:'#d8d5cb',open:()=>this.openCatalog(c)};});
+    const cur=cat.find(p=>p.id===this.state.productId)||cat[0];
+    const p=mk(cur);
+    p.thumbs=['','brightness(1.1)','brightness(.82)','contrast(1.15)'].map(f=>({bg:cur.bg+(f?';filter:'+f:'')}));
+    p.passId='WB-DPP-2026-'+(2000+cat.indexOf(cur)*73);
+    p.passDate='09.06.2026'; p.heroBg=cur.bg;
+    const related=cat.filter(x=>x.id!==cur.id).slice(0,4).map(mk);
+    const sizes=['XS','S','M','L','XL'].map(label=>{const on=label===this.state.size;return{label,pick:()=>this.setState({size:label}),bd:on?'#15140f':'rgba(21,20,15,.25)',bg:on?'#15140f':'transparent',fg:on?'var(--acc,#7c5cff)':'#15140f'};});
+
+    const designers=[
+      {name:'Ushatava',city:'Москва',note:'архитектурный крой'},
+      {name:'Lesyanebo',city:'СПб',note:'ручная работа'},
+      {name:'Toptygin',city:'Москва',note:'деним 90-х'},
+      {name:'Volchok',city:'Казань',note:'трикотаж'},
+      {name:'Matériel',city:'Тбилиси',note:'эксперимент'},
+    ];
+    const stories=[
+      {tag:'Манифест',bg:'linear-gradient(150deg,#221c2b,#4a4058)',title:'Почему локальное — это новый люкс',excerpt:'Разбираем дроп 015: семь имён, которые формируют российский культурный код.'},
+      {tag:'Интервью',bg:'linear-gradient(150deg,#3a3540,#6a5c6e)',title:'Ushatava: крой как высказывание',excerpt:'Нина и Алиса — о гендер-нейтральности и трансформируемой одежде.'},
+      {tag:'Гид',bg:'linear-gradient(150deg,#243a4a,#4a6a7e)',title:'Как читать цифровой паспорт вещи',excerpt:'QR + NFC, реестр бренда и почему это конец эпохи подделок.'},
+    ];
+    const heroSlides=[
+      { label:'локальное будущее', line1:'LOCAL', line2:'FUTURES', cta:'Смотреть дроп', action:()=>this.go('drop'),
+        text:'Семь российских и нишевых имён, которых не найти в общем поиске. Кураторский дроп: ограниченные тиражи, цифровой паспорт у каждой вещи.' },
+      { label:'дизайнеры недели', line1:'LOCAL', line2:'NAMES', cta:'Все дизайнеры', action:()=>this.openCatalog(),
+        text:'Ushatava, Lesyanebo, Toptygin и другие — независимые имена из Москвы, Петербурга и Тбилиси. Кураторский отбор редакции.' },
+      { label:'культурный код', line1:'THE', line2:'STORIES', cta:'Читать журнал', action:()=>this.go('journal'),
+        text:'Манифесты, интервью и гиды: не подборка товаров, а культурный жест. Почему локальное — это новый люкс.' },
+    ];
+    const heroBadges=['№015 / SS26','A–Z','Журнал'];
+    const heroBadge=heroBadges[this.state.hero];
+    const heroShift=(-this.state.hero*100)+'%';
+    const heroDots=[0,1,2].map(i=>({ go:()=>this.heroGo(i), w:i===this.state.hero?'26px':'7px', bg:i===this.state.hero?'var(--acc,#7c5cff)':'rgba(233,230,221,.35)' }));
+    const lookbook=[0,1,2,3,4].map(i=>({idx:i+1, bg:cat[i].bg, brand:cat[i].brand, name:cat[i].name, priceFmt:this.fmt(cat[i].price), open:()=>this.go('pdp',cat[i].id), shot:cat[i].shot}));
+
+
+    return {
+      isHome:this.state.screen==='home', isDrop:this.state.screen==='drop', isJournal:this.state.screen==='journal', isPdp:this.state.screen==='pdp', isListing:this.state.screen==='listing', isCatalog:this.state.screen==='catalog',
+      accent:this.props.accent ?? '#7c5cff', accentInk:this.props.accentInk ?? '#f6f2ff',
+      goHome:()=>this.go('home'), goDrop:()=>this.go('drop'), goJournal:()=>this.go('journal'), openListing:()=>this.go('listing'),
+      openCatalog:()=>this.openCatalog(), chips, catProducts, catTiles, catActive:this.state.catActive, catCount:catProducts.length, sortLabel:this.state.sort, cycleSort:this.cycleSort,
+      products, designers, stories, lookbook, p, related, sizes, bag:this.state.bag,
+      cd:this.countdown(),
+      heroSlides, heroBadge, heroShift, heroDots,
+      openScanner:this.openScanner, closeScanner:this.closeScanner, stop:e=>{if(e&&e.stopPropagation)e.stopPropagation();},
+      scannerOpen:!!this.state.scanner, scanning:this.state.scanner==='scan', verified:this.state.scanner==='done',
+      addToBag:this.addToBag,
+    };
+  }
+}
+</script>
+</body>
+</html>
