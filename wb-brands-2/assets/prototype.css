@@ -1,0 +1,237 @@
+/* ============================================================
+   РЕЖИМ ПРОТОТИПА · один сайт, по которому можно ходить
+   ============================================================ */
+
+.proto {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #14161A;
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+}
+
+.proto__stage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- мобильный: устройство по центру --- */
+
+.proto[data-mode='mobile'] .proto__stage {
+  align-items: center;
+  padding: 28px max(12px, env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.proto[data-mode='mobile'] .proto__device {
+  width: min(390px, calc(100vw - 24px));
+  height: min(844px, calc(100dvh - 124px));
+  min-height: 540px;
+  background: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .12),
+    0 30px 70px -20px rgba(0, 0, 0, .7);
+}
+
+.proto[data-mode='mobile'] .proto__screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.proto[data-mode='mobile'] .proto__screen::-webkit-scrollbar { display: none; }
+
+/* --- десктоп: сайт во всю ширину окна --- */
+
+.proto[data-mode='desktop'] .proto__stage { padding: 0 0 76px; }
+.proto[data-mode='desktop'] .proto__device { width: 100%; background: #fff; }
+.proto[data-mode='desktop'] .proto__screen { min-height: 100vh; }
+
+/* веб-вёрстка занимает ширину окна; ритм держат внутренние отступы секций */
+.proto[data-mode='desktop'] .ed--d,
+.proto[data-mode='desktop'] .mag--d,
+.proto[data-mode='desktop'] .slide--d,
+.proto[data-mode='desktop'] .chat--d {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* в прототипе аннотационные пины не нужны */
+.proto .pin { display: none; }
+
+/* --- панель управления --- */
+
+.proto__bar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(20, 22, 26, .86);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 100px;
+  box-shadow: 0 18px 44px -14px rgba(0, 0, 0, .6);
+}
+
+.proto__btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 100px;
+  color: #E9ECEC;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: background .16s ease;
+  text-decoration: none;
+}
+.proto__btn:hover { background: rgba(255, 255, 255, .1); }
+.proto__btn:active { background: rgba(255, 255, 255, .16); }
+.proto__btn:focus-visible,
+.proto__seg button:focus-visible,
+.proto__link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.proto__btn--wide { font-size: 12.5px; letter-spacing: .02em; }
+
+.proto__seg {
+  display: flex;
+  background: rgba(255, 255, 255, .07);
+  border-radius: 100px;
+  padding: 3px;
+}
+.proto__seg button {
+  min-width: 56px;
+  height: 34px;
+  border-radius: 100px;
+  border: 0;
+  background: none;
+  color: #A7B0B4;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+.proto__seg button[aria-pressed='true'] { background: #fff; color: #14161A; }
+.proto__seg button:active { transform: scale(.97); }
+
+/* --- список экранов --- */
+
+.proto__menu[hidden] { display: none; }
+
+.proto__menu {
+  position: fixed;
+  right: 20px;
+  bottom: 76px;
+  z-index: 200;
+  width: 320px;
+  max-height: 70vh;
+  background: rgba(20, 22, 26, .96);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .7);
+}
+
+.proto__menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+  color: #E9ECEC;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.proto__menu-body { overflow-y: auto; padding: 8px 0 12px; }
+
+.proto__group {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #6E7A80;
+  padding: 14px 18px 6px;
+}
+
+.proto__link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 18px;
+  background: none;
+  border: 0;
+  color: #A7B0B4;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.proto__link:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+.proto__link[aria-current='true'] { color: #fff; box-shadow: inset 2px 0 0 #fff; }
+
+@media (max-width: 900px) {
+  .proto__menu { right: 12px; left: 12px; width: auto; }
+}
+
+@media (max-width: 520px) {
+  .proto[data-mode='mobile'] .proto__stage {
+    align-items: flex-start;
+    padding: 0 0 calc(72px + env(safe-area-inset-bottom));
+  }
+
+  .proto[data-mode='mobile'] .proto__device {
+    width: 100vw;
+    height: calc(100dvh - 72px - env(safe-area-inset-bottom));
+    min-height: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .proto__bar {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: calc(100vw - 16px);
+    justify-content: center;
+    gap: 3px;
+    padding: 6px;
+  }
+
+  .proto__btn { min-width: 38px; height: 38px; padding-inline: 10px; }
+  .proto__btn--wide { padding-inline: 8px; }
+  .proto__seg button { min-width: 48px; }
+  .proto__menu { bottom: calc(66px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 86px); }
+}
+
+@media (max-width: 370px) {
+  .proto__btn--wide { font-size: 0; }
+  .proto__btn--wide::first-letter { font-size: 14px; }
+  #menuBtn::after { content: '☰'; font-size: 16px; }
+  .proto__bar a.proto__btn--wide::after { content: '↗'; font-size: 15px; }
+  .proto__seg button { min-width: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto__btn,
+  .proto__seg button { transition: none; }
+}

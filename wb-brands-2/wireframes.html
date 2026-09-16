@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WB Бренды 2.0 — кликабельный макет</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E1113'/%3E%3Crect x='7' y='7' width='18' height='18' fill='none' stroke='%2335A093' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/kit.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brandmark">
+      <span class="brandmark__logo">WB <b>БРЕНДЫ</b> 2.0</span>
+      <span class="brandmark__stage">Кликабельный макет</span>
+    </div>
+
+    <nav class="nav" aria-label="Разделы документа">
+      <button class="nav__item" data-view="overview" aria-selected="true"><span class="nav__num">00</span>Обзор</button>
+      <button class="nav__item" data-view="sitemap" aria-selected="false"><span class="nav__num">01</span>Карта экранов</button>
+      <button class="nav__item" data-view="flows" aria-selected="false"><span class="nav__num">02</span>Сценарии</button>
+      <button class="nav__item" data-view="screens" aria-selected="false"><span class="nav__num">03</span>Экраны</button>
+      <button class="nav__item" data-view="components" aria-selected="false"><span class="nav__num">04</span>Компоненты</button>
+      <button class="nav__item" data-view="states" aria-selected="false"><span class="nav__num">05</span>Состояния</button>
+    </nav>
+
+    <div class="topbar__meta">
+      <span>UX-архитектура</span>
+      <span>390 / 1440</span>
+      <span>29.07.2026</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="view" data-view="overview" data-active="true" id="overview"></section>
+    <section class="view" data-view="sitemap" data-active="false" id="sitemap"></section>
+    <section class="view" data-view="flows" data-active="false" id="flows"></section>
+
+    <section class="view" data-view="screens" data-active="false">
+      <div class="workbench">
+        <aside class="sidebar" id="sidebar" aria-label="Экраны"></aside>
+        <div class="canvas" id="canvas">
+          <div class="screenhead" id="screenhead"></div>
+          <div class="staterow" id="staterow"></div>
+          <div class="boards" id="boards"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="components" data-active="false" id="components"></section>
+    <section class="view" data-view="states" data-active="false" id="states"></section>
+  </main>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>

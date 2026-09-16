@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /wb-brands-2/
