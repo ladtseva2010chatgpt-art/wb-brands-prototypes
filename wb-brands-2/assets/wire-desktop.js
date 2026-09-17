@@ -580,7 +580,7 @@ export const DESKTOP = {
               <span style="font-size:26px;font-weight:500">39 000 ₽</span>
               ${cb ? `<span class="ed-trust ed-trust--ghost">Кросс-бордер</span>` : ''}
             </div>
-            <div class="w-row" style="gap:10px;flex-wrap:wrap;margin-bottom:26px">
+            <div class="w-row w-row--chips" style="gap:10px;margin-bottom:26px">
               ${hot('authenticity', 'how', `<span class="ed-trust">${ico('orig')} Оригинал</span>`)}
               ${nopass ? '' : hot('authenticity', 'passport', `<span class="ed-trust ed-trust--ghost">можно проверить самому</span>`)}
             </div>

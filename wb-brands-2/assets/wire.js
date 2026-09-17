@@ -458,7 +458,7 @@ export const MOBILE = {
     return `<div class="ed">${field('')}
       <section class="ed-sec--tight">
         <div class="ed-label ed-label--mute" style="margin-bottom:12px">Ищут сейчас</div>
-        <div class="w-row" style="gap:8px;flex-wrap:wrap">
+        <div class="w-row w-row--chips" style="gap:8px">
           ${['пальто оверсайз', 'локальные марки', 'Max Mara', 'дроп недели', 'аутлет обувь'].map((t) => hot('search', 'results', `<span class="ed-chip">${t}</span>`)).join('')}
         </div>
       </section>
@@ -781,7 +781,7 @@ export const MOBILE = {
     <section class="ed-sec--tight" style="padding-bottom:14px">
       <h1 class="ed-h1" style="font-size:28px;margin-bottom:12px">640 брендов</h1>
       ${pin(2)}
-      <div class="w-row" style="gap:8px;flex-wrap:wrap">
+      <div class="w-row w-row--chips" style="gap:8px">
         ${[['Все', st !== 'tier'], ['Популярные', 0], ['Премиум', st === 'tier'], ['Люкс', 0], ['Российские', 0]]
           .map(([t, on]) => `<span class="ed-chip"${on ? ' data-on' : ''}>${t}</span>`).join('')}
       </div>
@@ -977,7 +977,7 @@ export const MOBILE = {
           <span style="font-size:20px;font-weight:500">39 000 ₽</span>
           ${cb ? `<span class="ed-trust ed-trust--ghost">Кросс-бордер</span>` : ''}
         </div>
-        <div class="w-row" style="gap:8px;margin-top:16px;flex-wrap:wrap">
+        <div class="w-row w-row--chips" style="gap:8px;margin-top:16px">
           ${hot('authenticity', 'how', `<span class="ed-trust">${ico('orig')} Оригинал</span>`)}
           ${nopass ? '' : hot('authenticity', 'passport', `<span class="ed-trust ed-trust--ghost">можно проверить самому</span>`)}
         </div>

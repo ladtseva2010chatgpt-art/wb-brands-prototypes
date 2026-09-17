@@ -2002,6 +2002,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 13.5px;
 }
 .ed-field svg { width: 17px; height: 17px; flex: 0 0 auto; }
+/* Подсказка в поле — всегда одна строка: при узком экране она переносилась
+   на три и ломала высоту шапки. Длинный запрос обрезаем многоточием. */
+.ed-field { min-width: 0; }
+.ed-field > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Строка чипов с переносом. У обёртки .w-hot нет своей ширины, поэтому как
+   флекс-элемент она сжималась, а текст чипа (nowrap) вылезал на соседний. */
+.w-row--chips { flex-wrap: wrap; }
+.w-row--chips > .w-hot { display: inline-flex; flex: 0 0 auto; }
 
 .ed-tabs {
   display: flex;
@@ -3004,8 +3013,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ed-chip:active, .ed-size:active, .ed-btn:active, .ed-acc__i:active { opacity: .72; }
 .ed-iconbtn[data-on] { background: var(--e-ink); color: #fff; }
 
-/* обёртка перехода не должна ломать ширину кнопки вне липкой панели */
-.w-row > .w-hot { flex: 1; min-width: 0; }
+/* Обёртка перехода не должна ломать ширину кнопки вне липкой панели. Тянем
+   только обёртки самих кнопок: раньше правило растягивало и стрелку «назад»,
+   и чипы, из-за чего поле поиска сжималось, а чипы наезжали друг на друга. */
+.w-row > .w-hot:has(> .ed-btn),
+.w-row > .w-hot:has(> .slide-btn) { flex: 1; min-width: 0; }
 .w-hot > .ed-btn,
 .w-hot > .slide-btn { width: 100%; }
 
