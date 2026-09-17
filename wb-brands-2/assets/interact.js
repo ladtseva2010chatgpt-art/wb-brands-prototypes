@@ -3,22 +3,18 @@
    Подключается и в прототипе, и в документе.
    ============================================================ */
 
-/** Авторская подпись. Проставляется на каждый отрисованный экран — и в мобильной
-    версии, и в вебе, — а не вписывается в шаблоны руками: иначе новый экран
-    рано или поздно уедет без подписи. */
+/** Авторская подпись. Ставится один раз в подвале страницы, за пределами
+    макета, а не вписывается в шаблоны руками. */
 export const CREDIT = 'CONCEPT & PROTOTYPE © ALESYA MISHCHANINA · 2026';
 
-export function signScreens(scope = document) {
-  scope.querySelectorAll('.ed').forEach((screen) => {
-    if ([...screen.children].some((n) => n.classList?.contains('ed-credit'))) return;
-    const credit = document.createElement('footer');
-    credit.className = 'ed-credit';
-    credit.textContent = CREDIT;
-    // в мобильной версии нижняя навигация липкая — подпись встаёт над ней,
-    // иначе она окажется под панелью; на вебе .ed-bottom нет и вставка идёт в конец
-    const bottom = [...screen.children].find((n) => n.classList?.contains('ed-bottom'));
-    screen.insertBefore(credit, bottom ?? null);
-  });
+export function signPage() {
+  // подпись стоит в подвале страницы, а не внутри экранов: так скриншот
+  // самого макета остаётся чистым, а авторство у страницы сохраняется
+  if (document.querySelector('.page-credit')) return;
+  const credit = document.createElement('footer');
+  credit.className = 'page-credit';
+  credit.textContent = CREDIT;
+  document.body.appendChild(credit);
 }
 
 /** группы, внутри которых активен ровно один элемент */

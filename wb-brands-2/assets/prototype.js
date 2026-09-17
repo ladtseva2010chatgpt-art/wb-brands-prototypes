@@ -3,10 +3,10 @@
    Адрес: prototype.html#pdp/nosize
    ============================================================ */
 
-import { GROUPS, SCREENS } from './data.js?v=dda2b1d8';
-import { MOBILE } from './wire.js?v=dda2b1d8';
-import { DESKTOP } from './wire-desktop.js?v=dda2b1d8';
-import { initInteractions, signScreens } from './interact.js?v=dda2b1d8';
+import { GROUPS, SCREENS } from './data.js?v=d785ae0f';
+import { MOBILE } from './wire.js?v=d785ae0f';
+import { DESKTOP } from './wire-desktop.js?v=d785ae0f';
+import { initInteractions, signPage } from './interact.js?v=d785ae0f';
 
 /* хранилище недоступно, когда файл открыт напрямую с диска */
 const store = {
@@ -36,7 +36,7 @@ function render() {
   const draw = set[sc.id] || fallback[sc.id];
   q('#screen').innerHTML = draw ? draw(state.screenState) : '';
   q('#screen').scrollTop = 0;
-  signScreens(q('#screen'));
+  signPage();
 
   // куратор и его окно живут поверх экрана и не зависят от прокрутки
   const old = q('.screen-dock');

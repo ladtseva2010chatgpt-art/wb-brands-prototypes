@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=dda2b1d8';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=d785ae0f';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -282,7 +282,7 @@ export const DESKTOP = {
         </div>
       </section>`)}
 
-      <!-- подпись автора ставит signScreens() на каждый экран, см. interact.js -->
+      <!-- подпись автора стоит в подвале страницы, см. signPage() в interact.js -->
 
       ${pin(11)}
       ${chatOpen ? edChat(true) : (st === 'no-ai' ? '' : edFab())}
