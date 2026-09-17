@@ -2,11 +2,11 @@
    KIT · роутер, рабочее место, статичные виды
    ============================================================ */
 
-import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js';
+import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=60597ee1';
 import { MOBILE, ph, pin, hot, bars, chip, badge, btn, pcard, header, bottomnav,
-         edPh, edP, ico } from './wire.js';
-import { DESKTOP } from './wire-desktop.js';
-import { initInteractions, signScreens } from './interact.js';
+         edPh, edP, ico } from './wire.js?v=60597ee1';
+import { DESKTOP } from './wire-desktop.js?v=60597ee1';
+import { initInteractions, signScreens } from './interact.js?v=60597ee1';
 
 const byId = (id) => SCREENS.find((s) => s.id === id);
 

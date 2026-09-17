@@ -166,9 +166,9 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
       <div class="w-row" style="gap:12px">
         <button class="ed-brandsbtn" data-go="brands-az" data-state="default">A–Z</button>
         ${desktop ? '' : `<div class="ed-icons">
-          <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-          <button class="ed-ico w-hot" data-go="favorites" data-state="default" aria-label="Избранное">${ico('heart')}</button>
-          <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+          <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+          <button class="ed-ico w-hot w-hot--tight" data-go="favorites" data-state="default" aria-label="Избранное">${ico('heart')}</button>
+          <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
         </div>`}
       </div>
     </div>
@@ -387,9 +387,9 @@ export const MOBILE = {
     const field = (q) => `
       <div style="position:sticky;top:0;z-index:25;background:#fff;border-bottom:1px solid var(--e-line);padding:12px 20px">
         <div class="w-row" style="gap:10px">
-          <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+          <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
           <div class="ed-field" style="flex:1">${ico('search')}<span style="color:${q ? 'var(--e-ink)' : 'var(--e-mute)'}">${q || 'Бренд, вещь или материал'}</span></div>
-          <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+          <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
         </div>
       </div>`;
 
@@ -673,8 +673,8 @@ export const MOBILE = {
               <div class="ed-logo" style="letter-spacing:.1em">Одежда</div>
             </div>
             <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
           </div>
         </header>
@@ -769,11 +769,11 @@ export const MOBILE = {
     <header class="ed-header">
       <div class="ed-header__bar">
         <div class="w-row" style="gap:12px">
-          <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+          <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
           <div class="ed-logo" style="font-size:13px;letter-spacing:.1em">Бренды</div>
         </div>
         <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
       </div>
     </header>
@@ -822,8 +822,8 @@ export const MOBILE = {
             <div class="ed-logo" style="letter-spacing:.1em;font-size:13px">Пальто и куртки</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>`;
@@ -955,8 +955,8 @@ export const MOBILE = {
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>
@@ -1084,8 +1084,8 @@ export const MOBILE = {
         <div class="ed-header__bar">
           <span class="w-hot" data-go="brands-az" data-state="default" style="font-size:17px">‹</span>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>
@@ -1164,12 +1164,12 @@ export const MOBILE = {
       <header class="ed-header"${custom ? ' style="background:#F6F3EE"' : ''}>
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
             <span class="ed-sis__brand" style="font-size:13px"><i></i>MARC O’POLO</span>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
         <div class="ed-bar__row" style="padding-top:0">
@@ -1238,7 +1238,7 @@ export const MOBILE = {
               <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды · Аутлет</div>
             </div>
             <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
           </div>
         </header>
@@ -1280,12 +1280,12 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды · Аутлет</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>
@@ -1348,7 +1348,7 @@ export const MOBILE = {
     const head = (title = 'Журнал', active = 0) => `
       <header class="mag-head">
         <div class="mag-head__bar">
-          <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+          <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
           <div class="mag-head__t">${title}</div>
           <button class="mag-head__cart w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
         </div>
@@ -1650,11 +1650,11 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo" style="font-size:13px;letter-spacing:.1em">Дроп</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>
@@ -1858,11 +1858,11 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="home" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="home" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo" style="font-size:13px;letter-spacing:.1em">Лояльность</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>
@@ -1912,7 +1912,7 @@ export const MOBILE = {
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:13px;letter-spacing:.1em">${t}</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>`;
@@ -2007,7 +2007,7 @@ export const MOBILE = {
         <div class="ed-header__bar">
           <div class="ed-logo" style="font-size:13px;letter-spacing:.1em">Избранное</div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
         <div class="ed-bar__row" style="padding-top:0">
@@ -2064,7 +2064,7 @@ export const MOBILE = {
     if (st === 'done') {
       return `<div class="ed">
         <header class="ed-header"><div class="ed-header__bar"><div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды</div><div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div></div></header>
         <div class="ed-empty" style="padding-top:80px">
           <div style="width:60px;height:60px;border:1px solid var(--e-ink);border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;font-size:22px">✓</div>
@@ -2090,7 +2090,7 @@ export const MOBILE = {
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:13px;letter-spacing:.1em">Корзина</div>
           </div>
           <div class="ed-icons">
-            <button class="ed-ico w-hot" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
+            <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
         </div>
       </header>

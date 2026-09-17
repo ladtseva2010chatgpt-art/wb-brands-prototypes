@@ -1234,6 +1234,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: flex;
   align-items: center;
   gap: 7px;
+  /* имя бренда в шапке не разрывается: иконки справа его поджимали */
+  white-space: nowrap;
 }
 .ed-logo i { display: none; }
 
@@ -2010,7 +2012,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Строка чипов с переносом. У обёртки .w-hot нет своей ширины, поэтому как
    флекс-элемент она сжималась, а текст чипа (nowrap) вылезал на соседний. */
 .w-row--chips { flex-wrap: wrap; }
-.w-row--chips > .w-hot { display: inline-flex; flex: 0 0 auto; }
 
 .ed-tabs {
   display: flex;
@@ -3013,11 +3014,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ed-chip:active, .ed-size:active, .ed-btn:active, .ed-acc__i:active { opacity: .72; }
 .ed-iconbtn[data-on] { background: var(--e-ink); color: #fff; }
 
-/* Обёртка перехода не должна ломать ширину кнопки вне липкой панели. Тянем
-   только обёртки самих кнопок: раньше правило растягивало и стрелку «назад»,
-   и чипы, из-за чего поле поиска сжималось, а чипы наезжали друг на друга. */
-.w-row > .w-hot:has(> .ed-btn),
-.w-row > .w-hot:has(> .slide-btn) { flex: 1; min-width: 0; }
+/* обёртка перехода не должна ломать ширину кнопки вне липкой панели */
+.w-row > .w-hot { flex: 1; min-width: 0; }
+/* Но тянуть нужно только кнопки. Иначе стрелка «назад» отжимала поле поиска,
+   а чипы сжимались, и их текст (nowrap) наезжал на соседний чип.
+   Без :has() — его не понимают браузеры старше 2022 года. */
+.w-row > .w-hot--tight,
+.w-row--chips > .w-hot { flex: 0 0 auto; min-width: 0; }
+.w-row--chips > .w-hot { display: inline-flex; }
 .w-hot > .ed-btn,
 .w-hot > .slide-btn { width: 100%; }
 
