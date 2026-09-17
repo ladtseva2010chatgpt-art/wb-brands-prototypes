@@ -471,7 +471,7 @@ export const MOBILE = {
       </section>
       <section class="ed-sec--tight">
         ${pin(2)}
-        ${hot('assistant', 'entry', `<div class="ed-value__i" style="border:1px solid var(--e-line);padding:14px"><span class="ed-usp__ico">${ico('chat')}</span><div><div class="ed-value__t">Не знаете, с чего начать?</div><div class="ed-value__d">Опишите словами — куратор найдёт</div></div></div>`)}
+        ${hot('assistant', 'entry', `<div class="ed-value__i" style="border:1px solid var(--e-line);padding:14px"><span class="ed-usp__ico">${ico('chat')}</span><div><div class="ed-value__t">Не знаете, с чего начать?</div><div class="ed-value__d">Опишите словами, куратор найдёт</div></div></div>`)}
       </section>
       ${edBottom(1)}
     </div>`;

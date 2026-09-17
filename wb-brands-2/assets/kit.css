@@ -1662,7 +1662,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* --- нижняя навигация --- */
 
+/* Таббар прижат к низу экрана: без этого на коротких экранах он вставал
+   сразу под контентом, а sticky срабатывал только при переполнении. */
+.ed {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 .ed-bottom {
+  margin-top: auto;
   position: sticky;
   bottom: 0;
   z-index: 30;
