@@ -2,11 +2,11 @@
    KIT · роутер, рабочее место, статичные виды
    ============================================================ */
 
-import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=d785ae0f';
+import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=2f596a78';
 import { MOBILE, ph, pin, hot, bars, chip, badge, btn, pcard, header, bottomnav,
-         edPh, edP, ico } from './wire.js?v=d785ae0f';
-import { DESKTOP } from './wire-desktop.js?v=d785ae0f';
-import { initInteractions, signPage } from './interact.js?v=d785ae0f';
+         edPh, edP, ico } from './wire.js?v=2f596a78';
+import { DESKTOP } from './wire-desktop.js?v=2f596a78';
+import { initInteractions, signPage } from './interact.js?v=2f596a78';
 
 const byId = (id) => SCREENS.find((s) => s.id === id);
 
@@ -385,7 +385,6 @@ const COMP = {
   passport: () => `<div style="border:1px solid var(--e-ink);padding:14px"><div class="ed-label" style="margin-bottom:10px">Оригинал · проверка</div><div class="ed-rows"><div class="ed-rows__i"><span>Партия</span><span>AW-2026-118</span></div><div class="ed-rows__i" style="border-bottom:0"><span>Метка</span><span>NFC в подкладке</span></div></div></div>`,
   service: () => `<div class="ed-rows">${[['Доставка', 'послезавтра · бесплатно'], ['Возврат', '14 дней']].map(([k, v]) => `<div class="ed-rows__i"><span>${k}</span><span>${v}</span></div>`).join('')}</div>`,
   cb: () => `<div><span class="ed-trust ed-trust--ghost">Кросс-бордер</span><p class="ed-sm" style="margin-top:8px">12–18 дней · пошлина 1 950 ₽ до оплаты</p></div>`,
-  official: () => `<span class="ed-trust ed-trust--ghost">официальный бренд</span>`,
   club: () => `<div class="ed-value__i"><span class="ed-usp__ico">${ico('club')}</span><div><div class="ed-value__t">Лояльность</div><div class="ed-value__d">Ранний доступ к дропам</div></div></div>`,
 
   /* куратор */

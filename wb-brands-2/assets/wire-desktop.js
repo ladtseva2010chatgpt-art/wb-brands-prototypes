@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=d785ae0f';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2f596a78';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -703,11 +703,10 @@ export const DESKTOP = {
             ${pin(2)}
             <div class="w-row" style="gap:10px;margin-bottom:18px">
               <span class="ed-trust ed-trust--ghost">${tier}</span>
-              <span class="ed-trust ed-trust--ghost">официальный бренд</span>
             </div>
             <p class="ed-t" style="font-size:16px;color:var(--e-mute);max-width:56ch">${concept
               ? 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.'
-              : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе — официально, 214 вещей.'}</p>
+              : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе 214 вещей.'}</p>
           </div>
           <div>
             ${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Следить за брендом</div>`)}

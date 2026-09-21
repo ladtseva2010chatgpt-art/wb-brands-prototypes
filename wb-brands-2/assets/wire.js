@@ -1102,11 +1102,10 @@ export const MOBILE = {
         ${pin(2)}
         <div class="w-row" style="gap:8px;margin-bottom:14px">
           <span class="ed-trust ed-trust--ghost">${tier}</span>
-          <span class="ed-trust ed-trust--ghost">официальный бренд</span>
         </div>
         <p class="ed-t" style="color:var(--e-mute);max-width:44ch">${concept
           ? 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.'
-          : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе — официально, 214 вещей.'}</p>
+          : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе 214 вещей.'}</p>
         <div style="margin-top:18px">${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Следить за брендом</div>`)}</div>
       </section>
 
