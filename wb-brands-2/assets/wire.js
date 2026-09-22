@@ -903,8 +903,7 @@ export const MOBILE = {
       <section class="ed-sec--tight" style="padding-bottom:16px">
         ${pin(1)}
         <div class="ed-sm" style="margin-bottom:10px">Женщины / Одежда</div>
-        <h1 class="ed-h1" style="font-size:28px;margin-bottom:10px">Пальто и куртки</h1>
-        <p class="ed-t" style="color:var(--e-mute);max-width:44ch">Силуэт сезона — свободный и длинный. Собрали то, что держит форму: шерсть, кашемир, плотный твил.</p>
+        <h1 class="ed-h1" style="font-size:28px">Пальто и куртки</h1>
       </section>
       ${bar()}
       ${pin(3)}

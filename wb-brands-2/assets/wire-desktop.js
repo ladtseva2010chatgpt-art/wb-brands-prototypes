@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2fe2a81c';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=4c96d558';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -495,10 +495,7 @@ export const DESKTOP = {
       <section class="ed-sec" style="padding-bottom:24px">
         ${pin(1)}
         <div class="ed-sm" style="margin-bottom:14px">Женщины / Одежда</div>
-        <div style="display:grid;grid-template-columns:minmax(0,1fr) 460px;gap:60px;align-items:end">
-          <h1 class="ed-h1" style="font-size:52px">Пальто и куртки</h1>
-          <p class="ed-t" style="color:var(--e-mute)">Силуэт сезона — свободный и длинный. Собрали то, что держит форму: шерсть, кашемир, плотный твил.</p>
-        </div>
+        <h1 class="ed-h1" style="font-size:52px">Пальто и куртки</h1>
       </section>
       ${bar(filtersOpen)}
 
