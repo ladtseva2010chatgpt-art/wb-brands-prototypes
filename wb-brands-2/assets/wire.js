@@ -179,8 +179,7 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
 export const edCatalog = () => `
   <div class="ed-catalog">
     ${[['Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы']],
-       ['Обувь и сумки', ['Ботинки', 'Кроссовки', 'Сумки', 'Аксессуары']],
-       ['По подаче', ['Новинки', 'Дропы', 'Подборки стилиста', 'Аутлет']]].map(([t, items]) => `
+       ['Обувь и сумки', ['Ботинки', 'Кроссовки', 'Сумки', 'Аксессуары']]].map(([t, items]) => `
       <div class="ed-catalog__col">
         <div class="ed-catalog__t">${t}</div>
         ${items.map((i) => `<span class="ed-catalog__i w-hot" data-go="listing" data-state="default">${i}</span>`).join('')}
@@ -542,7 +541,7 @@ export const MOBILE = {
       </section>`) : `<div style="margin-top:6px">${pin(5)}</div>`}
 
       <!-- 5. за брендами сюда и приходят -->
-      ${head('Кого мы отобрали', 'Все бренды', 'brands-az', 'default')}
+      ${head('Кого мы выбрали', 'Все бренды', 'brands-az', 'default')}
       <div class="ed-rail" style="align-items:stretch">${BRANDS.map((b) => edBrand(b)).join('')}</div>
       ${pin(4)}
 
@@ -562,7 +561,7 @@ export const MOBILE = {
       </section>
 
       <!-- 7. новинки: одна полка вместо двух -->
-      ${head('Новое на этой неделе', 'Все 214', 'listing', 'default')}
+      ${head('Новинки', 'Все 214', 'listing', 'default')}
       ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
 
       <!-- 8. журнал -->
@@ -614,7 +613,7 @@ export const MOBILE = {
         <div class="ed-hero">
           ${edPh(390, 420, '')}
           <div class="ed-hero__copy ed-hero__copy--dark">
-            <div class="ed-h2">Как носить объём,<br>чтобы он не носил вас</div>
+            <div class="ed-h2">Как носить объём</div>
           </div>
           <div class="ed-hero__tab" style="padding:12px 18px;font-size:10px">Открыть <span>›</span></div>
         </div>
@@ -1411,7 +1410,7 @@ export const MOBILE = {
           </div>`)}
         </section>
         <section style="padding-top:34px">
-          ${item('Мода', 'Как носить объём, чтобы он не носил вас', '29 июля')}
+          ${item('Мода', 'Как носить объём', '29 июля')}
           ${item('Мода', 'Пять российских марок, которые стоит знать', '26 июля')}
           ${item('Мода', 'Пальто, которое переживёт сезон', '22 июля')}
         </section>
@@ -1445,7 +1444,7 @@ export const MOBILE = {
       <!-- лента последнего -->
       <section style="padding-top:34px">
         ${pin(6)}
-        ${item('Мода', 'Как носить объём, чтобы он не носил вас', '8 часов назад')}
+        ${item('Мода', 'Как носить объём', '8 часов назад')}
         ${item('Красота', 'Уход, который работает на смене сезона', '1 день назад')}
       </section>
 

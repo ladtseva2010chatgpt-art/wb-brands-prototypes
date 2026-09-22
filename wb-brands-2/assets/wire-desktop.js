@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=38b040ad';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=c6ae735e';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -138,7 +138,7 @@ export const DESKTOP = {
     return `<div class="ed ed--d">
       ${pin(1)}
       ${edHeader(catalogOpen, 0, true)}
-      ${catalogOpen ? `<div class="ed-catalog" style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px">${edCatalog().replace('<div class="ed-catalog">', '').replace(/<\/div>\s*$/, '')}
+      ${catalogOpen ? `<div class="ed-catalog" style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px">${edCatalog().replace('<div class="ed-catalog">', '').replace(/<\/div>\s*$/, '')}
         <div>${hot('journal', 'article', `${edPh(300, 200, '')}<div class="ed-art__t" style="font-size:15px;margin-top:12px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}</div>
       </div>` : ''}
 
@@ -176,7 +176,7 @@ export const DESKTOP = {
       <section class="ed-sec ed-brands-intro" style="padding-bottom:0">
         ${pin(4)}
         <div class="ed-head">
-          <h2 class="ed-h2">Кого мы отобрали</h2>
+          <h2 class="ed-h2">Кого мы выбрали</h2>
           ${hot('brands-az', 'default', `<span class="ed-link">Все бренды</span>`)}
         </div>
       </section>
@@ -203,7 +203,7 @@ export const DESKTOP = {
       <!-- новинки -->
       <section class="ed-sec">
         <div class="ed-head">
-          <h2 class="ed-h2">Новое на этой неделе</h2>
+          <h2 class="ed-h2">Новинки</h2>
           ${hot('listing', 'default', `<span class="ed-link">Все 214</span>`)}
         </div>
         <div class="ed-home-product-grid">
@@ -261,7 +261,7 @@ export const DESKTOP = {
           ${edPh(800, 520, '')}
           <div>
             <div class="ed-label" style="margin-bottom:14px">Слайд-журнал · 6 слайдов</div>
-            <div class="ed-h1" style="font-size:40px">Как носить объём,<br>чтобы он не носил вас</div>
+            <div class="ed-h1" style="font-size:40px">Как носить объём</div>
             <div class="ed-link" style="display:inline-block;margin-top:22px">Открыть историю</div>
           </div>
         </div>
@@ -359,7 +359,6 @@ export const DESKTOP = {
           ${col('Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы', 'Джинсы'])}
           ${col('Обувь и сумки', ['Ботинки', 'Кроссовки', 'Туфли', 'Сумки', 'Ремни'])}
           ${col('Украшения и красота', ['Украшения', 'Часы', 'Уход', 'Ароматы'])}
-          ${col('По подаче', ['Новинки', 'Дропы', 'Подборки стилиста', 'Все бренды A–Z', 'Аутлет'], 'listing', 'default')}
           <div>
             ${hot('journal', 'article', `${edPh(320, 240, '')}<div class="w-row" style="gap:10px;margin-top:14px;align-items:center"><span class="ed-art__tag">Гид</span><span class="ed-art__date">26 июл</span></div><div class="ed-art__t" style="font-size:15px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}
           </div>
@@ -968,7 +967,7 @@ export const DESKTOP = {
           </div>
         </section>
         <section class="mag-grid" style="border-top:1px solid var(--e-line)">
-          ${card('Мода', 'Как носить объём, чтобы он не носил вас', '29 июля')}
+          ${card('Мода', 'Как носить объём', '29 июля')}
           ${card('Красота', 'Уход, который работает на смене сезона', '28 июля')}
           ${card('Дом и вещи', 'Как я собираю пространство: квартира стилиста', '27 июля')}
         </section>
@@ -1026,7 +1025,7 @@ export const DESKTOP = {
       <!-- ступенчатая сетка материалов -->
       <section class="mag-grid">
         ${pin(6)}
-        ${card('Мода', 'Как носить объём, чтобы он не носил вас', '8 часов назад')}
+        ${card('Мода', 'Как носить объём', '8 часов назад')}
         ${card('Красота', 'Уход, который работает на смене сезона', '29 июля')}
         ${card('Интервью', 'Дизайнер о капсуле на десять лет', '28 июля')}
       </section>
