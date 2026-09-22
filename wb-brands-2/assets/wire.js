@@ -207,6 +207,7 @@ export const ico = (n) => {
     box:      '<path d="M2.8 6.4 10 3l7.2 3.4v7.2L10 17l-7.2-3.4z"/><path d="M2.8 6.4 10 9.9l7.2-3.5M10 9.9V17"/>',
     club:     '<path d="m10 2.6 2.3 4.7 5.1.7-3.7 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1L2.6 8l5.1-.7z"/>',
     heart:    '<path d="M10 16.4c-.3 0-6.2-3.6-6.2-7.7A3.4 3.4 0 0 1 10 6.6a3.4 3.4 0 0 1 6.2 2.1c0 4.1-5.9 7.7-6.2 7.7Z"/>',
+    share:    '<path d="M10 12.4V2.9"/><path d="M6.6 6.1 10 2.7l3.4 3.4"/><path d="M6.4 9.1H4.6v8.2h10.8V9.1h-1.8"/>',
     bag:      '<path d="M4.6 6.4h10.8l.9 10.2H3.7z"/><path d="M7.4 8.4V5.9a2.6 2.6 0 0 1 5.2 0v2.5"/>',
     home:     '<path d="M3.4 8.6 10 3.2l6.6 5.4v8.2H3.4z"/><path d="M8 16.8v-4.6h4v4.6"/>',
     grid:     '<path d="M3.4 3.6h5.2v5.2H3.4zM11.4 3.6h5.2v5.2h-5.2zM3.4 11.4h5.2v5.2H3.4zM11.4 11.4h5.2v5.2h-5.2z"/>',
@@ -230,7 +231,7 @@ export const USP = [
 
 /* причины вернуться: живут ниже, рядом с дропом и лояльностью */
 export const USP_CLUB = [
-  ['box', 'Сервис как в бутике', 'Премиальная упаковка везде. Доставка день в день — там, где доступна по адресу.'],
+  ['box', 'Сервис как в бутике', 'Доставка день в день там, где доступна по адресу.'],
   ['club', 'Лояльность', 'Ранний доступ к дропам за сутки до общего старта и привилегии раздела.'],
   ['drop', 'Дропы', 'Капсулы и коллаборации по расписанию — с напоминанием, чтобы не пропустить.'],
 ];
@@ -663,7 +664,7 @@ export const MOBILE = {
         <header class="ed-header">
           <div class="ed-header__bar">
             <div class="w-row" style="gap:12px">
-              <span class="w-hot" data-go="catalog" data-state="default" style="font-size:17px">‹</span>
+              <span class="w-hot w-hot--tight" data-go="catalog" data-state="default" style="font-size:17px">‹</span>
               <div class="ed-logo" style="letter-spacing:.1em">Одежда</div>
             </div>
             <div class="ed-icons">
@@ -812,7 +813,7 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="catalog" data-state="l2" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="catalog" data-state="l2" style="font-size:17px">‹</span>
             <div class="ed-logo" style="letter-spacing:.1em;font-size:13px">Пальто и куртки</div>
           </div>
           <div class="ed-icons">
@@ -943,10 +944,11 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="listing" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="listing" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды</div>
           </div>
           <div class="ed-icons">
+            <button class="ed-ico ed-share" data-share="Max Mara · Пальто из шерсти и кашемира" aria-label="Поделиться">${ico('share')}</button>
             <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
             <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
           </div>
@@ -962,7 +964,7 @@ export const MOBILE = {
 
       <section class="ed-sec--tight" style="padding-top:22px">
         ${pin(2)}
-        <div class="ed-label ed-label--mute" style="margin-bottom:8px">Премиум</div>
+        <div style="margin-bottom:10px"><span class="ed-p__badge">Премиум</span></div>
         <div class="ed-p__brand" style="font-size:15px;margin-top:0">MAX MARA</div>
         <h1 class="ed-h2" style="margin:6px 0 12px">Пальто из шерсти и кашемира</h1>
         <div class="w-row" style="gap:12px;align-items:baseline">
@@ -973,7 +975,7 @@ export const MOBILE = {
           ${hot('authenticity', 'how', `<span class="ed-trust">${ico('orig')} Оригинал</span>`)}
           ${nopass ? '' : hot('authenticity', 'passport', `<span class="ed-trust ed-trust--ghost">можно проверить самому</span>`)}
         </div>
-        ${cb ? `<p class="ed-sm" style="margin-top:14px">Доставка из-за рубежа · 12–18 дней · пошлина 1 950 ₽ рассчитана и показана до оплаты · возврат 14 дней</p>` : ''}
+        ${cb ? `<p class="ed-sm" style="margin-top:14px">Доставка из-за рубежа · 12–18 дней · пошлина 1 950 ₽ рассчитана и показана до оплаты</p>` : ''}
         ${nopass ? `<div style="margin-top:14px">${pin(6)}</div>` : ''}
       </section>
 
@@ -1000,7 +1002,7 @@ export const MOBILE = {
       <section class="ed-sec--tight">
         ${pin(4)}
         <div class="ed-rows">
-          ${[['Доставка', 'послезавтра, ПВЗ · бесплатно'], ['Возврат', '14 дней, без объяснений'], ['Упаковка', 'премиальная']]
+          ${[['Доставка', 'послезавтра, ПВЗ · бесплатно']]
             .map(([k, v]) => `<div class="ed-rows__i"><span>${k}</span><span>${v}</span></div>`).join('')}
         </div>
       </section>
@@ -1073,7 +1075,7 @@ export const MOBILE = {
       ${edFab()}
       <header class="ed-header">
         <div class="ed-header__bar">
-          <span class="w-hot" data-go="brands-az" data-state="default" style="font-size:17px">‹</span>
+          <span class="w-hot w-hot--tight" data-go="brands-az" data-state="default" style="font-size:17px">‹</span>
           <div class="ed-icons">
             <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
             <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
@@ -1204,7 +1206,7 @@ export const MOBILE = {
       <section class="ed-sec--tight" style="padding-top:30px">
         ${pin(4)}
         <div class="ed-value">
-          ${[['orig', 'Корзина и карточка — общие для витрины'], ['box', 'Упаковка и доставка — как везде']]
+          ${[['orig', 'Корзина и карточка — общие для витрины'], ['box', 'Доставка такая же, как везде']]
             .map(([i, t]) => `<div class="ed-value__i"><span class="ed-usp__ico">${ico(i)}</span><div class="ed-value__t" style="font-weight:400">${t}</div></div>`).join('')}
         </div>
         <div style="margin-top:20px">${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Следить за брендом</div>`)}</div>
@@ -1221,7 +1223,7 @@ export const MOBILE = {
         <header class="ed-header">
           <div class="ed-header__bar">
             <div class="w-row" style="gap:12px">
-              <span class="w-hot" data-go="outlet" data-state="default" style="font-size:17px">‹</span>
+              <span class="w-hot w-hot--tight" data-go="outlet" data-state="default" style="font-size:17px">‹</span>
               <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:12px"><i></i>WB Бренды · Аутлет</div>
             </div>
             <div class="ed-icons">
@@ -1865,7 +1867,7 @@ export const MOBILE = {
 
       <section class="ed-sec--tight">
         <div class="ed-rows">
-          ${[['Ранний доступ к дропам', 'за 24 часа', 1], ['Премиальная упаковка', 'по всей стране', 1],
+          ${[['Ранний доступ к дропам', 'за 24 часа', 1],
              ['Курьерская доставка', 'по всей стране', 1], ['Премиум-ПВЗ', 'в вашем городе', 0], ['Доставка день в день', 'по адресу', 0]]
             .map(([t, d, all]) => `<div class="ed-rows__i"><span>${t}</span><span>${d}${all ? '' : ' ·  не везде'}</span></div>`).join('')}
         </div>
@@ -1895,7 +1897,7 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="pdp" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="pdp" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:13px;letter-spacing:.1em">${t}</div>
           </div>
           <div class="ed-icons">
@@ -2056,7 +2058,7 @@ export const MOBILE = {
         <div class="ed-empty" style="padding-top:80px">
           <div style="width:60px;height:60px;border:1px solid var(--e-ink);border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;font-size:22px">✓</div>
           <div class="ed-empty__t" style="font-size:26px">Заказ оформлен</div>
-          <p class="ed-empty__d">Придёт послезавтра в ПВЗ на Ленина, 14. В премиальной упаковке.</p>
+          <p class="ed-empty__d">Придёт послезавтра в ПВЗ на Ленина, 14.</p>
         </div>
         <section class="ed-sec--tight">
           ${pin(3)}
@@ -2073,7 +2075,7 @@ export const MOBILE = {
       <header class="ed-header">
         <div class="ed-header__bar">
           <div class="w-row" style="gap:12px">
-            <span class="w-hot" data-go="pdp" data-state="default" style="font-size:17px">‹</span>
+            <span class="w-hot w-hot--tight" data-go="pdp" data-state="default" style="font-size:17px">‹</span>
             <div class="ed-logo w-hot" data-go="home" data-state="default" style="font-size:13px;letter-spacing:.1em">Корзина</div>
           </div>
           <div class="ed-icons">
@@ -2105,7 +2107,7 @@ export const MOBILE = {
       <section class="ed-sec--tight">
         ${pin(2)}
         <div class="ed-rows">
-          ${[['Доставка', 'послезавтра · бесплатно'], ['Упаковка', 'премиальная'], ['Возврат', '14 дней']]
+          ${[['Доставка', 'послезавтра · бесплатно'], ['Возврат', '14 дней']]
             .map(([k, v]) => `<div class="ed-rows__i"><span>${k}</span><span>${v}</span></div>`).join('')}
         </div>
         <p class="ed-sm" style="margin-top:14px">Вещей из-за рубежа в заказе нет. Если бы были — срок, пошлина и условия возврата раскрывались бы здесь, до оплаты.</p>

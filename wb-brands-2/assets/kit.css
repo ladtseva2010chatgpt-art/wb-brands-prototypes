@@ -3004,6 +3004,27 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ed-chip:active, .ed-size:active, .ed-btn:active, .ed-acc__i:active { opacity: .72; }
 .ed-iconbtn[data-on] { background: var(--e-ink); color: #fff; }
 
+/* поделиться карточкой */
+.ed-share { position: relative; background: none; color: var(--e-ink); padding: 0; }
+.ed-iconbtn.ed-share svg { width: 20px; height: 20px; }
+.ed-share:hover { opacity: .7; }
+.ed-share:focus-visible { outline: 1.5px solid var(--e-ink); outline-offset: 2px; }
+.ed-share:active { opacity: .5; }
+.ed-share__tip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 60;
+  padding: 7px 10px;
+  background: var(--e-ink);
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: ed-tip .16s ease-out;
+}
+@keyframes ed-tip { from { opacity: 0; transform: translateY(-3px); } }
+
 /* обёртка перехода не должна ломать ширину кнопки вне липкой панели */
 .w-row > .w-hot { flex: 1; min-width: 0; }
 /* Но тянуть нужно только кнопки. Иначе стрелка «назад» отжимала поле поиска,

@@ -40,6 +40,24 @@ const ACC = {
 
 const el = (sel, root = document) => root.querySelector(sel);
 
+async function shareScreen(btn) {
+  const url = location.href;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: btn.dataset.share || document.title, url });
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    const tip = document.createElement('span');
+    tip.className = 'ed-share__tip';
+    tip.textContent = 'Ссылка скопирована';
+    btn.appendChild(tip);
+    setTimeout(() => tip.remove(), 1600);
+  } catch {
+    // закрытое системное меню и запрет буфера (файл с диска) — не ошибка
+  }
+}
+
 export function initInteractions(root = document) {
   root.addEventListener('click', (e) => {
     /* --- бургер с остальными категориями ---
@@ -55,6 +73,15 @@ export function initInteractions(root = document) {
       const panel = moreBtn.nextElementSibling;
       panel.hidden = !panel.hidden;
       moreBtn.setAttribute('aria-expanded', String(!panel.hidden));
+      return;
+    }
+
+    /* --- поделиться карточкой ---
+       На телефоне открываем системное меню, на компьютере копируем ссылку:
+       коллега получает ровно этот экран прототипа, а не главную. */
+    const shareBtn = e.target.closest('[data-share]');
+    if (shareBtn) {
+      shareScreen(shareBtn);
       return;
     }
 

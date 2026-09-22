@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=4c96d558';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=ea0a3039';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -569,7 +569,7 @@ export const DESKTOP = {
           <!-- липкая панель покупки -->
           <div style="position:sticky;top:24px">
             ${pin(2)}
-            <div class="ed-label ed-label--mute" style="margin-bottom:10px">Премиум</div>
+            <div style="margin-bottom:12px"><span class="ed-p__badge">Премиум</span></div>
             <div class="ed-p__brand" style="font-size:17px;margin-top:0">MAX MARA</div>
             <h1 class="ed-h2" style="margin:8px 0 16px">Пальто из шерсти и кашемира</h1>
             <div class="w-row" style="gap:14px;align-items:baseline;margin-bottom:20px">
@@ -603,10 +603,10 @@ export const DESKTOP = {
               ? `<div style="display:grid;gap:10px"><div class="ed-btn ed-btn--off">Распродано</div>${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Сообщить о поступлении</div>`)}</div>`
               : nosize
                 ? `<div style="display:grid;gap:10px"><div class="ed-btn ed-btn--off">Выберите размер</div>${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Сообщить о поступлении</div>`)}</div>`
-                : `<div class="w-row" style="gap:12px">${hot('cart', 'default', `<div class="ed-btn">В корзину · 39 000 ₽</div>`)}<div class="ed-iconbtn">♡</div></div>`}
+                : `<div class="w-row" style="gap:12px">${hot('cart', 'default', `<div class="ed-btn">В корзину · 39 000 ₽</div>`)}<div class="ed-iconbtn">♡</div><button class="ed-iconbtn ed-share" data-share="Max Mara · Пальто из шерсти и кашемира" aria-label="Поделиться">${ico('share')}</button></div>`}
 
             <div class="ed-rows" style="margin-top:28px">
-              ${[['Доставка', 'послезавтра, ПВЗ · бесплатно'], ['Возврат', '14 дней, без объяснений'], ['Упаковка', 'премиальная']]
+              ${[['Доставка', 'послезавтра, ПВЗ · бесплатно']]
                 .map(([k, v]) => `<div class="ed-rows__i"><span>${k}</span><span>${v}</span></div>`).join('')}
             </div>
 
@@ -811,7 +811,7 @@ export const DESKTOP = {
       <section class="ed-sec" style="border-top:1px solid var(--e-line)">
         ${pin(4)}
         <div class="ed-value ed-value--d">
-          ${[['orig', 'Корзина и карточка — общие для всей витрины'], ['box', 'Упаковка и доставка — как везде'], ['club', 'Привилегии программы действуют и здесь']]
+          ${[['orig', 'Корзина и карточка — общие для всей витрины'], ['box', 'Доставка такая же, как везде'], ['club', 'Привилегии программы действуют и здесь']]
             .map(([i, t]) => `<div class="ed-value__i"><span class="ed-usp__ico">${ico(i)}</span><div class="ed-value__t" style="font-weight:400">${t}</div></div>`).join('')}
         </div>
       </section>
