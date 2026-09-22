@@ -1499,6 +1499,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   letter-spacing: .16em;
   text-transform: uppercase;
 }
+/* напоминание включено: кнопка становится подтверждением и больше не нажимается */
+.ed-drop__cta--done { border-color: transparent; background: rgba(255, 255, 255, .1); letter-spacing: .08em; }
 
 /* --- товарная карточка --- */
 
@@ -1644,6 +1646,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .ed-art__date { font-family: var(--font-mono); font-size: 10px; color: var(--e-mute); }
 .ed-art__t { font-size: 16px; font-weight: 500; letter-spacing: -.025em; line-height: 1.15; margin-top: 10px; text-transform: uppercase; }
+
+/* журнал на главной: одна главная статья и короткий список заголовков.
+   Три одинаковые карточки в ленте читались как ещё одна товарная полка. */
+.ed-jr { padding-top: 0; }
+.ed-jr__main { padding-bottom: 18px; border-bottom: 1px solid var(--e-line); }
+.ed-jr__t { font-size: 20px; font-weight: 500; letter-spacing: -.025em; line-height: 1.2; margin-top: 10px; }
+.ed-jr__i { padding: 16px 0; border-bottom: 1px solid var(--e-line); }
+.ed-jr__it { font-size: 15px; font-weight: 500; letter-spacing: -.02em; line-height: 1.25; margin-top: 8px; }
+.ed--d .ed-jr { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0 48px; align-items: start; }
+.ed--d .ed-jr__main { border-bottom: 0; padding-bottom: 0; }
+.ed--d .ed-jr__t { font-size: 30px; margin-top: 16px; }
+.ed--d .ed-jr__i { padding: 22px 0; }
+.ed--d .ed-jr__list > .w-hot:first-child .ed-jr__i { padding-top: 0; }
+.ed--d .ed-jr__it { font-size: 21px; margin-top: 12px; }
 
 /* --- лайфстайл-баннер --- */
 
