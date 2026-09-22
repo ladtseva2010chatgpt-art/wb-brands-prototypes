@@ -485,7 +485,22 @@ export const MOBILE = {
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
     /* варианты размещения аутлета — для сравнения, основная версия не меняется */
-    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : 'bottom';
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-banner' ? 'banner' : 'bottom';
+    /* аутлет баннером: фото во весь экран читается как отдельная остановка,
+       а светлая подложка с текстом сливалась с белыми соседями */
+    const outletBanner = () => hot('outlet', 'default', `
+      <section class="ed-sec--flush" style="padding-top:40px">
+        <div class="ed-hero">
+          ${pin(10)}
+          ${edPh(390, 480, '', 'outlet', 'banner-01', '28% center')}
+          <div class="ed-hero__copy ed-hero__copy--dark">
+            <div class="ed-label" style="margin-bottom:10px">Аутлет</div>
+            <h2 class="ed-h1" style="font-size:30px">Прошлые коллекции<br>тех же брендов</h2>
+            <p class="ed-t" style="margin-top:10px;max-width:260px">Оригинал прошлого сезона. Это единственная причина цены.</p>
+          </div>
+          <div class="ed-hero__tab">В аутлет <span>›</span></div>
+        </div>
+      </section>`);
     const outlet = (top = 34) => hot('outlet', 'default', `
       <section class="ed-sec" style="background:var(--e-soft);margin-top:${top}px">
         ${pin(10)}
@@ -576,7 +591,7 @@ export const MOBILE = {
       ${head('Новинки', 'Все 214', 'listing', 'default')}
       ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
 
-      ${outletAt === 'mid' ? outlet() : ''}
+      ${outletAt === 'mid' ? outlet() : outletAt === 'banner' ? outletBanner() : ''}
 
       <!-- 8. журнал -->
       ${head('Журнал', 'Все материалы', 'journal', 'default')}

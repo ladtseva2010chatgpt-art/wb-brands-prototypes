@@ -63,6 +63,7 @@ export const SCREENS = [
       { id: 'nodrop', label: 'Без активного дропа' },
       { id: 'outlet-mid', label: 'Вариант · аутлет после новинок' },
       { id: 'outlet-drop', label: 'Вариант · аутлет под дропом' },
+      { id: 'outlet-banner', label: 'Вариант · аутлет баннером' },
       { id: 'catalog', label: 'Каталог раскрыт' },
       { id: 'assistant', label: 'Ассистент раскрыт' },
       { id: 'loading', label: 'Загрузка' },

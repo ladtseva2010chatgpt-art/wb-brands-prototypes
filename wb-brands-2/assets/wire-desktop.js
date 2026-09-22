@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=b82c61d7';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=4d9f9845';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -112,7 +112,20 @@ export const DESKTOP = {
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
     /* варианты размещения аутлета — для сравнения, основная версия не меняется */
-    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : 'bottom';
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-banner' ? 'banner' : 'bottom';
+    /* аутлет баннером; на десктопе — между подборкой и брендами: оба соседа
+       белые, а после новинок сразу шёл бы фото-баннер магазина бренда */
+    const outletBanner = () => hot('outlet', 'default', `
+      <div class="ed-hero">
+        ${pin(11)}
+        ${edPh(1440, 560, '', 'outlet', 'banner-01', 'center 35%')}
+        <div class="ed-hero__copy ed-hero__copy--dark">
+          <div class="ed-label" style="margin-bottom:16px">Аутлет</div>
+          <h2 class="ed-h1">Прошлые коллекции тех же брендов</h2>
+          <p class="ed-t" style="margin-top:16px;font-size:16px;max-width:440px">Оригинал прошлого сезона. Это единственная причина цены, и мы говорим об этом прямо.</p>
+        </div>
+        <div class="ed-hero__tab">В аутлет <span>›</span></div>
+      </div>`);
     const outlet = (top = 0) => hot('outlet', 'default', `
       <section class="ed-sec" style="background:var(--e-soft)${top ? `;margin-top:${top}px` : ''}">
         ${pin(11)}
@@ -186,6 +199,8 @@ export const DESKTOP = {
           ${['Пальто камель', 'Пальто-кокон', 'Тренч', 'Пальто-халат'].map((n, i) => edP({ brand: ['MAX MARA', 'COS', 'MARC O’POLO', 'USHATÁVA'][i], name: n, price: '21 300 ₽', ratio: [300, 380], w: 0 })).join('')}
         </div>
       </section>
+
+      ${outletAt === 'banner' ? outletBanner() : ''}
 
       <!-- бренды словами -->
       <section class="ed-sec ed-brands-intro" style="padding-bottom:0">
