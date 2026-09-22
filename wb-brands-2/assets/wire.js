@@ -484,6 +484,16 @@ export const MOBILE = {
     const catalogOpen = st === 'catalog';
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
+    /* варианты размещения аутлета — для сравнения, основная версия не меняется */
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : 'bottom';
+    const outlet = (top = 34) => hot('outlet', 'default', `
+      <section class="ed-sec" style="background:var(--e-soft);margin-top:${top}px">
+        ${pin(10)}
+        <div class="ed-label" style="margin-bottom:12px">Аутлет</div>
+        <h2 class="ed-h1" style="font-size:30px">Прошлые коллекции<br>тех же брендов</h2>
+        <p class="ed-t" style="margin-top:12px;max-width:280px">Оригинал из коллекции прошлого сезона. Это единственная причина цены — и мы говорим об этом прямо.</p>
+        <div class="ed-link" style="display:inline-block;margin-top:18px">Перейти</div>
+      </section>`);
 
     const rail = (items, w = 158) => `<div class="ed-rail">${items.map(([b, n, pr]) => edP({ brand: b, name: n, price: pr, w })).join('')}</div>`;
     const head = (title, link, go, gs, sub = '') => `
@@ -540,6 +550,8 @@ export const MOBILE = {
         </div>
       </section>`) : `<div style="margin-top:6px">${pin(5)}</div>`}
 
+      ${outletAt === 'drop' ? outlet(hasDrop ? 0 : 34) : ''}
+
       <!-- 5. за брендами сюда и приходят -->
       ${head('Кого мы выбрали', 'Все бренды', 'brands-az', 'default')}
       <div class="ed-rail" style="align-items:stretch">${BRANDS.map((b) => edBrand(b)).join('')}</div>
@@ -563,6 +575,8 @@ export const MOBILE = {
       <!-- 7. новинки: одна полка вместо двух -->
       ${head('Новинки', 'Все 214', 'listing', 'default')}
       ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
+
+      ${outletAt === 'mid' ? outlet() : ''}
 
       <!-- 8. журнал -->
       ${head('Журнал', 'Все материалы', 'journal', 'default')}
@@ -619,15 +633,8 @@ export const MOBILE = {
         </div>
       </section>`)}
 
-      <!-- 12. аутлет: отдельный вход перед причинами вернуться -->
-      ${hot('outlet', 'default', `
-      <section class="ed-sec" style="background:var(--e-soft);margin-top:34px">
-        ${pin(10)}
-        <div class="ed-label" style="margin-bottom:12px">Аутлет</div>
-        <h2 class="ed-h1" style="font-size:30px">Прошлые коллекции<br>тех же брендов</h2>
-        <p class="ed-t" style="margin-top:12px;max-width:280px">Оригинал из коллекции прошлого сезона. Это единственная причина цены — и мы говорим об этом прямо.</p>
-        <div class="ed-link" style="display:inline-block;margin-top:18px">Перейти</div>
-      </section>`)}
+      <!-- 12. аутлет: по умолчанию — перед причинами вернуться -->
+      ${outletAt === 'bottom' ? outlet() : ''}
 
       <!-- 13. причины вернуться: самый низ ленты -->
       <section class="ed-sec--tight" style="padding-top:34px;padding-bottom:34px">

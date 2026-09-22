@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=c6ae735e';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=b82c61d7';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -111,6 +111,21 @@ export const DESKTOP = {
     const catalogOpen = st === 'catalog';
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
+    /* варианты размещения аутлета — для сравнения, основная версия не меняется */
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : 'bottom';
+    const outlet = (top = 0) => hot('outlet', 'default', `
+      <section class="ed-sec" style="background:var(--e-soft)${top ? `;margin-top:${top}px` : ''}">
+        ${pin(11)}
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:60px;align-items:center">
+          <div>
+            <div class="ed-label" style="margin-bottom:14px">Аутлет</div>
+            <h2 class="ed-h1" style="font-size:48px">Прошлые коллекции<br>тех же брендов</h2>
+            <p class="ed-t" style="margin-top:16px;max-width:48ch;font-size:15px">Оригинал из коллекции прошлого сезона. Это единственная причина цены — и мы говорим об этом прямо.</p>
+            <div class="ed-link" style="display:inline-block;margin-top:22px">Перейти в аутлет</div>
+          </div>
+          ${edPh(520, 340, '')}
+        </div>
+      </section>`);
 
     const sis = (o) => `
       <section class="ed-sisd${o.mirror ? ' ed-sisd--mirror' : ''}">
@@ -200,6 +215,8 @@ export const DESKTOP = {
         </div>
       </section>`) : `<div>${pin(4)}</div>`}
 
+      ${outletAt === 'drop' ? outlet() : ''}
+
       <!-- новинки -->
       <section class="ed-sec">
         <div class="ed-head">
@@ -211,6 +228,8 @@ export const DESKTOP = {
             .map(([b, n, pr]) => edP({ brand: b, name: n, price: pr, w: 0, ratio: [300, 380] })).join('')}
         </div>
       </section>
+
+      ${outletAt === 'mid' ? outlet() : ''}
 
       <!-- shop-in-shop: товары уезжают за баннер -->
       ${pin(5)}
@@ -267,20 +286,8 @@ export const DESKTOP = {
         </div>
       </section>`)}
 
-      <!-- аутлет -->
-      ${hot('outlet', 'default', `
-      <section class="ed-sec" style="background:var(--e-soft)">
-        ${pin(11)}
-        <div style="display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:60px;align-items:center">
-          <div>
-            <div class="ed-label" style="margin-bottom:14px">Аутлет</div>
-            <h2 class="ed-h1" style="font-size:48px">Прошлые коллекции<br>тех же брендов</h2>
-            <p class="ed-t" style="margin-top:16px;max-width:48ch;font-size:15px">Оригинал из коллекции прошлого сезона. Это единственная причина цены — и мы говорим об этом прямо.</p>
-            <div class="ed-link" style="display:inline-block;margin-top:22px">Перейти в аутлет</div>
-          </div>
-          ${edPh(520, 340, '')}
-        </div>
-      </section>`)}
+      <!-- аутлет: по умолчанию — в конце ленты -->
+      ${outletAt === 'bottom' ? outlet() : ''}
 
       <!-- подпись автора стоит в подвале страницы, см. signPage() в interact.js -->
 

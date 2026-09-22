@@ -61,6 +61,8 @@ export const SCREENS = [
     states: [
       { id: 'default', label: 'Основное · есть дроп' },
       { id: 'nodrop', label: 'Без активного дропа' },
+      { id: 'outlet-mid', label: 'Вариант · аутлет после новинок' },
+      { id: 'outlet-drop', label: 'Вариант · аутлет под дропом' },
       { id: 'catalog', label: 'Каталог раскрыт' },
       { id: 'assistant', label: 'Ассистент раскрыт' },
       { id: 'loading', label: 'Загрузка' },
