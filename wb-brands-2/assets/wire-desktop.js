@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2f596a78';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=6183931b';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -71,7 +71,7 @@ export const DESKTOP = {
           <aside>
             <div class="ed-label ed-label--mute" style="margin-bottom:16px">Бренды</div>
             <div style="display:grid;gap:16px">
-              ${[['MAX MARA', 'люкс · 214', 'default'], ['12 STOREEZ', 'российский · 168', 'concept'], ['COS', 'премиум · 96', 'default']]
+              ${[['MAX MARA', '214 вещей', 'default'], ['12 STOREEZ', '168 вещей', 'concept'], ['COS', 'премиум · 96', 'default']]
                 .map(([b, d, gs]) => hot('brand', gs, `
                   <div class="w-row" style="gap:14px;align-items:center">
                     <div style="width:52px;flex:0 0 auto">${edPh(100, 100, '')}</div>
@@ -80,7 +80,7 @@ export const DESKTOP = {
             </div>
             <div class="ed-label ed-label--mute" style="margin:34px 0 16px">Журнал</div>
             <div style="display:grid;gap:16px">
-              ${[['Гид', 'Пальто, которое переживёт сезон'], ['Тренд', 'Тихий люкс по-русски']]
+              ${[['Гид', 'Пальто, которое переживёт сезон'], ['Подборка', 'Российские марки, которые стоит знать']]
                 .map(([k, t]) => hot('journal', 'article', `<div><div class="chat-art__k">${k}</div><div class="chat-art__t" style="font-size:17px">${t}</div></div>`)).join('')}
             </div>
             ${pin(2)}
@@ -226,7 +226,7 @@ export const DESKTOP = {
           ${hot('journal', 'default', `<span class="ed-link">Все материалы</span>`)}
         </div>
         <div class="ed-features">
-          ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Тренд', '22 июл', 'ТИХИЙ ЛЮКС ПО-РУССКИ']]
+          ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Подборка', '22 июл', 'РОССИЙСКИЕ МАРКИ, КОТОРЫЕ СТОИТ ЗНАТЬ']]
             .map(([k, d, t]) => hot('journal', 'article', `
               <div>
                 ${edPh(420, 300, '')}
@@ -395,7 +395,7 @@ export const DESKTOP = {
       <h1 class="ed-h1" style="font-size:52px;margin-bottom:20px">640 брендов</h1>
       ${pin(2)}
       <div class="w-row" style="gap:10px">
-        ${[['Все', st !== 'tier'], ['Популярные', 0], ['Премиум', st === 'tier'], ['Люкс', 0], ['Российские', 0], ['Официальное присутствие', 0]]
+        ${[['Все', st !== 'tier'], ['Популярные', 0], ['Премиум', st === 'tier']]
           .map(([t, on]) => `<span class="ed-chip"${on ? ' data-on' : ''}>${t}</span>`).join('')}
       </div>
     </section>
@@ -417,7 +417,7 @@ export const DESKTOP = {
               <div class="ed-rows__i">
                 <span>
                   <span style="font-weight:500;letter-spacing:.02em">${['ACNE STUDIOS', 'ARNY PRAHT', 'ADIDAS', 'AERONAUTICA', 'BOSS', 'BEFREE', 'BALENCIAGA', 'BRUNELLO'][i]}</span>
-                  <span class="ed-catlist__note" style="display:block;margin-top:2px">${['популярные', 'премиум', 'люкс', 'российский'][i % 4]} · ${120 + i * 17}</span>
+                  <span class="ed-catlist__note" style="display:block;margin-top:2px">${['популярные', 'премиум'][i % 2]} · ${120 + i * 17}</span>
                 </span>
                 <span>${pin(3)}следить</span>
               </div>`)).join('')}
@@ -431,11 +431,11 @@ export const DESKTOP = {
     const items = [
       ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'премиум'],
       ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'],
-      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', 'российский'],
+      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''],
       ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', 'премиум'],
       ['BOSS', 'Пальто двубортное', '54 000 ₽', 'премиум'],
-      ['LIME', 'Пальто прямое', '12 900 ₽', 'российский'],
-      ['USHATÁVA', 'Пальто-халат', '46 000 ₽', 'российский'],
+      ['LIME', 'Пальто прямое', '12 900 ₽', ''],
+      ['USHATÁVA', 'Пальто-халат', '46 000 ₽', ''],
       ['LACOSTE', 'Куртка', '22 400 ₽', 'популярные'],
     ];
 
@@ -463,7 +463,7 @@ export const DESKTOP = {
             <div class="ed-p__brand">${b}</div>
             <div class="ed-p__name">${n}</div>
             <div class="ed-p__price">${pr}</div>
-            <div class="ed-p__name" style="margin-top:5px">${tier}</div>
+            ${tier ? `<div class="ed-p__name" style="margin-top:5px">${tier}</div>` : ''}
           </div>`)).join('')}
       </div>`;
 
@@ -508,7 +508,7 @@ export const DESKTOP = {
         <aside style="border-right:1px solid var(--e-line);padding:40px 40px 40px 48px">
           ${pin(6)}
           <div class="ed-rows">
-            ${[['Бренд', '640'], ['Тир бренда', 'популярные · премиум · люкс · российские'], ['Размер', '32'], ['Цвет', '18'],
+            ${[['Бренд', '640'], ['Тир бренда', 'популярные · премиум'], ['Размер', '32'], ['Цвет', '18'],
                ['Цена', '2 400 – 180 000 ₽'], ['Состояние', 'новая коллекция · аутлет'], ['Материал', '14'], ['Доставка', 'сегодня · 2 дня']]
               .map(([t, v]) => `<div class="ed-rows__i"><span>${t}</span><span>${v} ›</span></div>`).join('')}
           </div>
@@ -685,7 +685,6 @@ export const DESKTOP = {
   brand: (st) => {
     const concept = st === 'concept';
     const name = concept ? '12 STOREEZ' : 'MAX MARA';
-    const tier = concept ? 'российский' : 'люкс';
 
     return `<div class="ed ed--d">
       ${edHeader(false, -1, true, true)}
@@ -701,9 +700,6 @@ export const DESKTOP = {
         <div style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:60px;align-items:start">
           <div>
             ${pin(2)}
-            <div class="w-row" style="gap:10px;margin-bottom:18px">
-              <span class="ed-trust ed-trust--ghost">${tier}</span>
-            </div>
             <p class="ed-t" style="font-size:16px;color:var(--e-mute);max-width:56ch">${concept
               ? 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.'
               : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе 214 вещей.'}</p>
@@ -992,7 +988,7 @@ export const DESKTOP = {
           <div class="mag-dark__t">Мода</div>
           <div class="mag-dots">${[0, 1, 2, 3].map((i) => `<i${i === 0 ? ' data-on' : ''}></i>`).join('')}</div>
           <div class="mag-dark__grid">
-            ${[['Пять силуэтов, которые определят осень', '29 июля'], ['Как носить объём', '28 июля'], ['Тихий люкс по-русски', '26 июля'], ['Пальто на десять лет', '22 июля']]
+            ${[['Пять силуэтов, которые определят осень', '29 июля'], ['Как носить объём', '28 июля'], ['Российские марки, которые стоит знать', '26 июля'], ['Пальто на десять лет', '22 июля']]
               .map(([t, d]) => hot('journal', 'article', `
                 <article>${edPh(320, 400, '')}
                 <div class="mag-kicker" style="margin-top:16px;color:#fff">Мода</div>
@@ -1110,7 +1106,7 @@ export const DESKTOP = {
               <div class="slide-body">
                 <p>Свободный силуэт держится не тканью, а линией плеча. Если шов уходит на два-три сантиметра ниже естественной точки, вещь начинает жить самостоятельно — и объём читается как замысел, а не как размер больше нужного.</p>
                 <p>Проверить это легко: поднимите руки. Хорошо посаженное пальто <span class="slide-link">потянется вместе с вами</span>, а не соберётся складкой на спине.</p>
-                <p><em>Три вещи из этой истории собраны на следующем слайде — от российской марки до люкса.</em></p>
+                <p><em>Три вещи из этой истории собраны на следующем слайде, в трёх ценах.</em></p>
               </div>
               ${pin(8)}
               <div class="slide-cap" style="margin:34px 0 14px">Вещь из этого абзаца</div>
@@ -1142,16 +1138,16 @@ export const DESKTOP = {
               <div class="slide-rule"></div>
               <h2 class="slide-sub">Один силуэт,<br><i>три уровня</i></h2>
             </div>
-            <div class="slide-body">От российской марки до люкса — чтобы было видно, за что именно доплачивают. Разница не в тепле, а в том, сколько сезонов вещь держит форму.</div>
+            <div class="slide-body">Вещи в трёх ценах, чтобы было видно, за что именно доплачивают. Разница не в тепле, а в том, сколько сезонов вещь держит форму.</div>
           </div>
         </div>
         <div class="slide-sec" style="padding-top:0">
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px">
-            ${[['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', 'российский'], ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'], ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'люкс']]
+            ${[['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''], ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'], ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', '']]
               .map(([b, n, pr, tier]) => hot('pdp', 'default', `
                 <div class="slide-prod">
                   ${edPh(420, 540, '')}
-                  <div class="slide-cap" style="margin-top:14px">${tier}</div>
+                  ${tier ? `<div class="slide-cap" style="margin-top:14px">${tier}</div>` : ''}
                   <div class="slide-prod__brand" style="font-size:14px">${b}</div>
                   <div class="slide-prod__name" style="font-size:13px">${n}</div>
                   <div class="slide-prod__price" style="font-size:14px">${pr}</div>

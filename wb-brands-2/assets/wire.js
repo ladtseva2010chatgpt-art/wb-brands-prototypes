@@ -62,15 +62,9 @@ export const edP = (o = {}) => {
           w = 158, ratio = [300, 380], tag = '', go = 'pdp', state = 'default',
           badge = '', status = '' } = o;
   const inferredBadge = badge || ({
-    'MAX MARA': 'ЛЮКС',
-    BALENCIAGA: 'ЛЮКС',
     BOSS: 'ПРЕМИУМ',
     COS: 'ПРЕМИУМ',
     'MARC O’POLO': 'ПРЕМИУМ',
-    '12 STOREEZ': 'РОССИЙСКИЙ БРЕНД',
-    'USHATÁVA': 'РОССИЙСКИЙ БРЕНД',
-    LIME: 'РОССИЙСКИЙ БРЕНД',
-    'ARNY PRAHT': 'РОССИЙСКИЙ БРЕНД',
   }[brand] || '');
   const inferredStatus = status || (brand === 'BOSS' ? 'COMING SOON' : brand === 'ARNY PRAHT' ? 'LAST SIZE' : '');
   const productRole = /(сумк|клатч|шопер)/i.test(name) ? 'bag'
@@ -82,7 +76,7 @@ export const edP = (o = {}) => {
         ${edPh(ratio[0], ratio[1], tag, productRole)}
         ${inferredStatus ? `<span class="ed-p__status">${inferredStatus}</span>` : ''}
       </div>
-      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'РОССИЙСКИЙ БРЕНД' ? ' ed-p__badge--dark' : inferredBadge === 'ЛЮКС' ? ' ed-p__badge--lux' : ''}">${inferredBadge}</span>` : ''}</div>
+      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge">${inferredBadge}</span>` : ''}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
     </div>`);
@@ -104,20 +98,20 @@ export const edBrand = (o = {}) => hot('brand', o.state || 'concept', `
   </div>`);
 
 export const BRANDS = [
-  { n: '01', name: '12 STOREEZ', meta: 'российский · 168 вещей', note: 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.' },
-  { n: '02', name: 'USHATÁVA', meta: 'российский · 74 вещи', note: 'Екатеринбург, сдержанная сила. Тяжёлые ткани и архитектурный крой — вещи, в которых чувствуешь себя собранным.' },
+  { n: '01', name: '12 STOREEZ', meta: '168 вещей', note: 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.' },
+  { n: '02', name: 'USHATÁVA', meta: '74 вещи', note: 'Екатеринбург, сдержанная сила. Тяжёлые ткани и архитектурный крой — вещи, в которых чувствуешь себя собранным.' },
   { n: '03', name: 'COS', meta: 'премиум · 96 вещей', note: 'Скандинавская геометрия и объём. Тихая роскошь на ценнике, который не требует подвига.' },
-  { n: '04', name: 'MAX MARA', meta: 'люкс · 214 вещей', note: 'Пальто, ради которого копят. Верблюжья шерсть и крой, не менявшийся сорок лет, — и не собирающийся.' },
-  { n: '05', name: 'ARNY PRAHT', meta: 'российский · 52 вещи', note: 'Сумки, которые переживут три сезона и не выйдут из моды ни в один из них.' },
+  { n: '04', name: 'MAX MARA', meta: '214 вещей', note: 'Пальто, ради которого копят. Верблюжья шерсть и крой, не менявшийся сорок лет, — и не собирающийся.' },
+  { n: '05', name: 'ARNY PRAHT', meta: '52 вещи', note: 'Сумки, которые переживут три сезона и не выйдут из моды ни в один из них.' },
   { n: '06', name: 'MARC O’POLO', meta: 'премиум · 130 вещей', note: 'Северный кэжуал: лён, хлопок и ощущение, что вещь уже приняла вашу форму.' },
 ];
 
 /* вещи из этой истории — образ, собранный редакцией */
 export const LOOK = [
-  ['MAX MARA', 'Пальто из шерсти и кашемира', '39 000 ₽', 'люкс'],
+  ['MAX MARA', 'Пальто из шерсти и кашемира', '39 000 ₽', ''],
   ['COS', 'Водолазка мериносовая', '6 900 ₽', 'премиум'],
-  ['12 STOREEZ', 'Брюки прямые', '14 200 ₽', 'российский'],
-  ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽', 'российский'],
+  ['12 STOREEZ', 'Брюки прямые', '14 200 ₽', ''],
+  ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽', ''],
 ];
 
 export const slideProd = (o = {}) => {
@@ -425,7 +419,7 @@ export const MOBILE = {
           ${pin(1)}
           <div class="ed-label ed-label--mute" style="margin-bottom:14px">Бренды</div>
           <div style="display:grid;gap:14px">
-            ${[['MAX MARA', 'люкс · 214 вещей', 'default'], ['12 STOREEZ', 'российский · 168 вещей', 'concept']]
+            ${[['MAX MARA', '214 вещей', 'default'], ['12 STOREEZ', '168 вещей', 'concept']]
               .map(([b, d, gs]) => hot('brand', gs, `
                 <div class="w-row" style="gap:14px;align-items:center">
                   <div style="width:56px;flex:0 0 auto">${edPh(100, 100, '')}</div>
@@ -465,7 +459,7 @@ export const MOBILE = {
       <section class="ed-sec--tight" style="padding-top:8px">
         <div class="ed-label ed-label--mute" style="margin-bottom:14px">Бренды</div>
         <div class="ed-rows">
-          ${[['MAX MARA', 'люкс'], ['MARC O’POLO', 'премиум'], ['12 STOREEZ', 'российский']]
+          ${[['MAX MARA', ''], ['MARC O’POLO', 'премиум'], ['12 STOREEZ', '']]
             .map(([b, t]) => `<div class="ed-rows__i w-hot" data-go="brand" data-state="default"><span style="font-weight:500">${b}</span><span>${t}</span></div>`).join('')}
         </div>
       </section>
@@ -569,13 +563,13 @@ export const MOBILE = {
 
       <!-- 7. новинки: одна полка вместо двух -->
       ${head('Новое на этой неделе', 'Все 214', 'listing', 'default')}
-      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']])}
+      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
 
       <!-- 8. журнал -->
       ${head('Журнал', 'Все материалы', 'journal', 'default')}
       ${pin(7)}
       <div class="ed-rail" style="padding-bottom:34px">
-        ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Тренд', '22 июл', 'ТИХИЙ ЛЮКС ПО-РУССКИ']]
+        ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Подборка', '22 июл', 'РОССИЙСКИЕ МАРКИ, КОТОРЫЕ СТОИТ ЗНАТЬ']]
           .map(([k, d, t]) => hot('journal', 'article', `
             <div style="width:250px">
               ${edPh(250, 300, '')}
@@ -782,7 +776,7 @@ export const MOBILE = {
       <h1 class="ed-h1" style="font-size:28px;margin-bottom:12px">640 брендов</h1>
       ${pin(2)}
       <div class="w-row w-row--chips" style="gap:8px">
-        ${[['Все', st !== 'tier'], ['Популярные', 0], ['Премиум', st === 'tier'], ['Люкс', 0], ['Российские', 0]]
+        ${[['Все', st !== 'tier'], ['Популярные', 0], ['Премиум', st === 'tier']]
           .map(([t, on]) => `<span class="ed-chip"${on ? ' data-on' : ''}>${t}</span>`).join('')}
       </div>
     </section>
@@ -799,8 +793,8 @@ export const MOBILE = {
         <div class="ed-h2" style="margin-bottom:12px">${letter}</div>
         <div class="ed-rows">
           ${(letter === 'A'
-              ? [['ACNE STUDIOS', 'премиум · 120'], ['ARNY PRAHT', 'российский · 52'], ['ADIDAS ORIGINALS', 'популярные · 340']]
-              : [['BEFREE', 'популярные · 210'], ['BOSS', 'премиум · 180'], ['BALENCIAGA', 'люкс · 64']])
+              ? [['ACNE STUDIOS', 'премиум · 120'], ['ARNY PRAHT', '52'], ['ADIDAS ORIGINALS', 'популярные · 340']]
+              : [['BEFREE', 'популярные · 210'], ['BOSS', 'премиум · 180'], ['BALENCIAGA', '64']])
             .map(([b, d], i) => `
               <div class="ed-rows__i w-hot" data-go="brand" data-state="${i === 2 ? 'default' : 'concept'}">
                 <span><span style="font-weight:500;letter-spacing:.02em">${b}</span><span class="ed-catlist__note" style="display:block;margin-top:2px">${d}</span></span>
@@ -847,10 +841,10 @@ export const MOBILE = {
     const items = [
       ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'премиум'],
       ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'],
-      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', 'российский'],
+      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''],
       ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', 'премиум'],
       ['BOSS', 'Пальто двубортное', '54 000 ₽', 'премиум'],
-      ['LIME', 'Пальто прямое', '12 900 ₽', 'российский'],
+      ['LIME', 'Пальто прямое', '12 900 ₽', ''],
     ];
 
     const grid = (from, to) => `
@@ -871,7 +865,7 @@ export const MOBILE = {
           <div class="ed-sheet__body">
             ${pin(6)}
             <div class="ed-rows">
-              ${[['Бренд', '640'], ['Тир бренда', 'популярные · премиум · люкс · российские'], ['Размер', '32 значения'], ['Цвет', '18'],
+              ${[['Бренд', '640'], ['Тир бренда', 'популярные · премиум'], ['Размер', '32 значения'], ['Цвет', '18'],
                  ['Цена', '2 400 – 180 000 ₽'], ['Состояние', 'новая коллекция · аутлет'], ['Материал', '14'], ['Доставка', 'сегодня · 2 дня']]
                 .map(([t, v]) => `<div class="ed-rows__i"><span>${t}</span><span>${v} ›</span></div>`).join('')}
             </div>
@@ -1076,7 +1070,6 @@ export const MOBILE = {
   brand: (st) => {
     const concept = st === 'concept';
     const name = concept ? '12 STOREEZ' : 'MAX MARA';
-    const tier = concept ? 'российский' : 'люкс';
 
     return `<div class="ed">
       ${edFab()}
@@ -1100,9 +1093,6 @@ export const MOBILE = {
 
       <section class="ed-sec--tight" style="padding-top:20px">
         ${pin(2)}
-        <div class="w-row" style="gap:8px;margin-bottom:14px">
-          <span class="ed-trust ed-trust--ghost">${tier}</span>
-        </div>
         <p class="ed-t" style="color:var(--e-mute);max-width:44ch">${concept
           ? 'Русский минимализм, который не повышает голос. Базовый гардероб с той посадкой, ради которой возвращаются за второй вещью.'
           : 'Итальянский дом, известный пальто из верблюжьей шерсти. В разделе 214 вещей.'}</p>
@@ -1423,7 +1413,7 @@ export const MOBILE = {
         </section>
         <section style="padding-top:34px">
           ${item('Мода', 'Как носить объём, чтобы он не носил вас', '29 июля')}
-          ${item('Мода', 'Тихий люкс по-русски: пять локальных марок', '26 июля')}
+          ${item('Мода', 'Пять российских марок, которые стоит знать', '26 июля')}
           ${item('Мода', 'Пальто, которое переживёт сезон', '22 июля')}
         </section>
         ${edBottom(3)}
@@ -1538,7 +1528,7 @@ export const MOBILE = {
           <div class="slide-body">
             <p>Свободный силуэт держится не тканью, а линией плеча. Если шов уходит на два-три сантиметра ниже естественной точки, вещь начинает жить самостоятельно — и объём читается как замысел, а не как размер больше нужного.</p>
             <p>Проверить это легко: поднимите руки. Хорошо посаженное пальто <span class="slide-link">потянется вместе с вами</span>, а не соберётся складкой на спине.</p>
-            <p><em>Три вещи из этой истории собраны на следующем слайде — от российской марки до люкса.</em></p>
+            <p><em>Три вещи из этой истории собраны на следующем слайде, в трёх ценах.</em></p>
           </div>
           ${pin(8)}
           ${hot('pdp', 'default', `
@@ -1565,10 +1555,10 @@ export const MOBILE = {
           ${pin(3)}
           <div class="slide-rule"></div>
           <h2 class="slide-sub">Один силуэт,<br><i>три уровня</i></h2>
-          <div class="slide-body" style="font-size:16px">От российской марки до люкса — чтобы было видно, за что именно доплачивают.</div>
+          <div class="slide-body" style="font-size:16px">Вещи в трёх ценах, чтобы было видно, за что именно доплачивают.</div>
         </div>
         <div class="ed-rail" style="padding:0 20px 8px">
-          ${[['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', 'российский'], ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'], ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'люкс']]
+          ${[['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''], ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'], ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', '']]
             .map(([b, n, pr, tier]) => slideProd({ brand: b, name: n, price: pr, tier, w: 196 })).join('')}
         </div>
         <div class="slide-sec" style="padding-top:22px">

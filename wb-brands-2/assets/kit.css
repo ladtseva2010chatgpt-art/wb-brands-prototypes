@@ -1554,10 +1554,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   white-space: nowrap;
 }
-.ed-p__badge--dark { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
-/* Люкс — та же рамка, что у премиума и российского бренда: айдентика одна.
-   Выше по лестнице он читается контрастом рамки, а не отдельной формой. */
-.ed-p__badge--lux { border-color: var(--e-ink); color: var(--e-ink); }
 
 /* --- бегущая строка УТП под главной кампанией --- */
 .ed-marquee {
@@ -2751,7 +2747,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border-bottom: 1px solid var(--e-line);
   font-size: 13.5px;
 }
-.ed-rows__i span:last-child { color: var(--e-mute); font-size: 12.5px; text-align: right; }
+/* только правая колонка строки: без «>» правило цепляло и вложенную подпись
+   под названием и прижимало её вправо, под конец названия */
+.ed-rows__i > span:last-child { color: var(--e-mute); font-size: 12.5px; text-align: right; }
 
 /* выбор размера и цвета */
 .ed-sizes { display: flex; gap: 8px; flex-wrap: wrap; }
