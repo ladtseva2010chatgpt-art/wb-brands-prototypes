@@ -1519,7 +1519,7 @@ export const MOBILE = {
         ${pin(1)}
         <div class="slide-sec" style="padding-bottom:20px">
           <div class="slide-rule"></div>
-          <h2 class="slide-sub">Как сидит<br><i>свободный крой</i></h2>
+          <h2 class="slide-sub">Как выбрать<br><i>пальто оверсайз</i></h2>
         </div>
         ${edPh(390, 470, '')}
         <div class="slide-sec" style="padding-top:18px">

@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=93b0e79e';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2c15ecdb';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -1101,7 +1101,7 @@ export const DESKTOP = {
             <div>${edPh(660, 620, '')}<div class="slide-cap">Пальто MAX MARA · съёмка для WB Бренды</div></div>
             <div style="padding-top:20px">
               <div class="slide-rule"></div>
-              <h2 class="slide-sub">Как сидит<br><i>свободный крой</i></h2>
+              <h2 class="slide-sub">Как выбрать<br><i>пальто оверсайз</i></h2>
               ${pin(2)}
               <div class="slide-body">
                 <p>Свободный силуэт держится не тканью, а линией плеча. Если шов уходит на два-три сантиметра ниже естественной точки, вещь начинает жить самостоятельно — и объём читается как замысел, а не как размер больше нужного.</p>

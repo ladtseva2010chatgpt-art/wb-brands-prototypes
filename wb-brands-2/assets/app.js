@@ -2,11 +2,11 @@
    KIT · роутер, рабочее место, статичные виды
    ============================================================ */
 
-import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=93b0e79e';
+import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=2c15ecdb';
 import { MOBILE, ph, pin, hot, bars, chip, badge, btn, pcard, header, bottomnav,
-         edPh, edP, ico } from './wire.js?v=93b0e79e';
-import { DESKTOP } from './wire-desktop.js?v=93b0e79e';
-import { initInteractions, signPage } from './interact.js?v=93b0e79e';
+         edPh, edP, ico } from './wire.js?v=2c15ecdb';
+import { DESKTOP } from './wire-desktop.js?v=2c15ecdb';
+import { initInteractions, signPage } from './interact.js?v=2c15ecdb';
 
 const byId = (id) => SCREENS.find((s) => s.id === id);
 
@@ -364,7 +364,7 @@ const COMP = {
   hero: () => `<div class="ed-hero">${edPh(320, 220, '')}<div class="ed-hero__copy ed-hero__copy--dark" style="left:14px;right:14px;bottom:14px"><div class="ed-label" style="margin-bottom:6px">Кампания недели</div><div class="ed-h3">Спокойный объём</div></div><div class="ed-hero__tab" style="padding:10px 14px;font-size:9px">Смотреть ›</div></div>`,
   edbanner: () => `<div class="ed-infeed" style="padding:18px"><div class="ed-infeed__k">Подборка стилиста</div><div class="ed-h3">Шесть пальто сезона</div></div>`,
   storyslide: () => `<div style="position:relative">${edPh(320, 240, '')}<div class="slide-bars" style="position:absolute;top:10px;left:10px;right:10px">${[1, 2, 3].map((i) => `<i${i === 1 ? ' data-on' : ''}></i>`).join('')}</div></div>`,
-  edtext: () => `<div class="slide"><div class="slide-rule"></div><div class="slide-sub" style="font-size:19px">Как сидит <i>свободный крой</i></div><div class="slide-body" style="font-size:14px">Силуэт держится не тканью, а линией плеча.</div></div>`,
+  edtext: () => `<div class="slide"><div class="slide-rule"></div><div class="slide-sub" style="font-size:19px">Как выбрать <i>пальто оверсайз</i></div><div class="slide-body" style="font-size:14px">Силуэт держится не тканью, а линией плеча.</div></div>`,
   quote: () => `<div class="slide"><div class="slide-lead" style="font-size:17px">«Посадка — это не сантиметры. Это то, как вещь ведёт себя, когда вы про неё забыли»</div></div>`,
   brandfocus: () => `<div>${edPh(320, 200, '')}<div class="chat-art__k" style="margin-top:10px">Brand Focus</div><div class="chat-art__t">Кто такие 12 STOREEZ</div></div>`,
   article: () => `<div class="w-row" style="gap:12px"><div style="width:88px;flex:0 0 auto">${edPh(160, 120, '')}</div><div><div class="chat-art__k">Гид · 6 минут</div><div class="chat-art__t" style="font-size:16px">Пальто на сезон</div></div></div>`,
