@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=1c89f1e1';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=ea0a3039';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -111,7 +111,6 @@ export const DESKTOP = {
     const catalogOpen = st === 'catalog';
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
-    const reminded = st === 'reminded';
 
     const sis = (o) => `
       <section class="ed-sisd${o.mirror ? ' ed-sisd--mirror' : ''}">
@@ -160,7 +159,7 @@ export const DESKTOP = {
 
       <!-- объяснённая подборка (редакционная, ассистент свёрнут в кнопку) -->
       <section class="ed-sec ed-featured-section">
-        ${pin(10)}
+        ${pin(9)}
         <div class="ed-head">
           <div>
             <h2 class="ed-h2">Собрано для вас</h2>
@@ -173,43 +172,38 @@ export const DESKTOP = {
         </div>
       </section>
 
-      <!-- бренды: на своей светлой подложке, чтобы не сливаться с подборкой -->
-      <div class="ed-band">
-        <section class="ed-sec ed-brands-intro" style="padding-bottom:0">
-          ${pin(5)}
-          <div class="ed-head">
-            <h2 class="ed-h2">Кого мы выбрали</h2>
-            ${hot('brands-az', 'default', `<span class="ed-link">Все бренды</span>`)}
-          </div>
-        </section>
-        <div class="ed-rail">
-          ${BRANDS.map((b) => edBrand(b)).join('')}
+      <!-- бренды словами -->
+      <section class="ed-sec ed-brands-intro" style="padding-bottom:0">
+        ${pin(4)}
+        <div class="ed-head">
+          <h2 class="ed-h2">Кого мы отобрали</h2>
+          ${hot('brands-az', 'default', `<span class="ed-link">Все бренды</span>`)}
         </div>
+      </section>
+      <div class="ed-rail" style="padding-bottom:64px">
+        ${BRANDS.map((b) => edBrand(b)).join('')}
       </div>
 
-      <!-- дроп непостоянный: без дропа блок уходит целиком, после «Напомнить» — подтверждение -->
-      ${hasDrop ? `
+
+      ${hasDrop ? hot('drop', 'before', `
       <section class="ed-drop">
-        ${pin(3)}
-        ${hot('drop', 'before', `
+        ${pin(4)}
         <div>
           <div class="ed-label" style="color:rgba(255,255,255,.6);margin-bottom:14px">Дроп · 14 ноября, 12:00</div>
           <div class="ed-h1" style="color:#fff;font-size:44px">USHATÁVA × WB</div>
           <p class="ed-t" style="color:rgba(255,255,255,.72);margin-top:12px;max-width:52ch;font-size:15px">Капсула из восьми вещей. Ранний доступ для участников программы за 24 часа до общего старта.</p>
-        </div>`)}
+        </div>
         <div>
           <div class="ed-label" style="color:rgba(255,255,255,.6);margin-bottom:10px">До старта</div>
           <div class="ed-drop__timer">01 : 22 : 40</div>
-          ${reminded
-            ? `<div class="ed-drop__cta ed-drop__cta--done" style="margin-top:20px">✓ Напомним за час до старта</div>`
-            : hot('home', 'reminded', `<div class="ed-drop__cta" style="margin-top:20px">Напомнить</div>`)}
+          <div class="ed-drop__cta" style="margin-top:20px">Напомнить</div>
         </div>
-      </section>` : `<div>${pin(3)}</div>`}
+      </section>`) : `<div>${pin(4)}</div>`}
 
       <!-- новинки -->
       <section class="ed-sec">
         <div class="ed-head">
-          <h2 class="ed-h2">Новинки</h2>
+          <h2 class="ed-h2">Новое на этой неделе</h2>
           ${hot('listing', 'default', `<span class="ed-link">Все 214</span>`)}
         </div>
         <div class="ed-home-product-grid">
@@ -218,21 +212,62 @@ export const DESKTOP = {
         </div>
       </section>
 
-      <!-- слайд-история: поднята выше -->
+      <!-- shop-in-shop: товары уезжают за баннер -->
+      ${pin(5)}
+      ${sis({ brand: 'MARC O’POLO', state: 'custom', asset: 'banner-15', position: '67% center', items: [['Куртка замшевая', '38 900 ₽'], ['Футболка', '4 200 ₽'], ['Кепка', '3 400 ₽'], ['Джинсы', '9 800 ₽'], ['Рубашка', '7 900 ₽']] })}
+
+      <div class="ed-rule" style="margin:0 48px"></div>
+
+      <!-- журнал · точка входа 1 -->
+      <section class="ed-sec ed-journal-section">
+        ${pin(7)}
+        <div class="ed-head">
+          <h2 class="ed-h2">Журнал</h2>
+          ${hot('journal', 'default', `<span class="ed-link">Все материалы</span>`)}
+        </div>
+        <div class="ed-features">
+          ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Подборка', '22 июл', 'РОССИЙСКИЕ МАРКИ, КОТОРЫЕ СТОИТ ЗНАТЬ']]
+            .map(([k, d, t]) => hot('journal', 'article', `
+              <div>
+                ${edPh(420, 300, '')}
+                <div class="w-row" style="gap:12px;margin-top:16px;align-items:center"><span class="ed-art__tag">${k}</span><span class="ed-art__date">${d}</span></div>
+                <div class="ed-art__t">${t}</div>
+              </div>`)).join('')}
+        </div>
+      </section>
+
+      <!-- lifestyle во весь экран -->
+      ${hot('listing', 'default', `
+      <section class="ed-life">
+        ${pin(8)}
+        ${edPh(1440, 620, '', 'lifestyle', 'banner-lifestyle-wide', 'center')}
+        <div class="ed-life__copy" style="color:var(--e-ink)">
+          <div class="ed-label" style="margin-bottom:14px">Категория</div>
+          <div class="ed-h1">Дом и вещи</div>
+          <p class="ed-t" style="margin-top:14px;max-width:38ch;font-size:15px">Дом, ароматы, книги и предметы, из которых собирается остальная часть жизни.</p>
+          <div class="ed-link" style="display:inline-block;margin-top:20px">Смотреть</div>
+        </div>
+      </section>`)}
+
+      <!-- второй shop-in-shop, зеркальный -->
+      ${pin(9)}
+      ${sis({ brand: '12 STOREEZ', state: 'default', mirror: true, asset: 'banner-18', position: '68% center', items: [['Пальто', '27 800 ₽'], ['Костюм', '31 400 ₽'], ['Рубашка', '8 900 ₽'], ['Ботинки', '19 200 ₽'], ['Сумка', '12 400 ₽']] })}
+
+      <!-- журнал · точка входа 2 -->
       ${hot('slide-journal', 'cover', `
-      <section class="ed-sec">
-        ${pin(6)}
+      <section class="ed-sec" style="padding-top:0">
+        ${pin(7)}
         <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center">
           ${edPh(800, 520, '')}
           <div>
-            <div class="ed-label" style="margin-bottom:14px">Журнал · история в 6 слайдах</div>
-            <div class="ed-h1" style="font-size:40px">Как выбрать<br>пальто оверсайз</div>
+            <div class="ed-label" style="margin-bottom:14px">Слайд-журнал · 6 слайдов</div>
+            <div class="ed-h1" style="font-size:40px">Как носить объём,<br>чтобы он не носил вас</div>
             <div class="ed-link" style="display:inline-block;margin-top:22px">Открыть историю</div>
           </div>
         </div>
       </section>`)}
 
-      <!-- аутлет: поднят в первую половину страницы -->
+      <!-- аутлет -->
       ${hot('outlet', 'default', `
       <section class="ed-sec" style="background:var(--e-soft)">
         ${pin(11)}
@@ -247,71 +282,9 @@ export const DESKTOP = {
         </div>
       </section>`)}
 
-      <!-- shop-in-shop: товары уезжают за баннер -->
-      ${pin(4)}
-      ${sis({ brand: 'MARC O’POLO', state: 'custom', asset: 'banner-15', position: '67% center', items: [['Куртка замшевая', '38 900 ₽'], ['Футболка', '4 200 ₽'], ['Кепка', '3 400 ₽'], ['Джинсы', '9 800 ₽'], ['Рубашка', '7 900 ₽']] })}
-
-      <!-- lifestyle во весь экран: пауза между магазином бренда и журналом -->
-      ${hot('listing', 'default', `
-      <section class="ed-life">
-        ${pin(7)}
-        ${edPh(1440, 620, '', 'lifestyle', 'banner-lifestyle-wide', 'center')}
-        <div class="ed-life__copy" style="color:var(--e-ink)">
-          <div class="ed-label" style="margin-bottom:14px">Категория</div>
-          <div class="ed-h1">Дом и вещи</div>
-          <p class="ed-t" style="margin-top:14px;max-width:38ch;font-size:15px">Дом, ароматы, книги и предметы, из которых собирается остальная часть жизни.</p>
-          <div class="ed-link" style="display:inline-block;margin-top:20px">Смотреть</div>
-        </div>
-      </section>`)}
-
-      <!-- журнал: главная статья слева, короткий список справа -->
-      <section class="ed-sec ed-journal-section">
-        ${pin(6)}
-        <div class="ed-head">
-          <h2 class="ed-h2">Журнал</h2>
-          ${hot('journal', 'default', `<span class="ed-link">Все материалы</span>`)}
-        </div>
-        <div class="ed-jr">
-          ${hot('journal', 'article', `
-          <div class="ed-jr__main">
-            ${edPh(800, 520, '')}
-            <div class="w-row" style="gap:12px;margin-top:18px;align-items:center"><span class="ed-art__tag">Интервью</span><span class="ed-art__date">29 июл</span></div>
-            <div class="ed-jr__t">Работа как любовь: разговор с 12 STOREEZ</div>
-          </div>`)}
-          <div class="ed-jr__list">
-          ${[['Гид', '26 июл', 'Пальто, которое переживёт сезон'], ['Подборка', '22 июл', 'Российские марки, которые стоит знать']]
-            .map(([k, d, t]) => hot('journal', 'article', `
-            <div class="ed-jr__i">
-              <div class="w-row" style="gap:12px;align-items:center"><span class="ed-art__tag">${k}</span><span class="ed-art__date">${d}</span></div>
-              <div class="ed-jr__it">${t}</div>
-            </div>`)).join('')}
-          </div>
-        </div>
-      </section>
-
-      <!-- второй shop-in-shop, зеркальный -->
-      ${pin(8)}
-      ${sis({ brand: '12 STOREEZ', state: 'default', mirror: true, asset: 'banner-18', position: '68% center', items: [['Пальто', '27 800 ₽'], ['Костюм', '31 400 ₽'], ['Рубашка', '8 900 ₽'], ['Ботинки', '19 200 ₽'], ['Сумка', '12 400 ₽']] })}
-
-      <!-- причины вернуться: в самом низу -->
-      <section class="ed-sec" style="border-top:1px solid var(--e-line)">
-        ${pin(12)}
-        <div class="ed-head"><h2 class="ed-h2">Что здесь ещё</h2></div>
-        <div class="ed-value ed-value--d">
-          ${USP_CLUB.map(([i, t, d, go, gs]) => `
-            <div class="ed-value__i w-hot" data-go="${go}" data-state="${gs}">
-              <span class="ed-usp__ico">${ico(i)}</span>
-              <div>
-                <div class="ed-value__t">${t}</div>
-                <div class="ed-value__d">${d}</div>
-              </div>
-            </div>`).join('')}
-        </div>
-      </section>
-
       <!-- подпись автора стоит в подвале страницы, см. signPage() в interact.js -->
 
-      ${pin(9)}
+      ${pin(11)}
       ${chatOpen ? edChat(true) : (st === 'no-ai' ? '' : edFab())}
     </div>`;
   },
