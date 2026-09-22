@@ -833,7 +833,6 @@ export const MOBILE = {
           <span>412 вещей</span>
           <div class="w-row" style="gap:14px">
             <span>Сначала новинки ⌄</span>
-            <div class="ed-density">${[0, 1, 2].map((i) => `<i${i === 1 ? ' data-on' : ''}></i>`).join('')}</div>
           </div>
         </div>
       </div>`;

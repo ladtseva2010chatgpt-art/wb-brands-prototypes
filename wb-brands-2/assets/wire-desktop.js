@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2c15ecdb';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=2fe2a81c';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -450,7 +450,6 @@ export const DESKTOP = {
           <div class="w-row" style="gap:22px">
             <span class="ed-sm">412 вещей</span>
             <span class="ed-sm">Сначала новинки ⌄</span>
-            <div class="ed-density">${[0, 1, 2].map((i) => `<i${i === 1 ? ' data-on' : ''}></i>`).join('')}</div>
           </div>
         </div>
       </div>`;

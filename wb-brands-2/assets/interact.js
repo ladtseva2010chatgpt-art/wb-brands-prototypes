@@ -23,7 +23,6 @@ const SINGLE = [
   { sel: '.ed-cat', scope: '.ed-cats' },
   { sel: '.ed-tabs span', scope: '.ed-tabs' },
   { sel: '.mag-rubrics span', scope: '.mag-rubrics' },
-  { sel: '.ed-density i', scope: '.ed-density' },
   { sel: '.ed-size', scope: '.ed-sizes' },
   { sel: '.ed-swatch', scope: '.ed-swatches' },
   { sel: '.proto__seg button', scope: '.proto__seg' },

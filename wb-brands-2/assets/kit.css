@@ -2696,13 +2696,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   flex: 0 0 auto;
 }
 .ed-chip[data-on] { background: var(--e-ink); color: #fff; border-color: var(--e-ink); }
-.ed-density { display: flex; gap: 5px; }
-.ed-density i {
-  border: 0;
-  display: block;
-  position: relative;
-  color: var(--e-ink);
-}
 
 /* сетка выдачи */
 .ed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 12px; padding: 22px 20px; }
@@ -2863,15 +2856,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ed-chip { min-height: 40px; }
 .ed-cat { padding-top: 10px; padding-bottom: 10px; }
 .ed-brandsbtn { min-height: 40px; }
-.ed-density i { width: 34px; height: 34px; }
-.ed-density i::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid currentColor;
-  opacity: .55;
-}
-.ed-density i[data-on]::after { opacity: 1; }
 .ed-catlist__i { min-height: 52px; }
 .ed-rows__i { min-height: 46px; }
 .chat-chips span { min-height: 40px; display: inline-flex; align-items: center; }
@@ -3012,7 +2996,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* отклик на нажатие для всего интерактивного */
 .ed-chip, .ed-size, .ed-swatch, .ed-cat, .ed-acc__i, .ed-link,
-.ed-btn, .ed-tabs span, .mag-rubrics span, .ed-density i,
+.ed-btn, .ed-tabs span, .mag-rubrics span,
 .ed-rows__i, .ed-catlist__i, .chat-chips span, .ed-iconbtn, .ed-ico {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
