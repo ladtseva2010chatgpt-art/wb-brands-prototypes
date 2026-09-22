@@ -231,7 +231,6 @@ export const USP = [
 
 /* причины вернуться: живут ниже, рядом с дропом и лояльностью */
 export const USP_CLUB = [
-  ['box', 'Сервис как в бутике', 'Доставка день в день там, где доступна по адресу.'],
   ['club', 'Лояльность', 'Ранний доступ к дропам за сутки до общего старта и привилегии раздела.'],
   ['drop', 'Дропы', 'Капсулы и коллаборации по расписанию — с напоминанием, чтобы не пропустить.'],
 ];
@@ -621,23 +620,7 @@ export const MOBILE = {
         </div>
       </section>`)}
 
-      <!-- 12. причины вернуться -->
-      <section class="ed-sec--tight" style="padding-top:34px">
-        ${pin(11)}
-        <div class="ed-head" style="padding:0"><h2 class="ed-h2">Что здесь ещё</h2></div>
-        <div class="ed-value">
-          ${USP_CLUB.map(([i, t, d], k) => `
-            <div class="ed-value__i${k === 1 ? ' w-hot' : ''}"${k === 1 ? ' data-go="club" data-state="default"' : ''}>
-              <span class="ed-usp__ico">${ico(i)}</span>
-              <div>
-                <div class="ed-value__t">${t}</div>
-                <div class="ed-value__d">${d}</div>
-              </div>
-            </div>`).join('')}
-        </div>
-      </section>
-
-      <!-- 13. аутлет: отдельный вход в конце -->
+      <!-- 12. аутлет: отдельный вход перед причинами вернуться -->
       ${hot('outlet', 'default', `
       <section class="ed-sec" style="background:var(--e-soft);margin-top:34px">
         ${pin(10)}
@@ -646,6 +629,22 @@ export const MOBILE = {
         <p class="ed-t" style="margin-top:12px;max-width:280px">Оригинал из коллекции прошлого сезона. Это единственная причина цены — и мы говорим об этом прямо.</p>
         <div class="ed-link" style="display:inline-block;margin-top:18px">Перейти</div>
       </section>`)}
+
+      <!-- 13. причины вернуться: самый низ ленты -->
+      <section class="ed-sec--tight" style="padding-top:34px;padding-bottom:34px">
+        ${pin(11)}
+        <div class="ed-head" style="padding:0"><h2 class="ed-h2">Что здесь ещё</h2></div>
+        <div class="ed-value">
+          ${USP_CLUB.map(([i, t, d]) => `
+            <div class="ed-value__i${i === 'club' ? ' w-hot' : ''}"${i === 'club' ? ' data-go="club" data-state="default"' : ''}>
+              <span class="ed-usp__ico">${ico(i)}</span>
+              <div>
+                <div class="ed-value__t">${t}</div>
+                <div class="ed-value__d">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </section>
 
       ${edBottom(0)}
     </div>`;
