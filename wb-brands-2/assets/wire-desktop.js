@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=6183931b';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=56863a79';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -1106,7 +1106,7 @@ export const DESKTOP = {
               <div class="slide-body">
                 <p>Свободный силуэт держится не тканью, а линией плеча. Если шов уходит на два-три сантиметра ниже естественной точки, вещь начинает жить самостоятельно — и объём читается как замысел, а не как размер больше нужного.</p>
                 <p>Проверить это легко: поднимите руки. Хорошо посаженное пальто <span class="slide-link">потянется вместе с вами</span>, а не соберётся складкой на спине.</p>
-                <p><em>Три вещи из этой истории собраны на следующем слайде, в трёх ценах.</em></p>
+                <p><em>Три вещи из этой истории собраны на следующем слайде, от базы до премиума.</em></p>
               </div>
               ${pin(8)}
               <div class="slide-cap" style="margin:34px 0 14px">Вещь из этого абзаца</div>
@@ -1138,7 +1138,7 @@ export const DESKTOP = {
               <div class="slide-rule"></div>
               <h2 class="slide-sub">Один силуэт,<br><i>три уровня</i></h2>
             </div>
-            <div class="slide-body">Вещи в трёх ценах, чтобы было видно, за что именно доплачивают. Разница не в тепле, а в том, сколько сезонов вещь держит форму.</div>
+            <div class="slide-body">Одна линия плеча в базовой вещи и в премиальной. Так видно, за что именно доплачивают. Разница не в тепле, а в том, сколько сезонов вещь держит форму.</div>
           </div>
         </div>
         <div class="slide-sec" style="padding-top:0">
