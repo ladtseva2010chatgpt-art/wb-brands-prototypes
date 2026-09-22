@@ -520,16 +520,18 @@ export const MOBILE = {
       </div>`)}
       ${edMarquee()}
 
-      <!-- 2. за брендами сюда и приходят — поэтому они первыми после кампании -->
-      ${head('Кого мы отобрали', 'Все бренды', 'brands-az', 'default')}
-      <div class="ed-rail" style="align-items:stretch">${BRANDS.map((b) => edBrand(b)).join('')}</div>
-      ${pin(5)}
-
-      <!-- 3. объяснённая подборка: Aha Moment в первой сессии -->
+      <!-- 2. объяснённая подборка: Aha Moment в первой сессии -->
       ${st === 'no-ai'
         ? `${head('Выбор редакции', 'Ещё', 'journal', 'default', 'Куратор скоро вернётся. Пока — то, что редакция выбрала на этой неделе.')}${pin(10)}`
         : `${head('Собрано для вас', 'Ещё', 'assistant', 'set', 'Спокойные оттенки и свободный силуэт — вы как раз такие вещи и смотрели.')}${pin(10)}`}
       ${rail([['MAX MARA', 'Пальто камель', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽'], ['MARC O’POLO', 'Тренч', '24 000 ₽'], ['12 STOREEZ', 'Жакет', '17 400 ₽']], 150)}
+
+      <!-- 3. бренды — на своей светлой подложке, чтобы не сливаться с товарной полкой -->
+      <section class="ed-band">
+        ${head('Кого мы выбрали', 'Все бренды', 'brands-az', 'default')}
+        <div class="ed-rail" style="align-items:stretch">${BRANDS.map((b) => edBrand(b)).join('')}</div>
+        ${pin(5)}
+      </section>
 
       <!-- 4. повод именно сегодня. Дроп непостоянный: без дропа блок уходит целиком,
            соседние блоки смыкаются. После «Напомнить» кнопка меняется на подтверждение -->
@@ -551,9 +553,13 @@ export const MOBILE = {
         </div>
       </section>` : `<div style="margin-top:6px">${pin(3)}</div>`}
 
-      <!-- 5. слайд-история: вторая точка входа в редакцию, поднята выше -->
+      <!-- 5. новинки: одна полка вместо двух -->
+      ${head('Новинки', 'Все 214', 'listing', 'default')}
+      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
+
+      <!-- 6. слайд-история: вторая точка входа в редакцию, поднята выше -->
       ${hot('slide-journal', 'cover', `
-      <section class="ed-sec--flush" style="padding-top:34px">
+      <section class="ed-sec--flush" style="padding-top:56px">
         ${pin(6)}
         <div style="padding:0 20px 16px"><span class="ed-label ed-label--mute">Журнал · история в 6 слайдах</span></div>
         <div class="ed-hero">
@@ -564,10 +570,6 @@ export const MOBILE = {
           <div class="ed-hero__tab" style="padding:12px 18px;font-size:10px">Открыть <span>›</span></div>
         </div>
       </section>`)}
-
-      <!-- 6. новинки: одна полка вместо двух -->
-      ${head('Новинки', 'Все 214', 'listing', 'default')}
-      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
 
       <!-- 7. аутлет: отдельный вход, поднят в первую половину ленты -->
       ${hot('outlet', 'default', `
@@ -594,7 +596,19 @@ export const MOBILE = {
         ${rail([['MARC O’POLO', 'Куртка замшевая', '38 900 ₽'], ['MARC O’POLO', 'Футболка', '4 200 ₽'], ['MARC O’POLO', 'Кепка', '3 400 ₽'], ['MARC O’POLO', 'Джинсы', '9 800 ₽']], 150)}
       </section>
 
-      <!-- 9. журнал: одна главная статья и короткий список — читается как журнал, а не как ещё одна лента -->
+      <!-- 9. смена ритма: категория во весь экран -->
+      ${hot('listing', 'default', `
+      <section class="ed-life" style="margin-top:34px">
+        ${pin(7)}
+        ${edPh(390, 500, '', 'lifestyle', 'banner-lifestyle-mobile', 'center')}
+        <div class="ed-life__copy">
+          <div class="ed-label" style="margin-bottom:10px">Категория</div>
+          <div class="ed-h1">Дом и вещи</div>
+          <div class="ed-link" style="display:inline-block;margin-top:16px">Смотреть</div>
+        </div>
+      </section>`)}
+
+      <!-- 10. журнал: одна главная статья и короткий список — читается как журнал, а не как ещё одна лента -->
       ${head('Журнал', 'Все материалы', 'journal', 'default')}
       <section class="ed-sec--tight ed-jr">
         ${pin(6)}
@@ -613,18 +627,6 @@ export const MOBILE = {
           </div>`)).join('')}
         </div>
       </section>
-
-      <!-- 10. смена ритма: категория во весь экран -->
-      ${hot('listing', 'default', `
-      <section class="ed-life">
-        ${pin(7)}
-        ${edPh(390, 500, '', 'lifestyle', 'banner-lifestyle-mobile', 'center')}
-        <div class="ed-life__copy">
-          <div class="ed-label" style="margin-bottom:10px">Категория</div>
-          <div class="ed-h1">Дом и вещи</div>
-          <div class="ed-link" style="display:inline-block;margin-top:16px">Смотреть</div>
-        </div>
-      </section>`)}
 
       <!-- 11. второй бренд — другим форматом, без повтора первого -->
       <section class="ed-sec--flush" style="padding-top:34px">
