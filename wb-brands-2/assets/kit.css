@@ -1549,6 +1549,33 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-align: center;
   text-transform: uppercase;
 }
+/* Действия поверх снимка. Сердце вверху справа — привычное место, корзина
+   внизу справа, чтобы не спорить со статусной плашкой по центру низа.
+   Обе кнопки видны всегда: на телефоне наведения нет, и появление по hover
+   означало бы, что половина пользователей их просто не найдёт. */
+.ed-p__act {
+  position: absolute;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, .92);
+  color: var(--e-ink);
+  box-shadow: 0 1px 4px rgba(11, 11, 12, .12);
+  transition: transform .18s var(--ease), opacity .18s var(--ease);
+}
+.ed-p__act svg { width: 16px; height: 16px; }
+.ed-p__act--fav { top: 8px; }
+.ed-p__act--bag { bottom: 8px; }
+.ed-p__act:hover { transform: scale(1.06); }
+.ed-p__act:active { transform: scale(.94); }
+.ed-p__act:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
+/* под плашкой статуса корзина не нужна: товар всё равно не купить сейчас */
+.ed-p__status ~ .ed-p__act--bag { display: none; }
+
 .ed-p__meta {
   display: flex;
   align-items: center;
@@ -1571,6 +1598,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   white-space: nowrap;
 }
+/* «Популярный» — про спрос, а не про отбор, поэтому он залит, а не обведён:
+   так два бейджа различаются с расстояния, не добавляя в макет новый цвет */
+.ed-p__badge--hit { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
 
 /* --- бегущая строка УТП под главной кампанией --- */
 .ed-marquee {

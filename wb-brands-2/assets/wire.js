@@ -61,10 +61,15 @@ export const edP = (o = {}) => {
   const { brand = 'MAX MARA', name = 'Пальто из шерсти', price = '39 000 ₽', old = '',
           w = 158, ratio = [300, 380], tag = '', go = 'pdp', state = 'default',
           badge = '', status = '' } = o;
+  /* Бейджей два, и они про разное: «Премиум» — про отбор, «Популярный» —
+     про спрос. На одной карточке показываем только один: две плашки рядом
+     спорят между собой и обе перестают читаться. */
   const inferredBadge = badge || ({
     BOSS: 'ПРЕМИУМ',
     COS: 'ПРЕМИУМ',
     'MARC O’POLO': 'ПРЕМИУМ',
+    '12 STOREEZ': 'ПОПУЛЯРНЫЙ',
+    USHATÁVA: 'ПОПУЛЯРНЫЙ',
   }[brand] || '');
   const inferredStatus = status || (brand === 'BOSS' ? 'COMING SOON' : brand === 'ARNY PRAHT' ? 'LAST SIZE' : '');
   const productRole = /(сумк|клатч|шопер)/i.test(name) ? 'bag'
@@ -75,8 +80,12 @@ export const edP = (o = {}) => {
       <div class="ed-p__media">
         ${edPh(ratio[0], ratio[1], tag, productRole)}
         ${inferredStatus ? `<span class="ed-p__status">${inferredStatus}</span>` : ''}
+        ${/* избранное и быстрая корзина — на самой картинке: это единственные
+             два действия, ради которых не нужно открывать карточку */''}
+        <button class="ed-p__act ed-p__act--fav" aria-label="В избранное">${ico('heart')}</button>
+        <button class="ed-p__act ed-p__act--bag" aria-label="В корзину">${ico('bag')}</button>
       </div>
-      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge">${inferredBadge}</span>` : ''}</div>
+      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'ПОПУЛЯРНЫЙ' ? ' ed-p__badge--hit' : ''}">${inferredBadge}</span>` : ''}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
     </div>`);
@@ -183,6 +192,7 @@ export const edCatalog = () => `
     <div class="ed-catalog__lead">
       <button class="ed-catalog__key w-hot" data-go="brands-az" data-state="default">Бренды A–Z<i>›</i></button>
       <button class="ed-catalog__key w-hot" data-go="outlet" data-state="default">Аутлет<i>›</i></button>
+      <button class="ed-catalog__key w-hot" data-go="journal" data-state="default">Журнал<i>›</i></button>
     </div>
     ${[['Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы']],
        ['Обувь и сумки', ['Ботинки', 'Кроссовки', 'Сумки', 'Аксессуары']]].map(([t, items]) => `

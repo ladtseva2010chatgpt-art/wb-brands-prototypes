@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=72caca98';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=3812070c';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -381,6 +381,7 @@ export const DESKTOP = {
         <div class="ed-catalog__lead ed-catalog__lead--row">
           ${hot('brands-az', 'default', `<span class="ed-catalog__key">Бренды A–Z<i>›</i></span>`)}
           ${hot('outlet', 'default', `<span class="ed-catalog__key">Аутлет<i>›</i></span>`)}
+          ${hot('journal', 'default', `<span class="ed-catalog__key">Журнал<i>›</i></span>`)}
         </div>
         <div class="ed-catcols">
           ${col('Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы', 'Джинсы'])}
