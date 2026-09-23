@@ -82,8 +82,11 @@ export const edP = (o = {}) => {
         ${/* избранное — на снимке, как в приложении: единственное действие,
              ради которого не нужно открывать карточку */''}
         <button class="ed-p__fav" aria-label="В избранное">${ico('heart')}</button>
+        ${/* бейдж живёт на снимке: в строке с брендом длинное название
+             переносило его на вторую строку и карточки разъезжались */''}
+        ${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}
       </div>
-      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}</div>
+      <div class="ed-p__brand">${brand}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
       ${/* корзина — плашкой под карточкой, в том же виде, что срок доставки
