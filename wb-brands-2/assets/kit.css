@@ -1605,20 +1605,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   white-space: nowrap;
 }
-/* на снимке бейдж стоит слева сверху — напротив сердца и над плашкой статуса.
-   Подложка непрозрачная: поверх фотографии обводка сама по себе не читается. */
-.ed-p__media > .ed-p__badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: rgba(255, 255, 255, .94);
-  border-color: rgba(255, 255, 255, .94);
-  color: var(--e-ink);
-}
+/* бейдж стоит строкой под снимком: съёмка — главный аргумент раздела,
+   и служебная плашка не должна её перекрывать. На фото остаётся сердце. */
+/* строка держится и без бейджа: иначе в ряду бренд и цена соседних карточек
+   встают на разной высоте */
+.ed-p__badgeline { min-height: 22px; margin-top: 10px; }
+.ed-p__badgeline + .ed-p__brand { margin-top: 6px; }
 /* «Аутлет» залит, «Премиум» светлый: так они различаются с расстояния,
    и в макет не приходится вводить ещё один цвет */
-.ed-p__badge--outlet,
-.ed-p__media > .ed-p__badge--outlet { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
+.ed-p__badge--outlet { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
 
 /* --- бегущая строка УТП под главной кампанией --- */
 .ed-marquee {

@@ -3,10 +3,10 @@
    Адрес: prototype.html#pdp/nosize
    ============================================================ */
 
-import { GROUPS, SCREENS } from './data.js?v=9fe38d9e';
-import { MOBILE } from './wire.js?v=9fe38d9e';
-import { DESKTOP } from './wire-desktop.js?v=9fe38d9e';
-import { initInteractions, signPage } from './interact.js?v=9fe38d9e';
+import { GROUPS, SCREENS } from './data.js?v=636dce0e';
+import { MOBILE } from './wire.js?v=636dce0e';
+import { DESKTOP } from './wire-desktop.js?v=636dce0e';
+import { initInteractions, signPage } from './interact.js?v=636dce0e';
 
 /* хранилище недоступно, когда файл открыт напрямую с диска */
 const store = {

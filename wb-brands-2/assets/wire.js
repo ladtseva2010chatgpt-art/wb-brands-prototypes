@@ -82,10 +82,10 @@ export const edP = (o = {}) => {
         ${/* избранное — на снимке, как в приложении: единственное действие,
              ради которого не нужно открывать карточку */''}
         <button class="ed-p__fav" aria-label="В избранное">${ico('heart')}</button>
-        ${/* бейдж живёт на снимке: в строке с брендом длинное название
-             переносило его на вторую строку и карточки разъезжались */''}
-        ${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}
       </div>
+      ${/* бейдж — отдельной строкой под снимком: на фотографии он резал кадр,
+           а в строке с брендом длинное название сбивало его вниз */''}
+      <div class="ed-p__badgeline">${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}</div>
       <div class="ed-p__brand">${brand}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
