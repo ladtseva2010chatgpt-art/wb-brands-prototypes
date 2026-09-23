@@ -1549,32 +1549,43 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-align: center;
   text-transform: uppercase;
 }
-/* Действия поверх снимка. Сердце вверху справа — привычное место, корзина
-   внизу справа, чтобы не спорить со статусной плашкой по центру низа.
-   Обе кнопки видны всегда: на телефоне наведения нет, и появление по hover
-   означало бы, что половина пользователей их просто не найдёт. */
-.ed-p__act {
+/* Избранное — как в приложении: контурное сердце прямо на снимке, без
+   подложки и тени. Кружок под ним спорил с плашками и выглядел чужим. */
+.ed-p__fav {
   position: absolute;
+  top: 8px;
   right: 8px;
   width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, .92);
   color: var(--e-ink);
-  box-shadow: 0 1px 4px rgba(11, 11, 12, .12);
-  transition: transform .18s var(--ease), opacity .18s var(--ease);
+  transition: transform .18s var(--ease);
 }
-.ed-p__act svg { width: 16px; height: 16px; }
-.ed-p__act--fav { top: 8px; }
-.ed-p__act--bag { bottom: 8px; }
-.ed-p__act:hover { transform: scale(1.06); }
-.ed-p__act:active { transform: scale(.94); }
-.ed-p__act:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
-/* под плашкой статуса корзина не нужна: товар всё равно не купить сейчас */
-.ed-p__status ~ .ed-p__act--bag { display: none; }
+.ed-p__fav svg { width: 22px; height: 22px; stroke-width: 1.4; filter: drop-shadow(0 0 2px rgba(255, 255, 255, .9)); }
+.ed-p__fav:hover { transform: scale(1.08); }
+.ed-p__fav:active { transform: scale(.92); }
+.ed-p__fav:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
+
+/* Корзина повторяет плашку срока доставки: та же высота, форма и фон —
+   в приложении это уже привычная строка под карточкой. */
+.ed-p__cart {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  background: var(--e-soft);
+  color: var(--e-ink);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.ed-p__cart:hover { background: var(--e-ink); color: #fff; }
+.ed-p__cart:active { transform: scale(.98); }
+.ed-p__cart:focus-visible { outline: 2px solid var(--e-accent); outline-offset: 2px; }
 
 .ed-p__meta {
   display: flex;
@@ -1598,9 +1609,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   text-transform: uppercase;
   white-space: nowrap;
 }
-/* «Популярный» — про спрос, а не про отбор, поэтому он залит, а не обведён:
-   так два бейджа различаются с расстояния, не добавляя в макет новый цвет */
-.ed-p__badge--hit { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
+/* «Аутлет» залит, «Премиум» обведён: так они различаются с расстояния,
+   и в макет не приходится вводить ещё один цвет */
+.ed-p__badge--outlet { border-color: var(--e-ink); background: var(--e-ink); color: #fff; }
 
 /* --- бегущая строка УТП под главной кампанией --- */
 .ed-marquee {

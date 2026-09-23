@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=3812070c';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=512fca7e';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -456,14 +456,15 @@ export const DESKTOP = {
   /* 05 · категорийный листинг — визуальная версия */
   listing: (st) => {
     const items = [
-      ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'премиум'],
-      ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'],
-      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''],
-      ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', 'премиум'],
-      ['BOSS', 'Пальто двубортное', '54 000 ₽', 'премиум'],
+      /* четвёртым столбцом — прошлая цена: вещи аутлета идут в общей выдаче */
+      ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', ''],
+      ['COS', 'Пальто-кокон', '21 300 ₽', ''],
+      ['12 STOREEZ', 'Пальто оверсайз', '19 500 ₽', '27 800 ₽'],
+      ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', ''],
+      ['BOSS', 'Пальто двубортное', '37 800 ₽', '54 000 ₽'],
       ['LIME', 'Пальто прямое', '12 900 ₽', ''],
       ['USHATÁVA', 'Пальто-халат', '46 000 ₽', ''],
-      ['LACOSTE', 'Куртка', '22 400 ₽', 'популярные'],
+      ['LACOSTE', 'Куртка', '15 600 ₽', '22 400 ₽'],
     ];
 
     const bar = (on = false) => `
@@ -472,7 +473,7 @@ export const DESKTOP = {
         <div class="ed-bar__row" style="justify-content:space-between">
           <div class="w-row" style="gap:8px">
             ${hot('listing', 'filters', `<span class="ed-chip"${on ? ' data-on' : ''}>Фильтры ⌄</span>`)}
-            ${['Новинки', 'Премиум', 'Шерсть', '44–46', 'Кросс-бордер'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
+            ${['Новинки', 'Премиум', 'Аутлет', 'Шерсть', '44–46'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
           </div>
           <div class="w-row" style="gap:22px">
             <span class="ed-sm">412 вещей</span>
@@ -481,16 +482,11 @@ export const DESKTOP = {
         </div>
       </div>`;
 
+    /* карточку больше не собираем отдельно: избранное, корзина и бейджи
+       должны совпадать с мобильными один в один */
     const grid = (from, to, cols = 4) => `
       <div class="ed-grid" style="grid-template-columns:repeat(${cols},1fr)">
-        ${items.slice(from, to).map(([b, n, pr, tier]) => hot('pdp', 'default', `
-          <div class="ed-p">
-            ${edPh(320, 420, '')}
-            <div class="ed-p__brand">${b}</div>
-            <div class="ed-p__name">${n}</div>
-            <div class="ed-p__price">${pr}</div>
-            ${tier ? `<div class="ed-p__name" style="margin-top:5px">${tier}</div>` : ''}
-          </div>`)).join('')}
+        ${items.slice(from, to).map(([b, n, pr, old]) => edP({ brand: b, name: n, price: pr, old, w: 0, ratio: [320, 420] })).join('')}
       </div>`;
 
     if (st === 'loading') {

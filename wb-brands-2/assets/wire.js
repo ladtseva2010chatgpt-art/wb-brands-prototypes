@@ -61,16 +61,15 @@ export const edP = (o = {}) => {
   const { brand = 'MAX MARA', name = 'Пальто из шерсти', price = '39 000 ₽', old = '',
           w = 158, ratio = [300, 380], tag = '', go = 'pdp', state = 'default',
           badge = '', status = '' } = o;
-  /* Бейджей два, и они про разное: «Премиум» — про отбор, «Популярный» —
-     про спрос. На одной карточке показываем только один: две плашки рядом
-     спорят между собой и обе перестают читаться. */
-  const inferredBadge = badge || ({
+  /* Бейджей два, и они про разное: «Премиум» — про отбор, «Аутлет» — про то,
+     что вещь из прошлой коллекции. Аутлет не живёт отдельной витриной: его
+     товары идут в общей выдаче, и бейдж — единственное, что их отличает,
+     поэтому он ставится сам по зачёркнутой цене. */
+  const inferredBadge = badge || (old ? 'АУТЛЕТ' : ({
     BOSS: 'ПРЕМИУМ',
     COS: 'ПРЕМИУМ',
     'MARC O’POLO': 'ПРЕМИУМ',
-    '12 STOREEZ': 'ПОПУЛЯРНЫЙ',
-    USHATÁVA: 'ПОПУЛЯРНЫЙ',
-  }[brand] || '');
+  }[brand] || ''));
   const inferredStatus = status || (brand === 'BOSS' ? 'COMING SOON' : brand === 'ARNY PRAHT' ? 'LAST SIZE' : '');
   const productRole = /(сумк|клатч|шопер)/i.test(name) ? 'bag'
     : /(ботин|кроссов|кед|лофер)/i.test(name) ? 'shoes'
@@ -80,14 +79,16 @@ export const edP = (o = {}) => {
       <div class="ed-p__media">
         ${edPh(ratio[0], ratio[1], tag, productRole)}
         ${inferredStatus ? `<span class="ed-p__status">${inferredStatus}</span>` : ''}
-        ${/* избранное и быстрая корзина — на самой картинке: это единственные
-             два действия, ради которых не нужно открывать карточку */''}
-        <button class="ed-p__act ed-p__act--fav" aria-label="В избранное">${ico('heart')}</button>
-        <button class="ed-p__act ed-p__act--bag" aria-label="В корзину">${ico('bag')}</button>
+        ${/* избранное — на снимке, как в приложении: единственное действие,
+             ради которого не нужно открывать карточку */''}
+        <button class="ed-p__fav" aria-label="В избранное">${ico('heart')}</button>
       </div>
-      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'ПОПУЛЯРНЫЙ' ? ' ed-p__badge--hit' : ''}">${inferredBadge}</span>` : ''}</div>
+      <div class="ed-p__meta"><div class="ed-p__brand">${brand}</div>${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
+      ${/* корзина — плашкой под карточкой, в том же виде, что срок доставки
+           в приложении: так строка действий читается одинаково во всём WB */''}
+      ${inferredStatus ? '' : `<button class="ed-p__cart" aria-label="Добавить в корзину">В корзину</button>`}
     </div>`);
 };
 
@@ -869,7 +870,7 @@ export const MOBILE = {
         ${pin(2)}
         <div class="ed-bar__row">
           ${hot('listing', 'filters', `<span class="ed-chip"${filtersOn ? ' data-on' : ''}>Фильтры ⌄</span>`)}
-          ${['Новинки', 'Премиум', 'Шерсть', '44–46', 'Кросс-бордер'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
+          ${['Новинки', 'Премиум', 'Аутлет', 'Шерсть', '44–46'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
         </div>
         <div class="ed-bar__meta">
           <span>412 вещей</span>
@@ -879,18 +880,21 @@ export const MOBILE = {
         </div>
       </div>`;
 
+    /* Аутлет не отдельная витрина: вещи прошлых коллекций идут в общей выдаче
+       вперемешку с новыми — их отличает зачёркнутая цена и бейдж. Отдельный
+       раздел остаётся входом для тех, кто пришёл именно за ценой. */
     const items = [
-      ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', 'премиум'],
-      ['COS', 'Пальто-кокон', '21 300 ₽', 'премиум'],
-      ['12 STOREEZ', 'Пальто оверсайз', '27 800 ₽', ''],
-      ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', 'премиум'],
-      ['BOSS', 'Пальто двубортное', '54 000 ₽', 'премиум'],
+      ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', ''],
+      ['COS', 'Пальто-кокон', '21 300 ₽', ''],
+      ['12 STOREEZ', 'Пальто оверсайз', '19 500 ₽', '27 800 ₽'],
+      ['MARC O’POLO', 'Тренч из хлопка', '24 000 ₽', ''],
+      ['BOSS', 'Пальто двубортное', '37 800 ₽', '54 000 ₽'],
       ['LIME', 'Пальто прямое', '12 900 ₽', ''],
     ];
 
     const grid = (from, to) => `
       <div class="ed-grid">
-        ${items.slice(from, to).map(([b, n, pr]) => edP({ brand: b, name: n, price: pr, w: 0, ratio: [300, 380] })).join('')}
+        ${items.slice(from, to).map(([b, n, pr, old]) => edP({ brand: b, name: n, price: pr, old, w: 0, ratio: [300, 380] })).join('')}
       </div>`;
 
     if (st === 'filters') {
