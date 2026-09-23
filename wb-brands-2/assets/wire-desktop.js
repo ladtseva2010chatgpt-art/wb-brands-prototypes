@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=512fca7e';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=5122683b';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -111,8 +111,9 @@ export const DESKTOP = {
     const catalogOpen = st === 'catalog';
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
-    /* варианты размещения аутлета — для сравнения, основная версия не меняется */
-    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-banner' ? 'banner' : 'bottom';
+    /* основная версия — баннер, как в согласованной структуре главной;
+       остальные размещения остаются состояниями экрана для сравнения */
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-bottom' ? 'bottom' : 'banner';
     /* аутлет баннером; на десктопе — между подборкой и брендами: оба соседа
        белые, а после новинок сразу шёл бы фото-баннер магазина бренда */
     const outletBanner = () => hot('outlet', 'default', `

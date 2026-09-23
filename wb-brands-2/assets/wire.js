@@ -507,7 +507,9 @@ export const MOBILE = {
     const chatOpen = st === 'assistant';
     const hasDrop = st !== 'nodrop';
     /* варианты размещения аутлета — для сравнения, основная версия не меняется */
-    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-banner' ? 'banner' : 'bottom';
+    /* согласованная структура: аутлет — баннером сразу после новинок.
+       Остальные размещения остаются состояниями экрана для сравнения. */
+    const outletAt = st === 'outlet-mid' ? 'mid' : st === 'outlet-drop' ? 'drop' : st === 'outlet-bottom' ? 'bottom' : 'banner';
     /* аутлет баннером: фото во весь экран читается как отдельная остановка,
        а светлая подложка с текстом сливалась с белыми соседями */
     const outletBanner = () => hot('outlet', 'default', `
