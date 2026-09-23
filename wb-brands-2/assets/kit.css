@@ -1398,6 +1398,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* раскрытый каталог */
 .ed-catalog { background: var(--e-bg); border-bottom: 1px solid var(--e-line); padding: 4px 20px 26px; }
+/* бренды и аутлет — не категории, поэтому стоят над ними отдельным блоком
+   и набраны крупнее: это входы, а не пункты списка */
+.ed-catalog__lead { border-bottom: 1px solid var(--e-line); margin-bottom: 18px; }
+.ed-catalog__key {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 15px;
+  color: var(--e-ink);
+}
+.ed-catalog__key i { font-style: normal; color: var(--e-mute); }
+/* на 1440 входы встают в строку: колонок и так четыре, вертикаль их отодвигает */
+.ed-catalog__lead--row { display: flex; gap: 40px; margin-bottom: 26px; }
+.ed-catalog__lead--row .ed-catalog__key { width: auto; gap: 10px; font-size: 17px; }
+.ed-catalog__key:hover { color: var(--e-accent); }
 .ed-catalog__col + .ed-catalog__col { margin-top: 22px; }
 .ed-catalog__t { font-size: 11px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 10px; }
 .ed-catalog__i { font-size: 13.5px; padding: 6px 0; color: var(--e-ink); display: block; }
@@ -1678,6 +1695,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ed-bottom div { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
 .ed-bottom div[data-on] { color: #fff; }
 .ed-bottom i { width: 17px; height: 17px; border: 1px solid currentColor; display: block; }
+/* счётчик корзины — как в приложении: он же единственный цветной элемент строки */
+.ed-bottom__ico { position: relative; display: block; }
+.ed-bottom__badge {
+  position: absolute;
+  top: -6px;
+  left: 11px;
+  min-width: 15px;
+  padding: 0 4px;
+  border-radius: 100px;
+  background: var(--e-accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: center;
+}
 
 /* ============================================================
    EDITORIAL · desktop

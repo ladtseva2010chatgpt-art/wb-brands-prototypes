@@ -159,10 +159,10 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
       ].map(([t, go, gs]) => `<button class="ed-topnav__i w-hot" data-go="${go}" data-state="${gs}">${t}</button>`).join('')}</nav>` : ''}
       <div class="w-row" style="gap:12px">
         <button class="ed-brandsbtn" data-go="brands-az" data-state="default">A–Z</button>
+        ${/* избранное и корзина ушли в таббар приложения — в шапке раздела
+              остаются только поиск и вход в бренды, наша главная ось */''}
         ${desktop ? '' : `<div class="ed-icons">
           <button class="ed-ico w-hot w-hot--tight" data-go="search" data-state="suggest" aria-label="Поиск">${ico('search')}</button>
-          <button class="ed-ico w-hot w-hot--tight" data-go="favorites" data-state="default" aria-label="Избранное">${ico('heart')}</button>
-          <button class="ed-ico w-hot w-hot--tight" data-go="cart" data-state="default" aria-label="Корзина">${ico('bag')}</button>
         </div>`}
       </div>
     </div>
@@ -176,8 +176,14 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
     </div>` : ''}
   </header>`;
 
+/* Бренды — первый пункт каталога, а не приписка к категориям: за маркой сюда
+   приходят чаще, чем за «пальто». Аутлет замыкает список: вторая ось — цена. */
 export const edCatalog = () => `
   <div class="ed-catalog">
+    <div class="ed-catalog__lead">
+      <button class="ed-catalog__key w-hot" data-go="brands-az" data-state="default">Бренды A–Z<i>›</i></button>
+      <button class="ed-catalog__key w-hot" data-go="outlet" data-state="default">Аутлет<i>›</i></button>
+    </div>
     ${[['Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы']],
        ['Обувь и сумки', ['Ботинки', 'Кроссовки', 'Сумки', 'Аксессуары']]].map(([t, items]) => `
       <div class="ed-catalog__col">
@@ -186,13 +192,17 @@ export const edCatalog = () => `
       </div>`).join('')}
   </div>`;
 
+/* Таббар — не наш: он принадлежит приложению WB и одинаков во всех разделах.
+   Поэтому слоты повторяют его один в один, а бренды и журнал живут входами
+   внутри раздела: в шапке, в каталоге и на главной. */
 export const edBottom = (active = 0) => `
   <nav class="ed-bottom">
-    ${[['Главная', 'home', 'default', 'home'], ['Каталог', 'catalog', 'default', 'grid'],
-       ['Бренды', 'brands-az', 'default', 'tag'], ['Журнал', 'journal', 'default', 'book'],
-       ['Профиль', 'favorites', 'default', 'user']]
-      .map(([t, go, gs, name], i) => `
-        <div class="w-hot"${i === active ? ' data-on' : ''} data-go="${go}" data-state="${gs}">${ico(name)}${t}</div>`).join('')}
+    ${[['Главная', 'home', 'default', 'home', 0], ['Каталог', 'home', 'catalog', 'menu', 0],
+       ['Кошелёк', 'favorites', 'default', 'wallet', 0], ['Корзина', 'cart', 'default', 'bag', 12],
+       ['Профиль', 'favorites', 'default', 'user', 0]]
+      .map(([t, go, gs, name, badge], i) => `
+        <div class="w-hot"${i === active ? ' data-on' : ''} data-go="${go}" data-state="${gs}">
+          <span class="ed-bottom__ico">${ico(name)}${badge ? `<b class="ed-bottom__badge">${badge}</b>` : ''}</span>${t}</div>`).join('')}
   </nav>`;
 
 export const ico = (n) => {
@@ -211,6 +221,7 @@ export const ico = (n) => {
     home:     '<path d="M3.4 8.6 10 3.2l6.6 5.4v8.2H3.4z"/><path d="M8 16.8v-4.6h4v4.6"/>',
     grid:     '<path d="M3.4 3.6h5.2v5.2H3.4zM11.4 3.6h5.2v5.2h-5.2zM3.4 11.4h5.2v5.2H3.4zM11.4 11.4h5.2v5.2h-5.2z"/>',
     menu:     '<path d="M3.6 6.2h12.8M3.6 10h12.8M3.6 13.8h12.8"/>',
+    wallet:   '<path d="M3.2 6.2h13.6v10.2H3.2z"/><path d="M3.2 6.2 12.4 3.6l.8 2.6"/><circle cx="13.6" cy="11.3" r="1.2"/>',
     tag:      '<path d="M3.4 3.4h6l7.2 7.2-6 6L3.4 9.4z"/><circle cx="6.6" cy="6.6" r="1.1"/>',
     book:     '<path d="M3.6 4.2h5.2c.9 0 1.2.5 1.2 1.2v11c0-.7-.3-1.2-1.2-1.2H3.6z"/><path d="M16.4 4.2h-5.2c-.9 0-1.2.5-1.2 1.2v11c0-.7.3-1.2 1.2-1.2h5.2z"/>',
     user:     '<circle cx="10" cy="7" r="3"/><path d="M3.8 17c.6-3.1 3.1-5 6.2-5s5.6 1.9 6.2 5"/>',
@@ -824,7 +835,7 @@ export const MOBILE = {
         </div>
       </section>`).join('')}
 
-    ${edBottom(2)}
+    ${edBottom(1)}
   </div>`,
 
   /* 05 · категорийный листинг — визуальная версия */
@@ -1162,7 +1173,7 @@ export const MOBILE = {
             .map(([i, t]) => `<div class="ed-value__i"><span class="ed-usp__ico">${ico(i)}</span><div class="ed-value__t">${t}</div></div>`).join('')}
         </div>
       </section>
-      ${edBottom(2)}
+      ${edBottom(1)}
     </div>`;
   },
 
@@ -1232,7 +1243,7 @@ export const MOBILE = {
         <div style="margin-top:20px">${hot('favorites', 'subs', `<div class="ed-btn ed-btn--ghost">Следить за брендом</div>`)}</div>
       </section>
 
-      ${edBottom(2)}
+      ${edBottom(1)}
     </div>`;
   },
 
@@ -1410,7 +1421,7 @@ export const MOBILE = {
         <section class="ed-sec" style="padding-top:0">
           ${hot('journal', 'default', `<div class="ed-drop__cta" style="border-color:var(--e-ink);color:var(--e-ink)">Все материалы</div>`)}
         </section>
-        ${edBottom(3)}
+        ${edBottom(1)}
       </div>`;
     }
 
@@ -1436,7 +1447,7 @@ export const MOBILE = {
           ${item('Мода', 'Пять российских марок, которые стоит знать', '26 июля')}
           ${item('Мода', 'Пальто, которое переживёт сезон', '22 июля')}
         </section>
-        ${edBottom(3)}
+        ${edBottom(1)}
       </div>`;
     }
 
@@ -1509,7 +1520,7 @@ export const MOBILE = {
         ${hot('journal', 'article', `<div class="ed-head" style="padding:0"><h2 class="mag-h" style="font-size:20px">Архив дропов</h2><span class="ed-link">Смотреть</span></div>`)}
       </section>
 
-      ${edBottom(3)}
+      ${edBottom(1)}
     </div>`;
   },
 
