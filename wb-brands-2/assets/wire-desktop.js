@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=636dce0e';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, itemRole, journalRole, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=8152de71';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -168,7 +168,7 @@ export const DESKTOP = {
       ${pin(1)}
       ${edHeader(catalogOpen, 0, true)}
       ${catalogOpen ? `<div class="ed-catalog" style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px">${edCatalog().replace('<div class="ed-catalog">', '').replace(/<\/div>\s*$/, '')}
-        <div>${hot('journal', 'article', `${edPh(300, 200, '')}<div class="ed-art__t" style="font-size:15px;margin-top:12px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}</div>
+        <div>${hot('journal', 'article', `${edPh(300, 200, '', 'journal')}<div class="ed-art__t" style="font-size:15px;margin-top:12px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}</div>
       </div>` : ''}
 
       <!-- кампания-карусель во всю ширину -->
@@ -186,18 +186,15 @@ export const DESKTOP = {
       </div>`)}
       ${edMarquee()}
 
-      <!-- объяснённая подборка (редакционная, ассистент свёрнут в кнопку) -->
-      <section class="ed-sec ed-featured-section">
-        ${pin(9)}
+      <!-- новинки -->
+      <section class="ed-sec">
         <div class="ed-head">
-          <div>
-            <h2 class="ed-h2">Собрано для вас</h2>
-            <p class="ed-sm" style="margin-top:8px;max-width:56ch">Спокойные оттенки и свободный силуэт — вы как раз такие вещи и смотрели</p>
-          </div>
-          ${hot('assistant', 'set', `<span class="ed-link">Ещё</span>`)}
+          <h2 class="ed-h2">Новинки</h2>
+          ${hot('listing', 'default', `<span class="ed-link">Все 214</span>`)}
         </div>
-        <div class="ed-featured-products">
-          ${['Пальто камель', 'Пальто-кокон', 'Тренч', 'Пальто-халат'].map((n, i) => edP({ brand: ['MAX MARA', 'COS', 'MARC O’POLO', 'USHATÁVA'][i], name: n, price: '21 300 ₽', ratio: [300, 380], w: 0 })).join('')}
+        <div class="ed-home-product-grid">
+          ${[['MAX MARA', 'Пальто из шерсти', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽'], ['12 STOREEZ', 'Жакет прямой', '17 400 ₽'], ['MARC O’POLO', 'Тренч', '24 000 ₽']]
+            .map(([b, n, pr]) => edP({ brand: b, name: n, price: pr, w: 0, ratio: [300, 380] })).join('')}
         </div>
       </section>
 
@@ -233,15 +230,18 @@ export const DESKTOP = {
 
       ${outletAt === 'drop' ? outlet() : ''}
 
-      <!-- новинки -->
-      <section class="ed-sec">
+      <!-- объяснённая подборка (редакционная, ассистент свёрнут в кнопку) -->
+      <section class="ed-sec ed-featured-section">
+        ${pin(9)}
         <div class="ed-head">
-          <h2 class="ed-h2">Новинки</h2>
-          ${hot('listing', 'default', `<span class="ed-link">Все 214</span>`)}
+          <div>
+            <h2 class="ed-h2">Собрано для вас</h2>
+            <p class="ed-sm" style="margin-top:8px;max-width:56ch">Спокойные оттенки и свободный силуэт — вы как раз такие вещи и смотрели</p>
+          </div>
+          ${hot('assistant', 'set', `<span class="ed-link">Ещё</span>`)}
         </div>
-        <div class="ed-home-product-grid">
-          ${[['MAX MARA', 'Пальто из шерсти', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽'], ['12 STOREEZ', 'Жакет прямой', '17 400 ₽'], ['MARC O’POLO', 'Тренч', '24 000 ₽']]
-            .map(([b, n, pr]) => edP({ brand: b, name: n, price: pr, w: 0, ratio: [300, 380] })).join('')}
+        <div class="ed-featured-products">
+          ${['Пальто камель', 'Пальто-кокон', 'Тренч', 'Пальто-халат'].map((n, i) => edP({ brand: ['MAX MARA', 'COS', 'MARC O’POLO', 'USHATÁVA'][i], name: n, price: '21 300 ₽', ratio: [300, 380], w: 0 })).join('')}
         </div>
       </section>
 
@@ -264,7 +264,7 @@ export const DESKTOP = {
           ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Подборка', '22 июл', 'РОССИЙСКИЕ МАРКИ, КОТОРЫЕ СТОИТ ЗНАТЬ']]
             .map(([k, d, t]) => hot('journal', 'article', `
               <div>
-                ${edPh(420, 300, '')}
+                ${edPh(420, 300, '', 'journal')}
                 <div class="w-row" style="gap:12px;margin-top:16px;align-items:center"><span class="ed-art__tag">${k}</span><span class="ed-art__date">${d}</span></div>
                 <div class="ed-art__t">${t}</div>
               </div>`)).join('')}
@@ -286,14 +286,14 @@ export const DESKTOP = {
 
       <!-- второй shop-in-shop, зеркальный -->
       ${pin(9)}
-      ${sis({ brand: '12 STOREEZ', state: 'default', mirror: true, asset: 'banner-18', position: '68% center', items: [['Пальто', '27 800 ₽'], ['Костюм', '31 400 ₽'], ['Рубашка', '8 900 ₽'], ['Ботинки', '19 200 ₽'], ['Сумка', '12 400 ₽']] })}
+      ${sis({ brand: '12 STOREEZ', state: 'default', mirror: true, asset: 'banner-20', position: '60% center', items: [['Пальто', '27 800 ₽'], ['Костюм', '31 400 ₽'], ['Рубашка', '8 900 ₽'], ['Ботинки', '19 200 ₽'], ['Сумка', '12 400 ₽']] })}
 
       <!-- журнал · точка входа 2 -->
       ${hot('slide-journal', 'cover', `
       <section class="ed-sec" style="padding-top:0">
         ${pin(7)}
         <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center">
-          ${edPh(800, 520, '')}
+          ${edPh(800, 520, '', 'shoot')}
           <div>
             <div class="ed-label" style="margin-bottom:14px">Слайд-журнал · 6 слайдов</div>
             <div class="ed-h1" style="font-size:40px">Как носить объём</div>
@@ -332,7 +332,7 @@ export const DESKTOP = {
         </section>
         ${hot('listing', 'default', `
         <div class="ed-hero">
-          ${edPh(1440, 480, '')}
+          ${edPh(1440, 480, '', 'shoot')}
           <div class="ed-hero__copy ed-hero__copy--dark">
             <div class="ed-label" style="margin-bottom:12px">Женщины · осень</div>
             <div class="ed-h1" style="font-size:44px">Пальто и куртки</div>
@@ -346,7 +346,7 @@ export const DESKTOP = {
             ${col('Целиком', ['Платья', 'Костюмы', 'Комбинезоны'])}
             ${col('Базовое', ['Футболки', 'Белье', 'Домашняя одежда'])}
             <div>
-              ${hot('journal', 'article', `${edPh(320, 220, '')}<div class="ed-art__t" style="font-size:15px;margin-top:14px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}
+              ${hot('journal', 'article', `${edPh(320, 220, '', 'journal')}<div class="ed-art__t" style="font-size:15px;margin-top:14px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}
             </div>
           </div>
           <div style="margin-top:40px;width:320px">
@@ -389,7 +389,7 @@ export const DESKTOP = {
           ${col('Обувь и сумки', ['Ботинки', 'Кроссовки', 'Туфли', 'Сумки', 'Ремни'])}
           ${col('Украшения и красота', ['Украшения', 'Часы', 'Уход', 'Ароматы'])}
           <div>
-            ${hot('journal', 'article', `${edPh(320, 240, '')}<div class="w-row" style="gap:10px;margin-top:14px;align-items:center"><span class="ed-art__tag">Гид</span><span class="ed-art__date">26 июл</span></div><div class="ed-art__t" style="font-size:15px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}
+            ${hot('journal', 'article', `${edPh(320, 240, '', 'journal')}<div class="w-row" style="gap:10px;margin-top:14px;align-items:center"><span class="ed-art__tag">Гид</span><span class="ed-art__date">26 июл</span></div><div class="ed-art__t" style="font-size:15px">ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН</div>`)}
           </div>
         </div>
       </section>
@@ -401,7 +401,7 @@ export const DESKTOP = {
           ${[['Новое', 'Спокойный объём', 'slide-journal', 'cover'], ['Дроп · через 2 дня', 'USHATÁVA × WB', 'drop', 'before'], ['Категория', 'Дом и вещи', 'listing', 'default']]
             .map(([k, t, go, gs]) => hot(go, gs, `
               <div class="ed-hero">
-                ${edPh(420, 300, '')}
+                ${edPh(420, 300, '', itemRole(t) === 'woman' ? 'shoot' : itemRole(t))}
                 <div class="ed-hero__copy ed-hero__copy--dark" style="left:22px;right:22px;bottom:22px">
                   <div class="ed-label" style="margin-bottom:6px">${k}</div>
                   <div class="ed-h3" style="font-size:20px">${t}</div>
@@ -558,7 +558,7 @@ export const DESKTOP = {
               <div class="ed-infeed__k" style="margin:0">Новый бренд в разделе</div>
               <span class="ed-adtag">Реклама</span>
             </div>
-            ${hot('sis', 'custom', edPh(1330, 280, ''))}
+            ${hot('sis', 'custom', edPh(1330, 280, '', 'sis'))}
           </section>
         </div>
       </div>
@@ -666,7 +666,7 @@ export const DESKTOP = {
       <section class="ed-sec" style="border-top:1px solid var(--e-line)">
         ${pin(7)}
         <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center">
-          ${hot('slide-journal', 'products', edPh(660, 480, ''))}
+          ${hot('slide-journal', 'products', edPh(660, 480, '', 'shoot'))}
           <div>
             <div class="ed-label ed-label--mute" style="margin-bottom:14px">Полный образ</div>
             <h2 class="ed-h1" style="font-size:34px;margin-bottom:20px">Четыре вещи,<br>собранные вместе</h2>
@@ -750,7 +750,7 @@ export const DESKTOP = {
         ${pin(5)}
         ${hot('slide-journal', 'story', `
         <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:center">
-          ${edPh(760, 470, '')}
+          ${edPh(760, 470, '', 'shoot')}
           <div>
             <div class="ed-label ed-label--mute" style="margin-bottom:14px">Brand Focus</div>
             <div class="ed-h1" style="font-size:38px;margin-bottom:16px">Как устроено пальто,<br>которое носят двадцать лет</div>
@@ -764,7 +764,7 @@ export const DESKTOP = {
         <div class="ed-head"><h2 class="ed-h2">Категории бренда</h2></div>
         <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:26px">
           ${['Пальто', 'Жакеты', 'Трикотаж', 'Брюки', 'Платья', 'Аксессуары'].map((t) => hot('listing', 'default', `
-            <div>${edPh(200, 240, '')}<div class="ed-t" style="margin-top:12px">${t}</div></div>`)).join('')}
+            <div>${edPh(200, 240, '', itemRole(t))}<div class="ed-t" style="margin-top:12px">${t}</div></div>`)).join('')}
         </div>
       </section>
 
@@ -823,7 +823,7 @@ export const DESKTOP = {
         ${pin(3)}
         ${hot('journal', 'article', `
         <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center">
-          ${edPh(660, 420, '')}
+          ${edPh(660, 420, '', 'shoot')}
           <div>
             <div class="ed-label ed-label--mute" style="margin-bottom:14px">История бренда · видео</div>
             <div class="ed-h1" style="font-size:38px;margin-bottom:16px">Как делают деним<br>в Дании</div>
@@ -952,7 +952,7 @@ export const DESKTOP = {
 
     const card = (rub, t, date, ratio = [420, 300]) => hot('journal', 'article', `
       <article>
-        ${edPh(ratio[0], ratio[1], '')}
+        ${edPh(ratio[0], ratio[1], '', journalRole(rub))}
         <div class="mag-kicker" style="margin-top:18px">${rub}</div>
         <h3 class="mag-grid__t">${t}</h3>
         <div class="mag-date">${date}</div>
@@ -968,7 +968,7 @@ export const DESKTOP = {
           <p class="mag-lead" style="font-size:20px;margin-top:22px">Как две сестры из Екатеринбурга собрали марку, которую носят, не сверяясь с сезоном.</p>
           <div class="mag-date" style="margin-top:20px">29 июля 2026 · Текст: редакция · 8 минут</div>
         </section>
-        ${edPh(1440, 660, '')}
+        ${edPh(1440, 660, '', 'shoot')}
         <section class="ed-sec">
           <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:80px;max-width:1180px;margin:0 auto">
             <div class="mag-body" style="font-size:16px">
@@ -1010,7 +1010,7 @@ export const DESKTOP = {
           <div class="mag-dark__grid">
             ${[['Пять силуэтов, которые определят осень', '29 июля'], ['Как носить объём', '28 июля'], ['Российские марки, которые стоит знать', '26 июля'], ['Пальто на десять лет', '22 июля']]
               .map(([t, d]) => hot('journal', 'article', `
-                <article>${edPh(320, 400, '')}
+                <article>${edPh(320, 400, '', 'journal')}
                 <div class="mag-kicker" style="margin-top:16px;color:#fff">Мода</div>
                 <h3 class="mag-grid__t" style="font-size:20px;color:#fff">${t}</h3>
                 <div class="mag-date" style="color:rgba(255,255,255,.5)">${d}</div></article>`)).join('')}
@@ -1035,7 +1035,7 @@ export const DESKTOP = {
         ${pin(1)}
         <div class="mag-coverd__inner">
           <div style="position:relative">
-            ${edPh(520, 660, '')}
+            ${edPh(520, 660, '', 'shoot')}
             <div style="position:absolute;right:18px;top:18px;font-family:var(--font-mag);font-size:26px;color:#fff">ОТБОР</div>
           </div>
           <div style="align-self:center">
@@ -1063,7 +1063,7 @@ export const DESKTOP = {
         <div class="mag-dark__grid">
           ${[['Как я собираю пространство: квартира стилиста', '29 июля'], ['Ароматы, которые держат осень', '28 июля'], ['Книги на сентябрь', '27 июля'], ['Дом как продолжение гардероба', '26 июля']]
             .map(([t, d]) => hot('journal', 'article', `
-              <article>${edPh(320, 360, '')}
+              <article>${edPh(320, 360, '', 'interior')}
               <div class="mag-kicker" style="margin-top:16px;color:#fff">Дом и вещи</div>
               <h3 class="mag-grid__t" style="font-size:20px;color:#fff">${t}</h3>
               <div class="mag-date" style="color:rgba(255,255,255,.5)">${d}</div></article>`)).join('')}
@@ -1075,7 +1075,7 @@ export const DESKTOP = {
         ${pin(7)}
         ${hot('slide-journal', 'cover', `
         <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:56px;align-items:center">
-          ${edPh(800, 500, '')}
+          ${edPh(800, 500, '', 'shoot')}
           <div>
             <div class="mag-kicker" style="margin-bottom:18px">Слайд-журнал · 6 слайдов</div>
             <div class="mag-h" style="font-size:40px">Спокойный объём<br><i>в шести слайдах</i></div>
@@ -1118,7 +1118,7 @@ export const DESKTOP = {
         <div class="slide-sec" style="padding-bottom:0">
           ${pin(1)}
           <div class="slide-spread">
-            <div>${edPh(660, 620, '')}<div class="slide-cap">Пальто MAX MARA · съёмка для WB Бренды</div></div>
+            <div>${edPh(660, 620, '', 'shoot')}<div class="slide-cap">Пальто MAX MARA · съёмка для WB Бренды</div></div>
             <div style="padding-top:20px">
               <div class="slide-rule"></div>
               <h2 class="slide-sub">Как выбрать<br><i>пальто оверсайз</i></h2>
@@ -1214,7 +1214,7 @@ export const DESKTOP = {
       </div>
       <div class="slide-sec" style="padding-top:0">
         <div class="slide-spread">
-          <div>${edPh(660, 700, '')}<div class="slide-cap">Съёмка для WB Бренды · стилист Анна Ковалёва</div></div>
+          <div>${edPh(660, 700, '', 'shoot')}<div class="slide-cap">Съёмка для WB Бренды · стилист Анна Ковалёва</div></div>
           <div>
             <div class="slide-rule"></div>
             <p class="slide-lead" style="margin:0 0 26px">Свободный силуэт сезона держится не на ткани, а на линии плеча. Разбираем на трёх пальто — и объясняем, за что доплачивают.</p>
@@ -1253,7 +1253,7 @@ export const DESKTOP = {
 
     const card = (brand, name, price, why) => hot('pdp', 'default', `
       <div class="chat-card">
-        ${edPh(220, 280, '')}
+        ${edPh(220, 280, '', itemRole(name))}
         <div class="chat-card__brand">${brand}</div>
         <div class="chat-card__name">${name}</div>
         <div class="chat-card__price">${price}</div>
@@ -1262,7 +1262,7 @@ export const DESKTOP = {
 
     const art = (kicker, title) => hot('journal', 'article', `
       <div class="chat-art">
-        <div style="width:104px;flex:0 0 auto">${edPh(200, 160, '')}</div>
+        <div style="width:104px;flex:0 0 auto">${edPh(200, 160, '', 'journal')}</div>
         <div>
           <div class="chat-art__k">${kicker}</div>
           <div class="chat-art__t">${title}</div>
@@ -1334,7 +1334,7 @@ export const DESKTOP = {
                 ['Деталь', '12 STOREEZ', 'Шарф из альпаки', '7 200 ₽', 'Вы дважды открывали шарфы на неделе. Этот закроет вырез, если носить пальто нараспашку.'],
               ].map(([role, b, n, pr, why]) => hot('pdp', 'default', `
                 <div class="chat-look__i">
-                  <div>${edPh(160, 200, '')}</div>
+                  <div>${edPh(160, 200, '', itemRole(n))}</div>
                   <div>
                     <div class="chat-look__role">${role}</div>
                     <div class="chat-look__brand">${b}</div>

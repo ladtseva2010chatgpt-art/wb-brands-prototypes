@@ -24,19 +24,44 @@ const SHOTS = {
   editorial: Array.from({ length: 19 }, (_, i) => `editorial-${String(i + 1).padStart(2, '0')}`),
 };
 
-/* Роль блока → курируемый пул. Кадры с запечёнными UI/надписями сюда не входят. */
+/* Роль блока → курируемый пул. Кадр должен совпадать с тем, о чём блок:
+   раздел женский, поэтому одежда — только на женщине, а категория-предмет — сам предмет.
+   Мужские кадры (product-03, editorial-02/03/05/09/11/19, banner-06/08/16/18) и кадры
+   с запечённым UI (banner-04/11/12/14) не входят ни в один пул. */
 const ROLE_POOL = {
-  campaign: ['banner-22', 'banner-15', 'banner-16', 'banner-18', 'banner-20', 'banner-09', 'banner-02', 'banner-03', 'banner-05', 'banner-07'],
-  sis: ['banner-15', 'banner-20', 'banner-18', 'banner-16', 'banner-22'],
-  lifestyle: ['banner-lifestyle-user', 'banner-17', 'banner-21', 'banner-04', 'banner-08'],
-  interior: ['banner-lifestyle-user', 'banner-17', 'banner-21', 'banner-04', 'banner-08'],
-  model: ['product-01', 'product-02', 'product-03', 'editorial-08', 'editorial-09', 'editorial-11'],
-  coat: ['product-01', 'product-02', 'product-03', 'editorial-08', 'editorial-09', 'editorial-11'],
+  campaign: ['banner-15', 'banner-20', 'banner-05', 'banner-10', 'banner-lifestyle-v2'],
+  sis: ['banner-15', 'banner-20', 'banner-10', 'banner-05'],
+  /* широкий кадр без роли: женщина в образе или интерьер */
+  scene: ['banner-15', 'banner-lifestyle-v2', 'banner-20', 'banner-05', 'banner-10', 'banner-21'],
+  lifestyle: ['banner-lifestyle-user', 'banner-17', 'banner-21', 'banner-02', 'editorial-14', 'product-08'],
+  interior: ['banner-lifestyle-user', 'banner-17', 'banner-21', 'banner-02', 'editorial-14', 'product-08'],
+  /* карточка одежды: женщина в полный рост. product-02 и editorial-08 — один образ,
+     поэтому в пуле они разнесены: рядом в сетке читаются как дубль */
+  woman: ['product-01', 'editorial-16', 'product-02', 'editorial-10', 'editorial-04', 'editorial-08'],
   bag: ['product-06', 'product-07', 'editorial-13', 'editorial-17'],
-  shoes: ['banner-19', 'editorial-15'],
-  basic: ['product-04', 'product-05', 'product-08'],
-  rack: SHOTS.editorial,
-  journal: SHOTS.editorial,
+  shoes: ['editorial-15', 'banner-19', 'banner-09', 'banner-03'],
+  accessory: ['product-04', 'product-05', 'editorial-18', 'editorial-07'],
+  beauty: ['product-05', 'product-08', 'editorial-14'],
+  /* съёмка: постановочный кадр с женщиной — обложки историй и слайд-журнала */
+  shoot: ['editorial-10', 'product-01', 'editorial-16', 'banner-lifestyle-v2', 'editorial-04', 'banner-15'],
+  /* журнал: чередуем героиню и натюрморт, чтобы лента не выглядела каталогом */
+  journal: ['editorial-10', 'editorial-13', 'editorial-16', 'editorial-14', 'product-01', 'editorial-17', 'editorial-04', 'product-07'],
+};
+ROLE_POOL.model = ROLE_POOL.woman;
+ROLE_POOL.coat = ROLE_POOL.woman;
+ROLE_POOL.basic = ROLE_POOL.accessory;
+
+/** Название вещи или категории → роль кадра: предмет показываем предметом, одежду — на женщине. */
+export const itemRole = (name = '') => /(сумк|клатч|шопер)/i.test(name) ? 'bag'
+  : /(ботин|кроссов|кед|лофер|туфл|обувь)/i.test(name) ? 'shoes'
+    : /(очк|кошел|ремен|ремн|аксессуар|шарф|кашне|кепк|украшен|часы)/i.test(name) ? 'accessory'
+      : /(красот|уход|аромат)/i.test(name) ? 'beauty'
+        : /(lifestyle|^дом|интерьер)/i.test(name) ? 'interior' : 'woman';
+
+/** Рубрика журнала → роль: предметные рубрики — предметом, остальное — редакционная съёмка. */
+export const journalRole = (rub = '') => {
+  const role = itemRole(rub);
+  return role === 'woman' ? 'journal' : role;
 };
 
 const roleCursor = Object.create(null);
@@ -53,14 +78,14 @@ const shot = (role) => {
 
 export const edPh = (w, h, tag = '', role = '', asset = '', position = 'center') => `
   <span class="ed-shot" style="display:block;aspect-ratio:${w}/${h};background:var(--e-soft);position:relative;overflow:hidden">
-    <img alt="" src="assets/img/${asset || shot(role)}.jpg" style="width:100%;height:100%;object-fit:cover;object-position:${position};display:block">
+    <img alt="" src="assets/img/${asset || shot(role || (w / h > 1.25 ? 'scene' : 'woman'))}.jpg" style="width:100%;height:100%;object-fit:cover;object-position:${position};display:block">
     ${tag ? `<span class="ed-p__tag">${tag}</span>` : ''}
   </span>`;
 
 export const edP = (o = {}) => {
   const { brand = 'MAX MARA', name = 'Пальто из шерсти', price = '39 000 ₽', old = '',
           w = 158, ratio = [300, 380], tag = '', go = 'pdp', state = 'default',
-          badge = '', status = '' } = o;
+          badge = '', note = '' } = o;
   /* Бейджей два, и они про разное: «Премиум» — про отбор, «Аутлет» — про то,
      что вещь из прошлой коллекции. Аутлет не живёт отдельной витриной: его
      товары идут в общей выдаче, и бейдж — единственное, что их отличает,
@@ -70,28 +95,25 @@ export const edP = (o = {}) => {
     COS: 'ПРЕМИУМ',
     'MARC O’POLO': 'ПРЕМИУМ',
   }[brand] || ''));
-  const inferredStatus = status || (brand === 'BOSS' ? 'COMING SOON' : brand === 'ARNY PRAHT' ? 'LAST SIZE' : '');
-  const productRole = /(сумк|клатч|шопер)/i.test(name) ? 'bag'
-    : /(ботин|кроссов|кед|лофер)/i.test(name) ? 'shoes'
-      : /(очк|кошел|ремен|аксессуар)/i.test(name) ? 'basic' : 'model';
+  const productRole = itemRole(name);
   return hot(go, state, `
     <div class="ed-p"${w ? ` style="width:${w}px"` : ''}>
       <div class="ed-p__media">
         ${edPh(ratio[0], ratio[1], tag, productRole)}
-        ${inferredStatus ? `<span class="ed-p__status">${inferredStatus}</span>` : ''}
         ${/* избранное — на снимке, как в приложении: единственное действие,
              ради которого не нужно открывать карточку */''}
         <button class="ed-p__fav" aria-label="В избранное">${ico('heart')}</button>
+        ${/* метка — внизу снимка, набором и без плашки: кадр не разрезан,
+             а текстовый блок не зависит от того, есть метка или нет */''}
+        ${inferredBadge ? `<span class="ed-p__mark${inferredBadge === 'АУТЛЕТ' ? ' ed-p__mark--outlet' : ''}">${inferredBadge}</span>` : ''}
       </div>
-      ${/* бейдж — отдельной строкой под снимком: на фотографии он резал кадр,
-           а в строке с брендом длинное название сбивало его вниз */''}
-      <div class="ed-p__badgeline">${inferredBadge ? `<span class="ed-p__badge${inferredBadge === 'АУТЛЕТ' ? ' ed-p__badge--outlet' : ''}">${inferredBadge}</span>` : ''}</div>
       <div class="ed-p__brand">${brand}</div>
       <div class="ed-p__name">${name}</div>
       <div class="ed-p__price">${price}${old ? `<span class="ed-p__old">${old}</span>` : ''}</div>
+      ${note ? `<div class="ed-p__note">${note}</div>` : ''}
       ${/* корзина — плашкой под карточкой, в том же виде, что срок доставки
            в приложении: так строка действий читается одинаково во всём WB */''}
-      ${inferredStatus ? '' : `<button class="ed-p__cart" aria-label="Добавить в корзину">В корзину</button>`}
+      <button class="ed-p__cart" aria-label="Добавить в корзину">В корзину</button>
     </div>`);
 };
 
@@ -131,7 +153,7 @@ export const slideProd = (o = {}) => {
   const { brand, name, price, tier = '', w = 0, ratio = [240, 320] } = o;
   return hot('pdp', 'default', `
     <div class="slide-prod"${w ? ` style="width:${w}px"` : ''}>
-      ${edPh(ratio[0], ratio[1], '')}
+      ${edPh(ratio[0], ratio[1], '', itemRole(name))}
       ${tier ? `<div class="slide-cap" style="margin-top:10px">${tier}</div>` : ''}
       <div class="slide-prod__brand">${brand}</div>
       <div class="slide-prod__name">${name}</div>
@@ -152,10 +174,16 @@ export const catsRest = (tag = 'button') => `
   <span class="ed-cats__split" aria-hidden="true"></span>
   ${CATS_MORE.map((t) => `<${tag} class="ed-cat--sec w-hot" data-go="listing" data-state="default">${t}</${tag}>`).join('')}`;
 
+const MORE_KEYS = [['Бренды A–Z', 'brands-az'], ['Аутлет', 'outlet'], ['Журнал', 'journal']];
+
 export const catsMore = () => `
   <div class="ed-more__wrap">
     <button class="ed-more__btn" data-more aria-expanded="false" aria-label="Ещё категории">${ico('menu')}<b>Ещё</b></button>
     <div class="ed-more" data-more-panel hidden>
+      ${/* каталог живёт в таббаре, поэтому бренды, аутлет и журнал —
+            не его шапка, а входы раздела: держим их в бургере над категориями */''}
+      ${MORE_KEYS.map(([t, go]) => `<button class="ed-more__i ed-more__i--key w-hot" data-go="${go}" data-state="default">${t}<i>›</i></button>`).join('')}
+      <span class="ed-more__sep" aria-hidden="true"></span>
       ${CATS_MORE.map((t) => `<button class="ed-more__i w-hot" data-go="listing" data-state="default">${t}<i>›</i></button>`).join('')}
     </div>
   </div>`;
@@ -191,13 +219,14 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
 
 /* Бренды — первый пункт каталога, а не приписка к категориям: за маркой сюда
    приходят чаще, чем за «пальто». Аутлет замыкает список: вторая ось — цена. */
-export const edCatalog = () => `
+/* На мобиле входы переехали в бургер — lead оставляем только десктопу, где бургера нет. */
+export const edCatalog = (lead = true) => `
   <div class="ed-catalog">
-    <div class="ed-catalog__lead">
+    ${lead ? `<div class="ed-catalog__lead">
       <button class="ed-catalog__key w-hot" data-go="brands-az" data-state="default">Бренды A–Z<i>›</i></button>
       <button class="ed-catalog__key w-hot" data-go="outlet" data-state="default">Аутлет<i>›</i></button>
       <button class="ed-catalog__key w-hot" data-go="journal" data-state="default">Журнал<i>›</i></button>
-    </div>
+    </div>` : ''}
     ${[['Одежда', ['Пальто и куртки', 'Платья', 'Трикотаж', 'Брюки', 'Костюмы']],
        ['Обувь и сумки', ['Ботинки', 'Кроссовки', 'Сумки', 'Аксессуары']]].map(([t, items]) => `
       <div class="ed-catalog__col">
@@ -458,14 +487,14 @@ export const MOBILE = {
         </section>
         <div class="ed-grid" style="padding-top:8px">
           ${[['MAX MARA', 'Пальто из шерсти', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽']]
-            .map(([b, n, pr]) => hot('pdp', 'default', `<div class="ed-p">${edPh(300, 380, '')}<div class="ed-p__brand">${b}</div><div class="ed-p__name">${n}</div><div class="ed-p__price">${pr}</div></div>`)).join('')}
+            .map(([b, n, pr]) => hot('pdp', 'default', `<div class="ed-p">${edPh(300, 380, '', itemRole(n))}<div class="ed-p__brand">${b}</div><div class="ed-p__name">${n}</div><div class="ed-p__price">${pr}</div></div>`)).join('')}
         </div>
 
         <section class="ed-sec--tight" style="padding-top:8px">
           <div class="ed-label ed-label--mute" style="margin-bottom:14px">Журнал</div>
           ${hot('journal', 'article', `
           <div class="w-row" style="gap:14px;align-items:center">
-            <div style="width:96px;flex:0 0 auto">${edPh(160, 120, '')}</div>
+            <div style="width:96px;flex:0 0 auto">${edPh(160, 120, '', 'journal')}</div>
             <div><div class="chat-art__k">Гид · 6 минут</div><div class="chat-art__t">Пальто, которое переживёт сезон</div></div>
           </div>`)}
         </section>
@@ -553,7 +582,7 @@ export const MOBILE = {
       ${chatOpen ? `<div class="ed-scrim w-hot" data-go="home" data-state="default"></div>${edChat()}` : (st === 'no-ai' ? '' : edFab())}
       ${pin(1)}
       ${edHeader(catalogOpen)}
-      ${catalogOpen ? edCatalog() : ''}
+      ${catalogOpen ? edCatalog(false) : ''}
 
       <!-- 1. кампания: понять, что это отдельное место -->
       ${hot('slide-journal', 'cover', `
@@ -570,15 +599,13 @@ export const MOBILE = {
       </div>`)}
       ${edMarquee()}
 
-      <!-- 2. объяснённая подборка: Aha Moment сразу после входа -->
-      ${st === 'no-ai'
-        ? `${head('Выбор редакции', 'Ещё', 'journal', 'default', 'Куратор скоро вернётся. Пока — то, что редакция выбрала на этой неделе.')}${pin(9)}`
-        : `${head('Собрано для вас', 'Ещё', 'assistant', 'set', 'Спокойные оттенки и свободный силуэт — вы как раз такие вещи и смотрели.')}${pin(9)}`}
-      ${rail([['MAX MARA', 'Пальто камель', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽'], ['MARC O’POLO', 'Тренч', '24 000 ₽'], ['12 STOREEZ', 'Жакет', '17 400 ₽']], 150)}
+      <!-- 2. новинки сразу после входа: одна полка вместо двух -->
+      ${head('Новинки', 'Все 214', 'listing', 'default')}
+      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
 
-      <!-- 4. повод именно сегодня -->
+      <!-- 4. повод именно сегодня; отступ сверху — полка над ним кончается кнопками без поля -->
       ${hasDrop ? hot('drop', 'before', `
-      <section class="ed-drop">
+      <section class="ed-drop" style="margin-top:34px">
         ${pin(5)}
         <div>
           <div class="ed-label" style="color:rgba(255,255,255,.6);margin-bottom:12px">Дроп · 14 ноября, 12:00</div>
@@ -614,9 +641,11 @@ export const MOBILE = {
         ${rail([['MARC O’POLO', 'Куртка замшевая', '38 900 ₽'], ['MARC O’POLO', 'Футболка', '4 200 ₽'], ['MARC O’POLO', 'Кепка', '3 400 ₽'], ['MARC O’POLO', 'Джинсы', '9 800 ₽']], 150)}
       </section>
 
-      <!-- 7. новинки: одна полка вместо двух -->
-      ${head('Новинки', 'Все 214', 'listing', 'default')}
-      ${rail([['USHATÁVA', 'Пальто-халат', '46 000 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽'], ['LIME', 'Джемпер', '5 900 ₽'], ['BOSS', 'Пиджак', '54 000 ₽'], ['COS', 'Ботинки', '19 900 ₽']], 150)}
+      <!-- 7. объяснённая подборка: после новинок и брендов, когда уже есть что объяснять -->
+      ${st === 'no-ai'
+        ? `${head('Выбор редакции', 'Ещё', 'journal', 'default', 'Куратор скоро вернётся. Пока — то, что редакция выбрала на этой неделе.')}${pin(9)}`
+        : `${head('Собрано для вас', 'Ещё', 'assistant', 'set', 'Спокойные оттенки и свободный силуэт — вы как раз такие вещи и смотрели.')}${pin(9)}`}
+      ${rail([['MAX MARA', 'Пальто камель', '39 000 ₽'], ['COS', 'Пальто-кокон', '21 300 ₽'], ['MARC O’POLO', 'Тренч', '24 000 ₽'], ['12 STOREEZ', 'Жакет', '17 400 ₽']], 150)}
 
       ${outletAt === 'mid' ? outlet() : outletAt === 'banner' ? outletBanner() : ''}
 
@@ -627,7 +656,7 @@ export const MOBILE = {
         ${[['Интервью', '29 июл', 'РАБОТА КАК ЛЮБОВЬ: РАЗГОВОР С 12 STOREEZ'], ['Гид', '26 июл', 'ПАЛЬТО, КОТОРОЕ ПЕРЕЖИВЁТ СЕЗОН'], ['Подборка', '22 июл', 'РОССИЙСКИЕ МАРКИ, КОТОРЫЕ СТОИТ ЗНАТЬ']]
           .map(([k, d, t]) => hot('journal', 'article', `
             <div style="width:250px">
-              ${edPh(250, 300, '')}
+              ${edPh(250, 300, '', 'journal')}
               <div class="w-row" style="gap:10px;margin-top:14px;align-items:center"><span class="ed-art__tag">${k}</span><span class="ed-art__date">${d}</span></div>
               <div class="ed-art__t">${t}</div>
             </div>`)).join('')}
@@ -667,7 +696,7 @@ export const MOBILE = {
         ${pin(7)}
         <div style="padding:0 20px 16px"><span class="ed-label ed-label--mute">Слайд-журнал · 6 слайдов</span></div>
         <div class="ed-hero">
-          ${edPh(390, 420, '')}
+          ${edPh(390, 420, '', 'shoot')}
           <div class="ed-hero__copy ed-hero__copy--dark">
             <div class="ed-h2">Как носить объём</div>
           </div>
@@ -724,7 +753,7 @@ export const MOBILE = {
         ${pin(4)}
         ${hot('listing', 'default', `
         <div class="ed-hero">
-          ${edPh(390, 300, '')}
+          ${edPh(390, 300, '', 'shoot')}
           <div class="ed-hero__copy ed-hero__copy--dark">
             <div class="ed-label" style="margin-bottom:8px">Женщины · осень</div>
             <div class="ed-h2">Пальто и куртки</div>
@@ -773,7 +802,7 @@ export const MOBILE = {
           ${[['Новое', 'Спокойный объём'], ['Дроп', 'USHATÁVA × WB']].map(([k, t], i) => hot(i ? 'drop' : 'slide-journal', i ? 'before' : 'cover', `
             <div style="width:250px">
               <div class="ed-hero">
-                ${edPh(250, 150, '')}
+                ${edPh(250, 150, '', 'shoot')}
                 <div class="ed-hero__copy ed-hero__copy--dark" style="left:14px;right:14px;bottom:14px">
                   <div class="ed-label" style="margin-bottom:4px;font-size:9px">${k}</div>
                   <div class="ed-h3">${t}</div>
@@ -978,7 +1007,7 @@ export const MOBILE = {
           <span class="ed-adtag">Реклама</span>
         </div>
       </section>
-      ${hot('sis', 'custom', `<div style="padding:0 20px 30px">${edPh(350, 190, '')}</div>`)}
+      ${hot('sis', 'custom', `<div style="padding:0 20px 30px">${edPh(350, 190, '', 'sis')}</div>`)}
       ${edBottom(1)}
     </div>`;
   },
@@ -1080,7 +1109,7 @@ export const MOBILE = {
         ${pin(7)}
         <div class="ed-head" style="padding:0"><h2 class="ed-h2">Полный образ</h2><span class="ed-link">Собрать</span></div>
       </section>
-      ${hot('slide-journal', 'products', `<div style="padding:0 20px">${edPh(350, 260, '')}<p class="ed-sm" style="margin-top:10px">Четыре вещи в образе — из истории «Спокойный объём»</p></div>`)}
+      ${hot('slide-journal', 'products', `<div style="padding:0 20px">${edPh(350, 260, '', 'shoot')}<p class="ed-sm" style="margin-top:10px">Четыре вещи в образе — из истории «Спокойный объём»</p></div>`)}
 
       <section class="ed-sec--tight" style="padding-top:30px;padding-bottom:12px">
         <div class="ed-head" style="padding:0"><h2 class="ed-h2">Ещё от MAX MARA</h2>${hot('brand', 'default', `<span class="ed-link">Все 214</span>`)}</div>
@@ -1170,7 +1199,7 @@ export const MOBILE = {
         ${pin(5)}
         <div style="padding:0 20px 14px"><span class="ed-label ed-label--mute">Brand Focus</span></div>
         <div class="ed-hero">
-          ${edPh(390, 380, '')}
+          ${edPh(390, 380, '', 'shoot')}
           <div class="ed-hero__copy ed-hero__copy--dark">
             <div class="ed-h2">Как устроено пальто,<br>которое носят двадцать лет</div>
           </div>
@@ -1183,7 +1212,7 @@ export const MOBILE = {
       </section>
       <div class="ed-grid" style="padding-top:0;gap:20px 12px">
         ${['Пальто', 'Жакеты', 'Трикотаж', 'Брюки'].map((t) => hot('listing', 'default', `
-          <div>${edPh(180, 200, '')}<div class="ed-t" style="margin-top:10px">${t}</div></div>`)).join('')}
+          <div>${edPh(180, 200, '', itemRole(t))}<div class="ed-t" style="margin-top:10px">${t}</div></div>`)).join('')}
       </div>
 
       <section class="ed-sec--tight" style="background:var(--e-soft);margin-top:14px">
@@ -1247,7 +1276,7 @@ export const MOBILE = {
         <div style="padding:0 20px 14px"><span class="ed-label ed-label--mute">История бренда · видео</span></div>
         ${hot('journal', 'article', `
         <div class="ed-hero">
-          ${edPh(390, 320, '')}
+          ${edPh(390, 320, '', 'shoot')}
           <div class="ed-hero__copy ed-hero__copy--dark"><div class="ed-h2">Как делают деним<br>в Дании</div></div>
           <div class="ed-hero__tab" style="padding:12px 18px;font-size:10px">Смотреть <span>›</span></div>
         </div>`)}
@@ -1349,14 +1378,7 @@ export const MOBILE = {
            ['BOSS', 'Пиджак', '29 000 ₽', '48 000 ₽', 'коллекция 2025'],
            ['LEVI’S', 'Джинсы прямые', '5 400 ₽', '8 900 ₽', 'коллекция 2024'],
            ['LACOSTE', 'Поло', '6 200 ₽', '9 900 ₽', 'коллекция 2025']]
-          .map(([b, n, pr, old, note]) => hot('outlet', 'pdp', `
-            <div class="ed-p">
-              ${edPh(300, 380, '')}
-              <div class="ed-p__brand">${b}</div>
-              <div class="ed-p__name">${n}</div>
-              <div class="ed-p__price">${pr}<span class="ed-p__old">${old}</span></div>
-              <div class="ed-p__name" style="margin-top:5px">${note}</div>
-            </div>`)).join('')}
+          .map(([b, n, pr, old, note]) => edP({ brand: b, name: n, price: pr, old, note, w: 0, go: 'outlet', state: 'pdp' })).join('')}
       </div>
 
       <section class="ed-sec--tight" style="padding-bottom:12px">
@@ -1400,7 +1422,7 @@ export const MOBILE = {
       <article class="mag-item">
         <div class="mag-vlabel">${rub}</div>
         <div>
-          ${edPh(ratio[0], ratio[1], '')}
+          ${edPh(ratio[0], ratio[1], '', journalRole(rub))}
           <h3 class="mag-item__t">${t}</h3>
           <div class="mag-date">${date}</div>
         </div>
@@ -1409,7 +1431,7 @@ export const MOBILE = {
     if (st === 'article') {
       return `<div class="ed mag">
         ${head('Журнал')}
-        ${edPh(390, 420, '')}
+        ${edPh(390, 420, '', 'shoot')}
         <section class="ed-sec" style="padding-bottom:8px;text-align:center">
           ${pin(1)}
           <div class="mag-kicker" style="margin-bottom:14px">Интервью</div>
@@ -1453,7 +1475,7 @@ export const MOBILE = {
           <div class="mag-dots">${[0, 1, 2, 3].map((i) => `<i${i === 0 ? ' data-on' : ''}></i>`).join('')}</div>
           ${hot('journal', 'article', `
           <div class="mag-dark__card">
-            ${edPh(340, 400, '')}
+            ${edPh(340, 400, '', 'journal')}
             <div class="mag-dark__plate">
               <div class="mag-kicker" style="margin-bottom:12px">Мода</div>
               <h3 class="mag-h">Пять силуэтов,<br><i>которые</i> определят осень</h3>
@@ -1507,7 +1529,7 @@ export const MOBILE = {
         <div class="mag-dots">${[0, 1, 2, 3].map((i) => `<i${i === 0 ? ' data-on' : ''}></i>`).join('')}</div>
         ${hot('journal', 'article', `
         <div class="mag-dark__card">
-          ${edPh(340, 400, '')}
+          ${edPh(340, 400, '', 'journal')}
           <div class="mag-dark__plate">
             <div class="mag-kicker" style="margin-bottom:12px">Мода</div>
             <h3 class="mag-h">Пять силуэтов,<br><i>которые</i> определят осень</h3>
@@ -1528,7 +1550,7 @@ export const MOBILE = {
       </section>
       ${hot('slide-journal', 'cover', `
       <div class="ed-hero" style="margin-bottom:20px">
-        ${edPh(390, 300, '')}
+        ${edPh(390, 300, '', 'shoot')}
         <div class="ed-hero__copy ed-hero__copy--dark">
           <div class="mag-h" style="font-size:22px">Спокойный объём<br><i>в шести слайдах</i></div>
         </div>
@@ -1571,7 +1593,7 @@ export const MOBILE = {
           <div class="slide-rule"></div>
           <h2 class="slide-sub">Как выбрать<br><i>пальто оверсайз</i></h2>
         </div>
-        ${edPh(390, 470, '')}
+        ${edPh(390, 470, '', 'shoot')}
         <div class="slide-sec" style="padding-top:18px">
           <div class="slide-cap" style="margin:0 0 22px">Пальто MAX MARA · съёмка для WB Бренды</div>
           ${pin(2)}
@@ -1735,7 +1757,7 @@ export const MOBILE = {
         ${pin(4)}
         <div class="ed-head" style="padding:0"><h2 class="ed-h2">Как прошёл дроп</h2>${hot('journal', 'article', `<span class="ed-link">Читать</span>`)}</div>
       </section>
-      ${hot('journal', 'article', `<div style="padding:0 20px 20px">${edPh(350, 200, '')}</div>`)}` : ''}
+      ${hot('journal', 'article', `<div style="padding:0 20px 20px">${edPh(350, 200, '', 'journal')}</div>`)}` : ''}
 
       <div class="ed-buy">${cta}</div>
     </div>`;
@@ -1765,7 +1787,7 @@ export const MOBILE = {
 
     const card = (brand, name, price, why) => hot('pdp', 'default', `
       <div class="chat-card">
-        ${edPh(220, 280, '')}
+        ${edPh(220, 280, '', itemRole(name))}
         <div class="chat-card__brand">${brand}</div>
         <div class="chat-card__name">${name}</div>
         <div class="chat-card__price">${price}</div>
@@ -1774,7 +1796,7 @@ export const MOBILE = {
 
     const art = (kicker, title) => hot('journal', 'article', `
       <div class="chat-art">
-        <div style="width:78px;flex:0 0 auto">${edPh(160, 140, '')}</div>
+        <div style="width:78px;flex:0 0 auto">${edPh(160, 140, '', 'journal')}</div>
         <div>
           <div class="chat-art__k">${kicker}</div>
           <div class="chat-art__t">${title}</div>
@@ -1851,7 +1873,7 @@ export const MOBILE = {
                 ['Деталь', '12 STOREEZ', 'Шарф из альпаки', '7 200 ₽', 'Вы дважды открывали шарфы на неделе. Этот закроет вырез, если носить пальто нараспашку.'],
               ].map(([role, b, n, pr, why]) => hot('pdp', 'default', `
                 <div class="chat-look__i">
-                  <div>${edPh(160, 200, '')}</div>
+                  <div>${edPh(160, 200, '', itemRole(n))}</div>
                   <div>
                     <div class="chat-look__role">${role}</div>
                     <div class="chat-look__brand">${b}</div>
@@ -2092,7 +2114,7 @@ export const MOBILE = {
         ${[['MAX MARA', 'Пальто из шерсти', '39 000 ₽', ''], ['COS', 'Пальто-кокон', '21 300 ₽', 'цена снизилась'],
           ['12 STOREEZ', 'Жакет', '17 400 ₽', ''], ['LEVI’S', 'Джинсы', '5 400 ₽', 'остался размер 29']]
           .map(([b, n, pr, note]) => hot('pdp', 'default', `
-            <div class="ed-p">${edPh(300, 380, '')}<div class="ed-p__brand">${b}</div><div class="ed-p__name">${n}</div><div class="ed-p__price">${pr}</div>${note ? `<div class="ed-p__name" style="margin-top:5px">${note}</div>` : ''}</div>`)).join('')}
+            <div class="ed-p">${edPh(300, 380, '', itemRole(n))}<div class="ed-p__brand">${b}</div><div class="ed-p__name">${n}</div><div class="ed-p__price">${pr}</div>${note ? `<div class="ed-p__name" style="margin-top:5px">${note}</div>` : ''}</div>`)).join('')}
       </div>
       ${edBottom(4)}
     </div>`;
@@ -2141,7 +2163,7 @@ export const MOBILE = {
           ${[['MAX MARA', 'Пальто из шерсти · 44 · камель', '39 000 ₽'], ['COS', 'Шарф кашемировый · one size', '7 900 ₽']]
             .map(([b, n, pr]) => `
               <div class="w-row" style="gap:14px;align-items:flex-start">
-                <div style="width:72px;flex:0 0 auto">${edPh(120, 160, '')}</div>
+                <div style="width:72px;flex:0 0 auto">${edPh(120, 160, '', itemRole(n))}</div>
                 <div style="flex:1">
                   <div class="ed-p__brand" style="margin-top:0">${b}</div>
                   <div class="ed-p__name">${n}</div>

@@ -2,11 +2,11 @@
    KIT · роутер, рабочее место, статичные виды
    ============================================================ */
 
-import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=636dce0e';
+import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=8152de71';
 import { MOBILE, ph, pin, hot, bars, chip, badge, btn, pcard, header, bottomnav,
-         edPh, edP, ico } from './wire.js?v=636dce0e';
-import { DESKTOP } from './wire-desktop.js?v=636dce0e';
-import { initInteractions, signPage } from './interact.js?v=636dce0e';
+         edPh, edP, ico } from './wire.js?v=8152de71';
+import { DESKTOP } from './wire-desktop.js?v=8152de71';
+import { initInteractions, signPage } from './interact.js?v=8152de71';
 
 const byId = (id) => SCREENS.find((s) => s.id === id);
 
@@ -361,13 +361,13 @@ const COMP = {
   breadcrumbs: () => `<div class="ed-sm">WB Бренды / Женщины / Пальто</div>`,
 
   /* контент */
-  hero: () => `<div class="ed-hero">${edPh(320, 220, '')}<div class="ed-hero__copy ed-hero__copy--dark" style="left:14px;right:14px;bottom:14px"><div class="ed-label" style="margin-bottom:6px">Кампания недели</div><div class="ed-h3">Спокойный объём</div></div><div class="ed-hero__tab" style="padding:10px 14px;font-size:9px">Смотреть ›</div></div>`,
+  hero: () => `<div class="ed-hero">${edPh(320, 220, '', 'campaign')}<div class="ed-hero__copy ed-hero__copy--dark" style="left:14px;right:14px;bottom:14px"><div class="ed-label" style="margin-bottom:6px">Кампания недели</div><div class="ed-h3">Спокойный объём</div></div><div class="ed-hero__tab" style="padding:10px 14px;font-size:9px">Смотреть ›</div></div>`,
   edbanner: () => `<div class="ed-infeed" style="padding:18px"><div class="ed-infeed__k">Подборка стилиста</div><div class="ed-h3">Шесть пальто сезона</div></div>`,
-  storyslide: () => `<div style="position:relative">${edPh(320, 240, '')}<div class="slide-bars" style="position:absolute;top:10px;left:10px;right:10px">${[1, 2, 3].map((i) => `<i${i === 1 ? ' data-on' : ''}></i>`).join('')}</div></div>`,
+  storyslide: () => `<div style="position:relative">${edPh(320, 240, '', 'shoot')}<div class="slide-bars" style="position:absolute;top:10px;left:10px;right:10px">${[1, 2, 3].map((i) => `<i${i === 1 ? ' data-on' : ''}></i>`).join('')}</div></div>`,
   edtext: () => `<div class="slide"><div class="slide-rule"></div><div class="slide-sub" style="font-size:19px">Как выбрать <i>пальто оверсайз</i></div><div class="slide-body" style="font-size:14px">Силуэт держится не тканью, а линией плеча.</div></div>`,
   quote: () => `<div class="slide"><div class="slide-lead" style="font-size:17px">«Посадка — это не сантиметры. Это то, как вещь ведёт себя, когда вы про неё забыли»</div></div>`,
-  brandfocus: () => `<div>${edPh(320, 200, '')}<div class="chat-art__k" style="margin-top:10px">Brand Focus</div><div class="chat-art__t">Кто такие 12 STOREEZ</div></div>`,
-  article: () => `<div class="w-row" style="gap:12px"><div style="width:88px;flex:0 0 auto">${edPh(160, 120, '')}</div><div><div class="chat-art__k">Гид · 6 минут</div><div class="chat-art__t" style="font-size:16px">Пальто на сезон</div></div></div>`,
+  brandfocus: () => `<div>${edPh(320, 200, '', 'shoot')}<div class="chat-art__k" style="margin-top:10px">Brand Focus</div><div class="chat-art__t">Кто такие 12 STOREEZ</div></div>`,
+  article: () => `<div class="w-row" style="gap:12px"><div style="width:88px;flex:0 0 auto">${edPh(160, 120, '', 'journal')}</div><div><div class="chat-art__k">Гид · 6 минут</div><div class="chat-art__t" style="font-size:16px">Пальто на сезон</div></div></div>`,
   split: () => `<div class="w-row" style="gap:10px">${edPh(150, 190, '')}${edPh(150, 190, '')}</div>`,
 
   /* commerce */
@@ -399,7 +399,7 @@ const COMP = {
   sphero: () => `<div style="position:relative">${edPh(320, 190, '')}<div style="position:absolute;right:10px;top:10px"><span class="ed-adtag" style="background:#fff">Реклама</span></div></div>`,
   infeed: () => `<div><div class="w-row w-row--between" style="margin-bottom:8px"><span class="ed-label">Новый бренд</span><span class="ed-adtag">Реклама</span></div>${edPh(320, 150, '')}</div>`,
   prbrand: () => `<div class="w-row w-row--between" style="border:1px solid var(--e-line);padding:12px"><div class="w-row" style="gap:12px"><div style="width:40px">${edPh(60, 60, '')}</div><div><div class="ed-p__brand" style="margin-top:0">LIME</div><div class="ed-p__name">популярные</div></div></div><span class="ed-adtag">Реклама</span></div>`,
-  brarticle: () => `<div>${edPh(320, 170, '')}<div class="w-row" style="gap:10px;margin-top:10px"><span class="ed-label">Партнёрский материал</span><span class="ed-adtag">Реклама</span></div></div>`,
+  brarticle: () => `<div>${edPh(320, 170, '', 'journal')}<div class="w-row" style="gap:10px;margin-top:10px"><span class="ed-label">Партнёрский материал</span><span class="ed-adtag">Реклама</span></div></div>`,
   spshelf: () => `<div><div class="w-row w-row--between" style="margin-bottom:10px"><span class="ed-label">Полка бренда</span><span class="ed-adtag">Реклама</span></div><div class="w-row" style="gap:10px">${[1, 2].map(() => `<div style="flex:1">${edPh(130, 160, '')}</div>`).join('')}</div></div>`,
   native: () => `<div class="ed-infeed" style="padding:16px"><div class="w-row w-row--between" style="margin-bottom:8px"><span class="ed-infeed__k" style="margin:0">История бренда</span><span class="ed-adtag">Реклама</span></div><p class="ed-sm">Читается как редакция, промаркирован как реклама</p></div>`,
 };
