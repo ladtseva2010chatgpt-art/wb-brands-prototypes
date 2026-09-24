@@ -2,11 +2,11 @@
    KIT · роутер, рабочее место, статичные виды
    ============================================================ */
 
-import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=8152de71';
+import { GROUPS, SCREENS, FLOWS, STATES, COMPONENT_GROUPS } from './data.js?v=1b882a13';
 import { MOBILE, ph, pin, hot, bars, chip, badge, btn, pcard, header, bottomnav,
-         edPh, edP, ico } from './wire.js?v=8152de71';
-import { DESKTOP } from './wire-desktop.js?v=8152de71';
-import { initInteractions, signPage } from './interact.js?v=8152de71';
+         edPh, edP, ico } from './wire.js?v=1b882a13';
+import { DESKTOP } from './wire-desktop.js?v=1b882a13';
+import { initInteractions, signPage } from './interact.js?v=1b882a13';
 
 const byId = (id) => SCREENS.find((s) => s.id === id);
 
@@ -112,9 +112,10 @@ function renderWorkbench() {
       </div>
     </div>`;
 
-  q('#staterow').innerHTML = sc.states.length > 1
+  const shown = sc.states.filter((x) => !x.hidden);
+  q('#staterow').innerHTML = shown.length > 1
     ? `<span class="staterow__label">Состояния</span>
-       ${sc.states.map((st) => `<button class="statechip" data-state="${st.id}" aria-pressed="${st.id === state.screenState}">${st.label}</button>`).join('')}`
+       ${shown.map((st) => `<button class="statechip" data-state="${st.id}" aria-pressed="${st.id === state.screenState}">${st.label}</button>`).join('')}`
     : `<span class="staterow__label">Состояние</span><span class="statechip" aria-pressed="true">${sc.states[0].label}</span>`;
 
   const annotsHtml = `
@@ -283,7 +284,7 @@ function renderSitemap() {
                 <button class="smcard" data-screen="${s.id}">
                   <div class="smcard__num">${s.num}</div>
                   <div class="smcard__t">${s.title}</div>
-                  <div class="smcard__m"><i>${s.prd.join(' · ')}</i> · ${s.states.length} сост. · ${s.platforms.length === 2 ? 'mob + desk' : 'mobile'}</div>
+                  <div class="smcard__m"><i>${s.prd.join(' · ')}</i> · ${s.states.filter((x) => !x.hidden).length} сост. · ${s.platforms.length === 2 ? 'mob + desk' : 'mobile'}</div>
                 </button>`).join('')}
             </div>
           </section>`;

@@ -4,7 +4,7 @@
    ============================================================ */
 
 import { ph, pin, hot, bars, chip, badge, btn, rule, pcard,
-         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, itemRole, journalRole, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=8152de71';
+         edPh, edP, edBrand, edHeader, edCatalog, edFab, edChat, edMarquee, ico, slideProd, itemRole, journalRole, PARENTS, parentKey, CATS, catsMore, catsRest, LOOK, BRANDS, USP, USP_CLUB } from './wire.js?v=1b882a13';
 
 const dheader = (active = 0, mode = '') => `
   <header class="w-dheader">
@@ -21,7 +21,7 @@ const dheader = (active = 0, mode = '') => `
     <div class="ed-catbar ed-catbar--wide">
       <nav class="w-dheader__nav">
         ${[...CATS, 'Бренды A–Z', 'Дропы', 'Журнал', 'Аутлет']
-          .map((t, i) => `<span class="w-hot" data-go="listing" data-state="default"${i === active ? ' data-on' : ''}>${t}</span>`).join('')}
+          .map((t, i) => `<span class="w-hot" data-go="listing" data-state="${i < CATS.length ? parentKey(t) : 'default'}"${i === active ? ' data-on' : ''}>${t}</span>`).join('')}
         ${catsRest('span')}
       </nav>
       ${catsMore()}
@@ -370,7 +370,7 @@ export const DESKTOP = {
       <div class="ed-catbar ed-catbar--wide">
         <nav class="ed-tabs">
           ${pin(2)}
-          ${CATS.map((t, i) => `<span class="w-hot" data-go="listing" data-state="default"${i === 0 ? ' data-on' : ''}>${t}</span>`).join('')}
+          ${CATS.map((t, i) => `<span class="w-hot" data-go="listing" data-state="${parentKey(t)}"${i === 0 ? ' data-on' : ''}>${t}</span>`).join('')}
           ${catsRest('span')}
         </nav>
         ${catsMore()}
@@ -456,6 +456,51 @@ export const DESKTOP = {
 
   /* 05 · категорийный листинг — визуальная версия */
   listing: (st) => {
+    /* выдача родительской категории — пара к мобильной: товары сразу,
+       подкатегории — фильтром «Категория», он раскрывается колонкой слева */
+    const pk = st.replace(/-cats$/, '');
+    if (PARENTS[pk]) {
+      const P = PARENTS[pk];
+      const catsOpen = st.endsWith('-cats');
+      const cols = catsOpen ? 3 : 4;
+      return `<div class="ed ed--d">
+        ${edHeader(false, CATS.indexOf(P.t), true, true)}
+        <section class="ed-sec" style="padding-bottom:24px">
+          ${pin(1)}
+          <h1 class="ed-h1" style="font-size:52px">${P.t}</h1>
+        </section>
+        <div class="ed-bar">
+          ${pin(2)}
+          <div class="ed-bar__row" style="justify-content:space-between">
+            <div class="w-row" style="gap:8px">
+              ${hot('listing', catsOpen ? pk : `${pk}-cats`, `<span class="ed-chip"${catsOpen ? ' data-on' : ''}>Категория ⌄</span>`)}
+              ${['Аутлет', 'Цена ⌄', 'Бренд ⌄', 'Размер ⌄'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
+            </div>
+            <div class="w-row" style="gap:22px">
+              <span class="ed-sm">${P.count} вещей</span>
+              <span class="ed-sm">Сначала популярные ⌄</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:${catsOpen ? '280px minmax(0,1fr)' : 'minmax(0,1fr)'}">
+          ${catsOpen ? `
+          <aside style="border-right:1px solid var(--e-line);padding:40px 40px 40px 48px">
+            <div class="ed-label ed-label--mute" style="margin-bottom:12px">Категория</div>
+            <div class="ed-rows">
+              ${P.subs.map(([t, n]) => hot('listing', 'default', `<div class="ed-rows__i"><span>${t}</span><span>${n.toLocaleString('ru-RU')} ›</span></div>`)).join('')}
+            </div>
+            <div style="margin-top:28px">${hot('listing', pk, `<div class="ed-btn ed-btn--ghost">Показать ${P.count} вещей</div>`)}</div>
+          </aside>` : ''}
+          <div>
+            ${pin(3)}
+            <div class="ed-grid" style="grid-template-columns:repeat(${cols},1fr)">
+              ${P.items.map(([b, n, pr, old]) => edP({ brand: b, name: n, price: pr, old, w: 0, ratio: [320, 420], role: P.role })).join('')}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
     const items = [
       /* четвёртым столбцом — прошлая цена: вещи аутлета идут в общей выдаче */
       ['MAX MARA', 'Пальто из шерсти', '39 000 ₽', ''],

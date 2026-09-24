@@ -26,8 +26,8 @@ const SHOTS = {
 
 /* Роль блока → курируемый пул. Кадр должен совпадать с тем, о чём блок:
    раздел женский, поэтому одежда — только на женщине, а категория-предмет — сам предмет.
-   Мужские кадры (product-03, editorial-02/03/05/09/11/19, banner-06/08/16/18) и кадры
-   с запечённым UI (banner-04/11/12/14) не входят ни в один пул. */
+   Мужские кадры (product-03, editorial-02/03/05/09/11/19) живут только в пуле man —
+   для мужской выдачи. Кадры с запечённым UI (banner-04/11/12/14) не входят никуда. */
 const ROLE_POOL = {
   campaign: ['banner-15', 'banner-20', 'banner-05', 'banner-10', 'banner-lifestyle-v2'],
   sis: ['banner-15', 'banner-20', 'banner-10', 'banner-05'],
@@ -37,6 +37,7 @@ const ROLE_POOL = {
   interior: ['banner-lifestyle-user', 'banner-17', 'banner-21', 'banner-02', 'editorial-14', 'product-08'],
   /* карточка одежды: женщина в полный рост. product-02 и editorial-08 — один образ,
      поэтому в пуле они разнесены: рядом в сетке читаются как дубль */
+  man: ['product-03', 'editorial-19', 'editorial-05', 'editorial-09', 'editorial-11', 'editorial-02'],
   woman: ['product-01', 'editorial-16', 'product-02', 'editorial-10', 'editorial-04', 'editorial-08'],
   bag: ['product-06', 'product-07', 'editorial-13', 'editorial-17'],
   shoes: ['editorial-15', 'banner-19', 'banner-09', 'banner-03'],
@@ -85,7 +86,7 @@ export const edPh = (w, h, tag = '', role = '', asset = '', position = 'center')
 export const edP = (o = {}) => {
   const { brand = 'MAX MARA', name = 'Пальто из шерсти', price = '39 000 ₽', old = '',
           w = 158, ratio = [300, 380], tag = '', go = 'pdp', state = 'default',
-          badge = '', note = '' } = o;
+          badge = '', note = '', role = '' } = o;
   /* Бейджей два, и они про разное: «Премиум» — про отбор, «Аутлет» — про то,
      что вещь из прошлой коллекции. Аутлет не живёт отдельной витриной: его
      товары идут в общей выдаче, и бейдж — единственное, что их отличает,
@@ -95,11 +96,13 @@ export const edP = (o = {}) => {
     COS: 'ПРЕМИУМ',
     'MARC O’POLO': 'ПРЕМИУМ',
   }[brand] || ''));
-  const productRole = itemRole(name);
+  const productRole = role || itemRole(name);
   return hot(go, state, `
     <div class="ed-p"${w ? ` style="width:${w}px"` : ''}>
       <div class="ed-p__media">
-        ${edPh(ratio[0], ratio[1], tag, productRole)}
+        ${productRole === 'none'
+          ? `<span class="ed-shot" style="display:block;aspect-ratio:${ratio[0]}/${ratio[1]};background:var(--e-soft)"></span>`
+          : edPh(ratio[0], ratio[1], tag, productRole)}
         ${/* избранное — на снимке, как в приложении: единственное действие,
              ради которого не нужно открывать карточку */''}
         <button class="ed-p__fav" aria-label="В избранное">${ico('heart')}</button>
@@ -167,12 +170,41 @@ export const slideProd = (o = {}) => {
 export const CATS = ['Женщины', 'Мужчины', 'Красота', 'Аксессуары'];
 export const CATS_MORE = ['Электроника', 'Бытовая техника', 'Мебель', 'Текстиль', 'Посуда', 'Спорт'];
 
+/* Родительская категория открывает обычную выдачу, а не ещё один уровень меню:
+   каталог уже есть в таббаре, повторять его под шапкой — лишний шаг до товара.
+   Подкатегории уходят в фильтр «Категория», аутлет идёт в той же ленте.
+   role — пул кадров: мужская выдача на мужчинах, для техники кадров нет — подложка. */
+export const PARENTS = {
+  women: { t: 'Женщины', count: '12 480', role: '', subs: [['Верхняя одежда', 1840], ['Платья', 1320], ['Блузки и рубашки', 960], ['Трикотаж', 1105], ['Брюки', 870], ['Юбки', 540], ['Костюмы', 310], ['Обувь', 1420], ['Сумки', 780], ['Аксессуары', 1260]],
+    items: [['MAX MARA', 'Пальто из шерсти', '39 000 ₽', ''], ['COS', 'Платье-рубашка', '11 900 ₽', ''], ['12 STOREEZ', 'Жакет прямой', '12 200 ₽', '17 400 ₽'], ['ARNY PRAHT', 'Сумка Fold', '14 200 ₽', ''], ['USHATÁVA', 'Брюки широкие', '15 400 ₽', ''], ['BOSS', 'Блузка шёлковая', '13 900 ₽', '19 800 ₽'], ['LIME', 'Джемпер', '5 900 ₽', ''], ['COS', 'Ботинки', '13 900 ₽', '19 900 ₽']] },
+  men: { t: 'Мужчины', count: '6 210', role: 'man', subs: [['Верхняя одежда', 920], ['Рубашки', 640], ['Трикотаж', 580], ['Брюки', 710], ['Джинсы', 430], ['Костюмы', 260], ['Обувь', 890], ['Аксессуары', 540]],
+    items: [['BOSS', 'Пиджак', '54 000 ₽', ''], ['MARC O’POLO', 'Куртка замшевая', '38 900 ₽', ''], ['LEVI’S', 'Джинсы прямые', '5 400 ₽', '8 900 ₽'], ['COS', 'Рубашка оверсайз', '7 900 ₽', ''], ['LACOSTE', 'Поло', '6 200 ₽', '9 900 ₽'], ['12 STOREEZ', 'Бомбер', '21 400 ₽', ''], ['BOSS', 'Брюки чинос', '11 200 ₽', '16 000 ₽'], ['MARC O’POLO', 'Кардиган', '12 800 ₽', '']] },
+  beauty: { t: 'Красота', count: '3 940', role: 'beauty', subs: [['Ароматы', 820], ['Уход за лицом', 1140], ['Уход за телом', 610], ['Макияж', 730], ['Волосы', 390], ['Наборы', 250]],
+    items: [['BYREDO', 'Парфюмерная вода', '21 500 ₽', ''], ['AESOP', 'Крем для рук', '3 900 ₽', ''], ['LE LABO', 'Santal 33', '24 800 ₽', ''], ['DIPTYQUE', 'Свеча Baies', '7 900 ₽', '9 900 ₽'], ['KIEHL’S', 'Сыворотка', '5 600 ₽', ''], ['AESOP', 'Гель для душа', '3 400 ₽', '4 600 ₽'], ['BYREDO', 'Лосьон для тела', '8 200 ₽', ''], ['LE LABO', 'Набор миниатюр', '11 900 ₽', '']] },
+  acc: { t: 'Аксессуары', count: '4 380', role: '', subs: [['Сумки', 1210], ['Очки', 380], ['Украшения', 920], ['Ремни', 310], ['Шарфы и платки', 540], ['Головные уборы', 420], ['Кошельки', 600]],
+    items: [['ARNY PRAHT', 'Сумка Fold', '14 200 ₽', ''], ['COS', 'Очки солнцезащитные', '6 900 ₽', ''], ['12 STOREEZ', 'Шарф из альпаки', '7 200 ₽', ''], ['MAX MARA', 'Сумка-шопер', '32 000 ₽', '46 000 ₽'], ['BOSS', 'Ремень кожаный', '8 400 ₽', ''], ['MARC O’POLO', 'Кошелёк', '5 900 ₽', '8 400 ₽'], ['USHATÁVA', 'Клатч', '18 600 ₽', ''], ['COS', 'Кепка', '3 400 ₽', '']] },
+  electronics: { t: 'Электроника', count: '1 860', role: 'none', subs: [['Наушники', 420], ['Смартфоны', 310], ['Умные часы', 240], ['Колонки', 190], ['Аксессуары', 700]],
+    items: [['BANG & OLUFSEN', 'Наушники Beoplay', '42 000 ₽', ''], ['MARSHALL', 'Колонка Emberton', '17 900 ₽', '22 900 ₽'], ['APPLE', 'Watch Series', '39 900 ₽', ''], ['SONY', 'Наушники WH', '29 900 ₽', ''], ['BANG & OLUFSEN', 'Колонка Beosound', '31 000 ₽', '44 000 ₽'], ['NATIVE UNION', 'Кабель', '2 900 ₽', '']] },
+  appliances: { t: 'Бытовая техника', count: '940', role: 'none', subs: [['Для кухни', 380], ['Уход за домом', 260], ['Климат', 150], ['Красота и здоровье', 150]],
+    items: [['SMEG', 'Чайник', '18 900 ₽', ''], ['DYSON', 'Фен Supersonic', '44 900 ₽', ''], ['DE’LONGHI', 'Кофемашина', '59 900 ₽', '74 900 ₽'], ['SMEG', 'Тостер', '17 400 ₽', ''], ['DYSON', 'Очиститель воздуха', '52 000 ₽', '64 000 ₽'], ['BALMUDA', 'Тостер', '29 900 ₽', '']] },
+  furniture: { t: 'Мебель', count: '720', role: 'interior', subs: [['Кресла', 140], ['Столы', 120], ['Хранение', 210], ['Освещение', 250]],
+    items: [['HAY', 'Кресло', '64 000 ₽', ''], ['MUUTO', 'Стол журнальный', '38 000 ₽', '52 000 ₽'], ['HAY', 'Стеллаж', '46 000 ₽', ''], ['&TRADITION', 'Лампа Flowerpot', '27 900 ₽', ''], ['MUUTO', 'Полка', '14 800 ₽', '19 900 ₽'], ['HAY', 'Табурет', '12 400 ₽', '']] },
+  textile: { t: 'Текстиль', count: '1 150', role: 'interior', subs: [['Постельное бельё', 380], ['Пледы', 240], ['Полотенца', 310], ['Подушки', 220]],
+    items: [['ZARA HOME', 'Плед из шерсти', '9 900 ₽', ''], ['TKANO', 'Постельное бельё', '12 400 ₽', '16 900 ₽'], ['HAY', 'Подушка', '5 400 ₽', ''], ['TKANO', 'Полотенце', '2 900 ₽', ''], ['ZARA HOME', 'Покрывало', '14 900 ₽', '19 900 ₽'], ['HAY', 'Плед', '11 200 ₽', '']] },
+  dishes: { t: 'Посуда', count: '860', role: 'interior', subs: [['Сервировка', 320], ['Бокалы', 180], ['Для кухни', 240], ['Декор', 120]],
+    items: [['HAY', 'Набор тарелок', '8 900 ₽', ''], ['IITTALA', 'Бокалы Essence', '6 400 ₽', '8 900 ₽'], ['MUUTO', 'Ваза', '9 800 ₽', ''], ['IITTALA', 'Кастрюля', '14 900 ₽', ''], ['HAY', 'Кружки', '3 900 ₽', '5 400 ₽'], ['&TRADITION', 'Графин', '7 200 ₽', '']] },
+  sport: { t: 'Спорт', count: '1 540', role: 'shoes', subs: [['Кроссовки', 520], ['Одежда для бега', 380], ['Йога', 240], ['Аксессуары', 400]],
+    items: [['SALOMON', 'Кроссовки XT-6', '21 900 ₽', ''], ['NEW BALANCE', 'Кроссовки 990', '24 900 ₽', '32 000 ₽'], ['ON', 'Кроссовки Cloud', '18 400 ₽', ''], ['ASICS', 'Кроссовки Gel', '14 900 ₽', ''], ['SALOMON', 'Кроссовки Speedcross', '15 200 ₽', '19 900 ₽'], ['HOKA', 'Кроссовки Clifton', '17 900 ₽', '']] },
+};
+/** Название родителя → ключ состояния листинга (#listing/women). */
+export const parentKey = (t) => Object.keys(PARENTS).find((k) => PARENTS[k].t === t) || 'women';
+
 /* Остальные категории живут в двух видах сразу: на десктопе — продолжением
    строки за разделителем, на мобиле — под бургером. Разметка одна, режим
    переключает CSS: держать два набора данных дороже, чем два правила. */
 export const catsRest = (tag = 'button') => `
   <span class="ed-cats__split" aria-hidden="true"></span>
-  ${CATS_MORE.map((t) => `<${tag} class="ed-cat--sec w-hot" data-go="listing" data-state="default">${t}</${tag}>`).join('')}`;
+  ${CATS_MORE.map((t) => `<${tag} class="ed-cat--sec w-hot" data-go="listing" data-state="${parentKey(t)}">${t}</${tag}>`).join('')}`;
 
 const MORE_KEYS = [['Бренды A–Z', 'brands-az'], ['Аутлет', 'outlet'], ['Журнал', 'journal']];
 
@@ -184,7 +216,7 @@ export const catsMore = () => `
             не его шапка, а входы раздела: держим их в бургере над категориями */''}
       ${MORE_KEYS.map(([t, go]) => `<button class="ed-more__i ed-more__i--key w-hot" data-go="${go}" data-state="default">${t}<i>›</i></button>`).join('')}
       <span class="ed-more__sep" aria-hidden="true"></span>
-      ${CATS_MORE.map((t) => `<button class="ed-more__i w-hot" data-go="listing" data-state="default">${t}<i>›</i></button>`).join('')}
+      ${CATS_MORE.map((t) => `<button class="ed-more__i w-hot" data-go="listing" data-state="${parentKey(t)}">${t}<i>›</i></button>`).join('')}
     </div>
   </div>`;
 
@@ -210,7 +242,7 @@ export const edHeader = (open = false, active = 0, desktop = false, showCats = t
     ${showCats ? `<div class="ed-catbar">
       <nav class="ed-cats">
         ${CATS.map((t, i) => `
-          <button class="ed-cat w-hot"${i === active ? ' data-on' : ''} data-go="home" data-state="${open ? 'default' : 'catalog'}">${t} <span style="opacity:.5">⌄</span></button>`).join('')}
+          <button class="ed-cat w-hot"${i === active ? ' data-on' : ''} data-go="listing" data-state="${parentKey(t)}">${t}</button>`).join('')}
         ${catsRest()}
       </nav>
       ${catsMore()}
@@ -426,6 +458,53 @@ export const explained = (o = {}) => {
 /* ============================================================
    МОБИЛЬНЫЕ ЭКРАНЫ
    ============================================================ */
+
+/* Выдача родительской категории. Как в приложении WB: сразу товары, а подкатегории —
+   первым фильтром «Категория». Вещи аутлета идут в той же ленте со своей ценой и меткой. */
+const parentListing = (key, catsOpen) => {
+  const P = PARENTS[key];
+  const active = CATS.indexOf(P.t);
+  const grid = (list) => `
+    <div class="ed-grid">
+      ${list.map(([b, n, pr, old]) => edP({ brand: b, name: n, price: pr, old, w: 0, ratio: [300, 380], role: P.role })).join('')}
+    </div>`;
+  return `<div class="ed"${catsOpen ? ' style="position:relative;min-height:844px"' : ''}>
+    ${catsOpen ? '' : edFab()}
+    ${edHeader(false, active)}
+    <section class="ed-sec--tight" style="padding-bottom:14px">
+      ${pin(1)}
+      <h1 class="ed-h1" style="font-size:28px">${P.t}</h1>
+    </section>
+    <div class="ed-bar">
+      ${pin(2)}
+      <div class="ed-bar__row">
+        ${hot('listing', catsOpen ? key : `${key}-cats`, `<span class="ed-chip"${catsOpen ? ' data-on' : ''}>Категория ⌄</span>`)}
+        ${['Аутлет', 'Цена ⌄', 'Бренд ⌄', 'Размер ⌄'].map((t) => `<span class="ed-chip">${t}</span>`).join('')}
+      </div>
+      <div class="ed-bar__meta">
+        <span>${P.count} вещей</span>
+        <span>Сначала популярные ⌄</span>
+      </div>
+    </div>
+    ${pin(3)}
+    ${grid(catsOpen ? P.items.slice(0, 2) : P.items)}
+    ${catsOpen ? `
+    <div class="ed-scrim w-hot" data-go="listing" data-state="${key}"></div>
+    <div class="ed-sheet">
+      <div class="ed-sheet__grip"></div>
+      <div class="ed-sheet__head">
+        <div class="ed-h3">Категория</div>
+        <span class="w-hot ed-sm" data-go="listing" data-state="${key}">Сбросить</span>
+      </div>
+      <div class="ed-sheet__body">
+        <div class="ed-rows">
+          ${P.subs.map(([t, n]) => hot('listing', 'default', `<div class="ed-rows__i"><span>${t}</span><span>${n.toLocaleString('ru-RU')} ›</span></div>`)).join('')}
+        </div>
+      </div>
+      <div class="ed-buy">${hot('listing', key, `<div class="ed-btn">Показать ${P.count} вещей</div>`)}</div>
+    </div>` : edBottom(1)}
+  </div>`;
+};
 
 export const MOBILE = {
 
@@ -885,6 +964,9 @@ export const MOBILE = {
 
   /* 05 · категорийный листинг — визуальная версия */
   listing: (st) => {
+    const pk = st.replace(/-cats$/, '');
+    if (PARENTS[pk]) return parentListing(pk, st.endsWith('-cats'));
+
     const head = () => `
       <header class="ed-header">
         <div class="ed-header__bar">
